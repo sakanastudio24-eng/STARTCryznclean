@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #56070F;
+  --color-accent: #8CC0D6;
+  --color-charcoal: #10150F;
+  --color-offWhite: #F9FAF9;
+  --font-heading: 'Impact', 'Anton', sans-serif;
+  --font-body: 'Inter', 'Poppins', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-offWhite);
+  color: var(--color-charcoal);
+}
+
+h1, .heading {
+  font-family: var(--font-heading);
+  letter-spacing: 0.01em;
+}

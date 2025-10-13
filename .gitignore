@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+
+# next.js build output
+.next/
+out/
+
+# env & local
+.env
+.env.*
+.DS_Store
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# archives & exports
+*.zip
+
+# design exports (reference only)
+design/code-reference/**
