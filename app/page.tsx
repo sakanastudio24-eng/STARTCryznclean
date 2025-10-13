@@ -1,21 +1,8 @@
-import HeroSection from "../components/HeroSection";
-import ServicesGrid from "../components/ServicesGrid";
-import GalleryGrid from "../components/GalleryGrid";
-import FAQAccordion from "../components/FAQAccordion";
-import NavigationBar from "../components/NavigationBar";
-import Footer from "../components/Footer";
-
-export default function HomePage() {
+export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-offWhite text-charcoal">
-      <NavigationBar />
-      <main className="flex-1">
-        <HeroSection />
-        <ServicesGrid preview />
-        <GalleryGrid preview />
-        <FAQAccordion />
-      </main>
-      <Footer />
-    </div>
+    <main style={{ padding: 24 }}>
+      <h1 style={{ fontFamily: 'Impact, Anton, sans-serif' }}>Cruiz n Clean</h1>
+      <p>Starter page — build sanity check.</p>
+    </main>
   );
 }
