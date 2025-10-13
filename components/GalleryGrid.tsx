@@ -1,17 +1,38 @@
-const images = [
-  { src: "/images/gallery/placeholder1.jpg", alt: "Exterior detail on a sedan" },
-  { src: "/images/gallery/placeholder2.jpg", alt: "Interior cleaning in progress" },
-  { src: "/images/gallery/placeholder3.jpg", alt: "Headlight restoration before and after" },
-];
+import React, { useState } from "react";
+import { images as manifest } from "../data/images-manifest";
+
+const categories = ["All", "Exterior", "Interior", "Ceramic", "Specialty"];
 
 export default function GalleryGrid({ preview = false }: { preview?: boolean }) {
-  const displayImages = preview ? images.slice(0, 2) : images;
+  const [category, setCategory] = useState("All");
+  let filtered = manifest.filter(img => img.file.startsWith("/images/gallery/"));
+  if (category !== "All") filtered = filtered.filter(img => img.category === category);
+  const displayImages = preview ? filtered.slice(0, 2) : filtered;
   return (
     <section className="w-full bg-accent/10 py-12 px-4">
       <h2 className="text-3xl font-bold heading text-primary mb-8 text-center">Gallery</h2>
+      <div className="flex justify-center gap-2 mb-6 flex-wrap">
+        {categories.map(cat => (
+          <button
+            key={cat}
+            className={`px-4 py-1 rounded-full font-medium border transition ${category === cat ? "bg-primary text-offWhite border-primary" : "bg-white text-primary border-primary/30"}`}
+            onClick={() => setCategory(cat)}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
         {displayImages.map((img, i) => (
-          <img key={i} src={img.src} alt={img.alt} className="rounded-lg shadow w-full h-56 object-cover" />
+          <figure key={img.file} className="rounded-lg shadow bg-white overflow-hidden">
+            <img
+              src={img.file}
+              alt={img.alt}
+              loading="lazy"
+              className="w-full h-56 object-cover"
+            />
+            <figcaption className="p-2 text-sm text-charcoal text-center">{img.caption}</figcaption>
+          </figure>
         ))}
       </div>
     </section>

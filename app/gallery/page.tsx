@@ -1,7 +1,15 @@
+import NavigationBar from "../../components/NavigationBar";
+import Footer from "../../components/Footer";
+
 export default function GalleryPage() {
   return (
-    <main className="min-h-screen">
-      {/* ...content... */}
-    </main>
+    <div className="flex flex-col min-h-screen bg-offWhite text-charcoal">
+      <NavigationBar />
+      <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8">
+        <h1 className="text-4xl font-bold heading text-primary mb-6">Gallery</h1>
+        {/* ...content... */}
+      </main>
+      <Footer />
+    </div>
   );
 }

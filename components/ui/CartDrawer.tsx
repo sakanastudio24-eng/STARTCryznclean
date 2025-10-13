@@ -1,23 +1,28 @@
 import React from "react";
 
-interface CartItem {
-  id: string;
-  title: string;
-  price: number;
+import type { CartItem as CartItemType } from "./CartProvider";
+
+interface CartItem extends CartItemType {
+  // id, title, basePrice, category, qty
 }
 
+type VehicleSize = "car" | "smallSUV" | "largeSUVTruck";
 interface CartDrawerProps {
   items: CartItem[];
   onRemove: (id: string) => void;
-  vehicleSize: string;
-  setVehicleSize: (size: string) => void;
+  vehicleSize: VehicleSize;
+  setVehicleSize: (size: VehicleSize) => void;
   estimate: number;
   onContinue: () => void;
   open: boolean;
   onClose: () => void;
 }
 
-const vehicleSizes = ["Car", "SUV", "Truck", "Van"];
+const vehicleSizes = [
+  { label: "Car", value: "car" },
+  { label: "Small SUV", value: "smallSUV" },
+  { label: "Large SUV/Truck", value: "largeSUVTruck" },
+];
 
 export default function CartDrawer({ items, onRemove, vehicleSize, setVehicleSize, estimate, onContinue, open, onClose }: CartDrawerProps) {
   return (
@@ -34,7 +39,7 @@ export default function CartDrawer({ items, onRemove, vehicleSize, setVehicleSiz
             <div key={item.id} className="flex justify-between items-center border-b py-2">
               <div>
                 <span className="font-medium text-charcoal">{item.title}</span>
-                <span className="block text-xs text-charcoal/60">${item.price}</span>
+                <span className="block text-xs text-charcoal/60">${item.basePrice}</span>
               </div>
               <button onClick={() => onRemove(item.id)} aria-label={`Remove ${item.title}`} className="text-red-600 hover:text-primary text-lg font-bold">×</button>
             </div>
@@ -43,9 +48,9 @@ export default function CartDrawer({ items, onRemove, vehicleSize, setVehicleSiz
       </div>
       <div className="p-4 border-t flex flex-col gap-2">
         <label className="text-sm font-medium text-charcoal mb-1">Vehicle Size</label>
-        <select value={vehicleSize} onChange={e => setVehicleSize(e.target.value)} className="w-full border rounded p-2 focus:ring-accent">
+        <select value={vehicleSize} onChange={e => setVehicleSize(e.target.value as VehicleSize)} className="w-full border rounded p-2 focus:ring-accent">
           {vehicleSizes.map(size => (
-            <option key={size} value={size}>{size}</option>
+            <option key={size.value} value={size.value}>{size.label}</option>
           ))}
         </select>
         <div className="flex justify-between items-center mt-2">
