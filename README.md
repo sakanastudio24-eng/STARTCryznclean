@@ -22,10 +22,20 @@ A modern, accessible Next.js + Tailwind site for mobile detailing bookings.
    ```
 
 4. **Deploy to Vercel:**
-   - Framework: Next.js
+   - Install Command: `npm install`
    - Build Command: `next build`
-   - Output Directory: `.next`
+   - Output Directory: (leave blank)
+   - Root Directory: `/`
    - Add your environment variables in Vercel project settings (Settings > Environment Variables).
+
+## Setup & Deploy (Quick)
+
+```bash
+npm install
+npm run dev
+npm run build
+npm run start
+```
 
 5. **Add images:**
    - Place hero images in `/public/images/hero/` and gallery images in `/public/images/gallery/`.

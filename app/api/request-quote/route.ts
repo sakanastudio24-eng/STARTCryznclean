@@ -32,11 +32,12 @@ export async function POST(req: NextRequest) {
           }),
         });
       } catch (e) {
-        // Fallback: no-op
+        // Ignore email failure; continue UX
       }
+      return NextResponse.json({ ok: true });
     }
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, note: "email not configured" });
   } catch (e) {
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: false, error: "invalid request" }, { status: 400 });
   }
 }

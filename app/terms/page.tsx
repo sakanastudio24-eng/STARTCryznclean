@@ -1,15 +1,9 @@
-import NavigationBar from "../../components/NavigationBar";
-import Footer from "../../components/Footer";
 
 export default function TermsPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-offWhite text-charcoal">
-      <NavigationBar />
-      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-8">
-        <h1 className="text-4xl font-bold heading text-primary mb-6">Terms & Conditions</h1>
-        {/* ...content... */}
-      </main>
-      <Footer />
-    </div>
+    <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-8">
+      <h1 className="text-4xl font-bold heading text-primary mb-6">Terms & Conditions</h1>
+      <p className="text-charcoal/80">Standard terms apply. Services are performed on-site at your location; ensure safe parking and access to requested utilities if applicable.</p>
+    </main>
   );
 }

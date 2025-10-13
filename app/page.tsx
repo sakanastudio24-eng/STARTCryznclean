@@ -3,10 +3,9 @@
 import React, { useState, useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import GalleryGrid from "../components/GalleryGrid";
-import Footer from "../components/Footer";
 import { services } from "../data/services-data";
 import ServiceCard from "../components/ui/ServiceCard";
-import { CartProvider, useCart } from "../components/ui/CartProvider";
+import { useCart } from "../components/cart/CartProvider";
 
 function ServicesPreview() {
   const { items, add } = useCart();
@@ -51,8 +50,8 @@ function GalleryPreview() {
 function CTABand() {
   return (
     <section className="w-full bg-primary text-offWhite py-10 flex flex-col items-center justify-center fade-in">
-      <h3 className="text-2xl font-bold heading mb-4">Ready for a spotless ride?</h3>
-      <a href="/request" className="bg-accent text-charcoal px-8 py-3 rounded-full font-bold text-lg shadow hover:bg-accent/90 transition">Request a Quote</a>
+      <h3 className="text-2xl font-bold heading mb-4">Book your detail today</h3>
+      <a href="/request" className="bg-accent text-charcoal px-8 py-3 rounded-full font-bold text-lg shadow hover:bg-accent/90 transition-smooth">Request a Quote</a>
     </section>
   );
 }
@@ -64,20 +63,13 @@ function HomePage() {
     setMounted(true);
   }, []);
   return (
-    <div className={`flex flex-col min-h-screen bg-offWhite text-charcoal ${mounted ? "fade-in" : "opacity-0"}`}>
+    <div className={`flex flex-col ${mounted ? "fade-in" : "opacity-0"}`}>
       <HeroSection />
-      <div className="flex flex-col gap-12">
-        <div className="flex flex-col gap-12">
-          <div className="container mx-auto px-0">
-            <div className="flex flex-col gap-12">
-              <ServicesPreview />
-              <GalleryPreview />
-              <CTABand />
-            </div>
-          </div>
-        </div>
+      <div className="container mx-auto px-0 flex flex-col gap-12">
+        <ServicesPreview />
+        <GalleryPreview />
+        <CTABand />
       </div>
-      <Footer />
       <style>{`
         .fade-in {
           opacity: 1;
@@ -91,10 +83,4 @@ function HomePage() {
   );
 }
 
-export default function Page() {
-  return (
-    <CartProvider>
-      <HomePage />
-    </CartProvider>
-  );
-}
+export default function Page() { return <HomePage />; }
