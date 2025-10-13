@@ -3,13 +3,11 @@ import { useState } from "react";
 import { services } from "../../data/services-data";
 import ServiceCard from "../../components/ui/ServiceCard";
 import CartDrawer from "../../components/ui/CartDrawer";
-import NavigationBar from "../../components/NavigationBar";
-import Footer from "../../components/Footer";
-import { CartProvider, useCart } from "../../components/ui/CartProvider";
+import { useCart } from "../../components/cart/CartProvider";
 
 function ServicesPageInner() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { items, vehicleSize, add, remove, setVehicleSize, count, total } = useCart();
+  const { items, size, add, remove, setSize, count, total } = useCart();
   const sizeMultipliers = { car: 1.0, smallSUV: 1.15, largeSUVTruck: 1.3 };
   const categories = ["Exterior", "Interior", "Ceramic", "Specialty"];
   const servicesByCategory = categories.map(cat => ({
@@ -19,7 +17,6 @@ function ServicesPageInner() {
 
   return (
     <div className="flex flex-col min-h-screen bg-offWhite text-charcoal">
-      <NavigationBar />
       <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8">
         <h1 className="text-4xl font-bold heading text-primary mb-6">Select Services</h1>
         <div className="flex flex-col gap-10">
@@ -29,25 +26,25 @@ function ServicesPageInner() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {group.services.map(service => {
                   const selected = !!items.find(i => i.id === service.id);
-                  const price = (service.price * sizeMultipliers[vehicleSize]).toFixed(2);
+                  const price = (service.basePrice * sizeMultipliers[size]).toFixed(2);
                   return (
                     <div key={service.id} className="relative group">
                       <ServiceCard
                         id={service.id}
                         title={service.title}
                         price={+price}
-                        basePrice={service.price}
+                        basePrice={service.basePrice}
                         category={service.category}
                         selected={selected}
                         onClick={() => selected
                           ? remove(service.id)
-                          : add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
+                          : add({ id: service.id, title: service.title, basePrice: service.basePrice, category: service.category, qty: 1 })}
                       />
                       <button
                         className={`absolute top-4 right-4 px-3 py-1 rounded shadow font-bold text-sm transition ${selected ? "bg-primary text-offWhite" : "bg-accent text-charcoal"}`}
                         onClick={() => selected
                           ? remove(service.id)
-                          : add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
+                          : add({ id: service.id, title: service.title, basePrice: service.basePrice, category: service.category, qty: 1 })}
                         aria-label={selected ? `Remove ${service.title}` : `Add ${service.title}`}
                       >
                         {selected ? "Added" : "Add"}
@@ -62,8 +59,8 @@ function ServicesPageInner() {
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-10">
           <label className="font-medium text-charcoal">Vehicle Size:</label>
           <select
-            value={vehicleSize}
-            onChange={e => setVehicleSize(e.target.value as any)}
+            value={size}
+            onChange={e => setSize(e.target.value as any)}
             className="border rounded p-2 focus:ring-accent"
           >
             <option value="car">Car</option>
@@ -81,23 +78,16 @@ function ServicesPageInner() {
         <CartDrawer
           items={items}
           onRemove={remove}
-          vehicleSize={vehicleSize}
-          setVehicleSize={setVehicleSize}
+          vehicleSize={size}
+          setVehicleSize={setSize}
           estimate={total()}
           onContinue={() => { window.location.href = "/request"; }}
           open={drawerOpen}
           onClose={() => setDrawerOpen(false)}
         />
       </main>
-      <Footer />
     </div>
   );
 }
 
-export default function ServicesPage() {
-  return (
-    <CartProvider>
-      <ServicesPageInner />
-    </CartProvider>
-  );
-}
+export default function ServicesPage() { return <ServicesPageInner />; }

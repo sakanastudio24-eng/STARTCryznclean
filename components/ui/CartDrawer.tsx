@@ -1,12 +1,12 @@
 import React from "react";
 
-import type { CartItem as CartItemType } from "./CartProvider";
+import type { CartItem as CartItemType, VehicleSize } from "../cart/CartProvider";
 
 interface CartItem extends CartItemType {
   // id, title, basePrice, category, qty
 }
 
-type VehicleSize = "car" | "smallSUV" | "largeSUVTruck";
+// VehicleSize imported from cart provider
 interface CartDrawerProps {
   items: CartItem[];
   onRemove: (id: string) => void;
@@ -26,7 +26,7 @@ const vehicleSizes = [
 
 export default function CartDrawer({ items, onRemove, vehicleSize, setVehicleSize, estimate, onContinue, open, onClose }: CartDrawerProps) {
   return (
-    <aside className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 transform transition-transform duration-200 ${open ? "translate-x-0" : "translate-x-full"}`} aria-label="Cart Drawer">
+    <aside className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 transform transition-transform duration-500 ${open ? "translate-x-0" : "translate-x-full"}`} aria-label="Cart Drawer">
       <div className="flex justify-between items-center p-4 border-b">
         <h2 className="text-xl font-bold heading text-primary">Your Cart</h2>
         <button onClick={onClose} aria-label="Close cart" className="text-charcoal hover:text-primary text-2xl">×</button>

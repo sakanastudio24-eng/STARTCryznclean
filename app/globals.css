@@ -21,3 +21,13 @@ h1, .heading {
   font-family: var(--font-heading);
   letter-spacing: 0.01em;
 }
+
+.text-primary { color: var(--color-primary); }
+.text-charcoal { color: var(--color-charcoal); }
+.text-offWhite { color: var(--color-offWhite); }
+.bg-primary { background-color: var(--color-primary); }
+.bg-accent { background-color: var(--color-accent); }
+.bg-offWhite { background-color: var(--color-offWhite); }
+
+/* Smooth transitions for motion (AA safe durations) */
+.transition-smooth { transition: all 0.5s ease; }
