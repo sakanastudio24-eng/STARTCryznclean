@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { images as manifest } from "../data/images-manifest";
+import { galleryImages, ImageCategory } from "../data/images-manifest";
 
-const categories = ["All", "Exterior", "Interior", "Ceramic", "Specialty"];
+const categories: ("All" | ImageCategory)[] = ["All", "Exterior", "Interior", "Ceramic", "Specialty"];
 
 export default function GalleryGrid({ preview = false }: { preview?: boolean }) {
-  const [category, setCategory] = useState("All");
-  let filtered = manifest.filter(img => img.file.startsWith("/images/gallery/"));
+  const [category, setCategory] = useState<(typeof categories)[number]>("All");
+  let filtered = galleryImages;
   if (category !== "All") filtered = filtered.filter(img => img.category === category);
   const displayImages = preview ? filtered.slice(0, 2) : filtered;
   return (
@@ -23,10 +23,10 @@ export default function GalleryGrid({ preview = false }: { preview?: boolean }) 
         ))}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {displayImages.map((img, i) => (
+        {displayImages.map((img) => (
           <figure key={img.file} className="rounded-lg shadow bg-white overflow-hidden">
             <img
-              src={img.file}
+              src={"/images/" + img.file}
               alt={img.alt}
               loading="lazy"
               className="w-full h-56 object-cover"
