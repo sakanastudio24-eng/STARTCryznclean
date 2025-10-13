@@ -32,17 +32,15 @@ function HomePage() {
     setMounted(true);
   }, []);
   return (
-    <div className={`flex flex-col min-h-screen bg-offWhite text-charcoal ${mounted ? "fade-in" : "opacity-0"}`}>
+    <div className={`flex flex-col min-h-screen bg-base text-text ${mounted ? "fade-in" : "opacity-0"}`}>
       <HeroSection />
       <div className="flex flex-col gap-12">
         <div className="flex flex-col gap-12">
-          <div className="container mx-auto px-0">
-            <div className="flex flex-col gap-12">
-              <ServicesGrid preview />
-              <GalleryPreview />
-              <CTABand />
-            </div>
+          <div className="Section">
+            <ServicesGrid preview />
           </div>
+          <GalleryPreview />
+          <CTABand />
         </div>
       </div>
       <Footer />
