@@ -1,12 +1,12 @@
-import { images } from "../data/images-manifest";
+import { heroImages } from "../data/images-manifest";
 
-const heroImage = images.find(img => img.file.startsWith("/images/hero/") && img.orientation === "horizontal") || images[0];
+const heroImage = heroImages.find(img => img.orientation === "landscape") || heroImages[0];
 
 export default function HeroSection() {
   return (
     <section className="relative w-full min-h-[400px] flex flex-col items-center justify-center text-offWhite text-center overflow-hidden">
       <img
-        src={heroImage.file}
+        src={"/images/" + heroImage.file}
         alt={heroImage.alt}
         className="absolute inset-0 w-full h-full object-cover z-0"
         style={{ filter: "brightness(0.55)" }}

@@ -29,25 +29,25 @@ function ServicesPageInner() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {group.services.map(service => {
                   const selected = !!items.find(i => i.id === service.id);
-                  const price = (service.price * sizeMultipliers[vehicleSize]).toFixed(2);
+                  const price = (service.basePrice * sizeMultipliers[vehicleSize]).toFixed(2);
                   return (
                     <div key={service.id} className="relative group">
                       <ServiceCard
                         id={service.id}
                         title={service.title}
                         price={+price}
-                        basePrice={service.price}
+                        basePrice={service.basePrice}
                         category={service.category}
                         selected={selected}
                         onClick={() => selected
                           ? remove(service.id)
-                          : add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
+                          : add({ id: service.id, title: service.title, basePrice: service.basePrice, category: service.category, qty: 1 })}
                       />
                       <button
                         className={`absolute top-4 right-4 px-3 py-1 rounded shadow font-bold text-sm transition ${selected ? "bg-primary text-offWhite" : "bg-accent text-charcoal"}`}
                         onClick={() => selected
                           ? remove(service.id)
-                          : add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
+                          : add({ id: service.id, title: service.title, basePrice: service.basePrice, category: service.category, qty: 1 })}
                         aria-label={selected ? `Remove ${service.title}` : `Add ${service.title}`}
                       >
                         {selected ? "Added" : "Add"}

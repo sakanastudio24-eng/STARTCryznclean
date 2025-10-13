@@ -20,15 +20,15 @@ function ServicesPreview() {
             <ServiceCard
               id={service.id}
               title={service.title}
-              price={service.price}
-              basePrice={service.price}
+              price={service.basePrice}
+              basePrice={service.basePrice}
               category={service.category}
               selected={!!items.find(i => i.id === service.id)}
-              onClick={() => add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
+              onClick={() => add({ id: service.id, title: service.title, basePrice: service.basePrice, category: service.category, qty: 1 })}
             />
             <button
               className="absolute top-4 right-4 bg-accent text-charcoal px-3 py-1 rounded shadow font-bold text-sm opacity-90 group-hover:opacity-100 transition"
-              onClick={() => add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
+              onClick={() => add({ id: service.id, title: service.title, basePrice: service.basePrice, category: service.category, qty: 1 })}
               aria-label={`Add ${service.title}`}
             >
               {items.find(i => i.id === service.id) ? "Added" : "Add"}
