@@ -4,41 +4,9 @@ import React, { useState, useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import GalleryGrid from "../components/GalleryGrid";
 import Footer from "../components/Footer";
-import { services } from "../data/services-data";
-import ServiceCard from "../components/ui/ServiceCard";
-import { CartProvider, useCart } from "../components/ui/CartProvider";
+import ServicesGrid from "../components/ServicesGrid";
 
-function ServicesPreview() {
-  const { items, add } = useCart();
-  const previewServices = services.slice(0, 6);
-  return (
-    <section className="w-full py-12 px-4 bg-white fade-in">
-      <h2 className="text-3xl font-bold heading text-primary mb-8 text-center">Popular Services</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {previewServices.map((service) => (
-          <div key={service.id} className="relative group">
-            <ServiceCard
-              id={service.id}
-              title={service.title}
-              price={service.price}
-              basePrice={service.price}
-              category={service.category}
-              selected={!!items.find(i => i.id === service.id)}
-              onClick={() => add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
-            />
-            <button
-              className="absolute top-4 right-4 bg-accent text-charcoal px-3 py-1 rounded shadow font-bold text-sm opacity-90 group-hover:opacity-100 transition"
-              onClick={() => add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
-              aria-label={`Add ${service.title}`}
-            >
-              {items.find(i => i.id === service.id) ? "Added" : "Add"}
-            </button>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
+// Services preview is now handled by ServicesGrid
 
 function GalleryPreview() {
   return (
@@ -70,7 +38,7 @@ function HomePage() {
         <div className="flex flex-col gap-12">
           <div className="container mx-auto px-0">
             <div className="flex flex-col gap-12">
-              <ServicesPreview />
+              <ServicesGrid preview />
               <GalleryPreview />
               <CTABand />
             </div>
@@ -92,9 +60,5 @@ function HomePage() {
 }
 
 export default function Page() {
-  return (
-    <CartProvider>
-      <HomePage />
-    </CartProvider>
-  );
+  return <HomePage />;
 }

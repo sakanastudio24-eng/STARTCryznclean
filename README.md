@@ -1,4 +1,4 @@
-# Cruiz n Clean
+# Cruzn Clean
 
 A modern, accessible Next.js + Tailwind site for mobile detailing bookings.
 

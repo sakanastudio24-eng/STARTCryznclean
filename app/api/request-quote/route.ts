@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
           body: JSON.stringify({
             from: CONTACT_EMAIL,
             to: CONTACT_EMAIL,
-            subject: `Cruiz n Clean Request from ${data.fullName}`,
+            subject: `Cruzn Clean Request from ${data.fullName}`,
             text: body,
           }),
         });
