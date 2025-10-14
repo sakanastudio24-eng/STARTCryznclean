@@ -2,39 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --color-primary: #56070F;
-  --color-accent: #8CC0D6;
-  --color-charcoal: #10150F;
-  --color-offWhite: #F9FAF9;
-  --font-heading: 'Impact', 'Anton', sans-serif;
-  --font-body: 'Inter', 'Poppins', system-ui, sans-serif;
-}
-
-/* Global hygiene */
 html, body { overflow-x: hidden; }
 *, *::before, *::after { box-sizing: border-box; }
 
-body {
-  font-family: var(--font-body);
-  background: var(--color-offWhite);
-  color: var(--color-charcoal);
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
-
-h1, .heading {
-  font-family: var(--font-heading);
-  letter-spacing: 0.01em;
-}
-
-/* Utility tokens mapping to classes used */
-.bg-base { background-color: var(--color-offWhite); }
-.text-text { color: var(--color-charcoal); }
-.bg-primary { background-color: var(--color-primary); }
-.text-primary { color: var(--color-primary); }
-.bg-accent { background-color: var(--color-accent); }
-.text-accent { color: var(--color-accent); }
-.bg-offWhite { background-color: var(--color-offWhite); }
-.text-offWhite { color: var(--color-offWhite); }
-.bg-charcoal { background-color: var(--color-charcoal); }
-.text-charcoal { color: var(--color-charcoal); }
-
