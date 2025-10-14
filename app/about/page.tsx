@@ -3,11 +3,13 @@ import Footer from "../../components/Footer";
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-offWhite text-charcoal">
+    <div className="flex flex-col min-h-screen bg-base text-text">
       <NavigationBar />
-      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-8">
-        <h1 className="text-4xl font-bold heading text-primary mb-6">About Cruiz n Clean</h1>
-        {/* ...content... */}
+      <main className="flex-1 py-12 md:py-16">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl font-bold heading text-primary mb-6">About Cruiz n Clean</h1>
+          {/* ...content... */}
+        </div>
       </main>
       <Footer />
     </div>

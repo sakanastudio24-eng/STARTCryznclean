@@ -21,11 +21,11 @@ function ServicesPreview() {
             <ServiceCard
               id={service.id}
               title={service.title}
-              price={service.price}
-              basePrice={service.price}
+              price={service.basePrice}
+              basePrice={service.basePrice}
               category={service.category}
               selected={!!items.find(i => i.id === service.id)}
-              onClick={() => add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
+              onClick={() => add({ id: service.id, title: service.title, basePrice: service.basePrice, category: service.category, qty: 1 })}
             />
           </div>
         ))}
@@ -45,9 +45,11 @@ function GalleryPreview() {
 
 function CTABand() {
   return (
-    <section className="w-full bg-primary text-offWhite py-10 flex flex-col items-center justify-center fade-in">
-      <h3 className="text-2xl font-bold heading mb-4">Ready for a spotless ride?</h3>
-      <a href="/request" className="bg-accent text-charcoal px-8 py-3 rounded-full font-bold text-lg shadow hover:bg-accent/90 transition">Request a Quote</a>
+    <section className="w-full bg-primary text-offWhite fade-in">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+        <h3 className="text-2xl font-bold heading mb-4">Ready for a spotless ride?</h3>
+        <a href="/request" className="inline-flex items-center justify-center rounded-xl px-6 py-3 bg-accent text-charcoal font-bold text-lg shadow hover:bg-accent/90 transition">Request a Quote</a>
+      </div>
     </section>
   );
 }

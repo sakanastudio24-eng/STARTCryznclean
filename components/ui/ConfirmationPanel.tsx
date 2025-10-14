@@ -6,7 +6,7 @@ interface ConfirmationPanelProps {
 
 export default function ConfirmationPanel({ booked }: ConfirmationPanelProps) {
   return (
-    <div className="bg-white rounded-lg shadow p-8 text-center max-w-lg mx-auto mt-12">
+    <div className="bg-white/90 rounded-xl shadow p-8 text-center max-w-lg mx-auto mt-12">
       <h1 className="text-3xl font-bold heading text-primary mb-4">
         {booked ? "Booking Confirmed!" : "Request Sent!"}
       </h1>
@@ -16,9 +16,9 @@ export default function ConfirmationPanel({ booked }: ConfirmationPanelProps) {
           : "Your request was sent. We'll contact you soon to confirm your booking."}
       </p>
       {booked ? (
-        <a href="https://www.setmore.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-accent text-charcoal px-6 py-2 rounded font-bold hover:bg-accent/80 transition">View on Setmore</a>
+        <a href="https://www.setmore.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-accent text-charcoal px-6 py-3 rounded-xl font-bold hover:bg-accent/80 transition">View on Setmore</a>
       ) : (
-        <a href="/" className="inline-block bg-primary text-offWhite px-6 py-2 rounded font-bold hover:bg-primary/90 transition">Back to Home</a>
+        <a href="/" className="inline-block bg-primary text-offWhite px-6 py-3 rounded-xl font-bold hover:bg-primary/90 transition">Back to Home</a>
       )}
     </div>
   );

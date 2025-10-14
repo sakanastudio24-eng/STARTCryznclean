@@ -10,7 +10,7 @@ export default function ServicesGrid({ preview = false }: { preview?: boolean })
           <div key={service.id} className="bg-white rounded-lg shadow p-6 border border-charcoal/10">
             <h3 className="text-xl font-semibold text-charcoal mb-2">{service.title}</h3>
             <p className="text-base text-charcoal mb-2">Category: {service.category}</p>
-            <p className="text-lg font-bold text-primary">${service.price}</p>
+            <p className="text-lg font-bold text-primary">${service.basePrice}</p>
           </div>
         ))}
       </div>

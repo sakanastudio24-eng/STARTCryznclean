@@ -26,7 +26,9 @@ const vehicleSizes = [
 
 export default function CartDrawer({ items, onRemove, vehicleSize, setVehicleSize, estimate, onContinue, open, onClose }: CartDrawerProps) {
   return (
-    <aside className={`fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 transform transition-transform duration-200 ${open ? "translate-x-0" : "translate-x-full"}`} aria-label="Cart Drawer">
+    <>
+    {open && <div className="fixed inset-0 bg-black/40 z-40" onClick={onClose} aria-hidden="true" />}
+    <aside className={`fixed inset-y-0 right-0 max-w-md w-full bg-white shadow-xl z-50 transform transition-transform duration-200 ${open ? "translate-x-0" : "translate-x-full"}`} aria-label="Cart Drawer">
       <div className="flex justify-between items-center p-4 border-b">
         <h2 className="text-xl font-bold heading text-primary">Your Cart</h2>
         <button onClick={onClose} aria-label="Close cart" className="text-charcoal hover:text-primary text-2xl">×</button>
@@ -60,5 +62,6 @@ export default function CartDrawer({ items, onRemove, vehicleSize, setVehicleSiz
         <button onClick={onContinue} className="w-full mt-4 bg-primary text-offWhite py-2 rounded font-bold hover:bg-primary/90 transition">Continue</button>
       </div>
     </aside>
+    </>
   );
 }

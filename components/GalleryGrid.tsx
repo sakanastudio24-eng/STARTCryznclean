@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { galleryImages, ImageCategory } from "../data/images-manifest";
 
@@ -9,7 +10,8 @@ export default function GalleryGrid({ preview = false }: { preview?: boolean }) 
   if (category !== "All") filtered = filtered.filter(img => img.category === category);
   const displayImages = preview ? filtered.slice(0, 2) : filtered;
   return (
-    <section className="w-full bg-accent/10 py-12 px-4">
+    <section className="w-full">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
       <h2 className="text-3xl font-bold heading text-primary mb-8 text-center">Gallery</h2>
       <div className="flex justify-center gap-2 mb-6 flex-wrap">
         {categories.map(cat => (
@@ -22,18 +24,21 @@ export default function GalleryGrid({ preview = false }: { preview?: boolean }) 
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {displayImages.map((img) => (
-          <figure key={img.file} className="rounded-lg shadow bg-white overflow-hidden">
-            <img
-              src={"/images/" + img.file}
-              alt={img.alt}
-              loading="lazy"
-              className="w-full h-56 object-cover"
-            />
-            <figcaption className="p-2 text-sm text-charcoal text-center">{img.caption}</figcaption>
+          <figure key={img.file} className="group rounded-xl overflow-hidden shadow bg-white/90">
+            <div className="aspect-[4/3] overflow-hidden">
+              <img
+                src={"/images/" + img.file}
+                alt={img.alt}
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <figcaption className="p-2 text-sm text-charcoal/80 text-center">{img.caption}</figcaption>
           </figure>
         ))}
+      </div>
       </div>
     </section>
   );

@@ -1,3 +1,4 @@
+"use client";
 import { heroImages } from "../data/images-manifest";
 
 const heroImage = heroImages[0];

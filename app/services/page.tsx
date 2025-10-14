@@ -18,40 +18,33 @@ function ServicesPageInner() {
   })).filter(group => group.services.length > 0);
 
   return (
-    <div className="flex flex-col min-h-screen bg-offWhite text-charcoal">
+    <div className="flex flex-col min-h-screen bg-base text-text">
       <NavigationBar />
-      <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8">
-        <h1 className="text-4xl font-bold heading text-primary mb-6">Select Services</h1>
-        <div className="flex flex-col gap-10">
+      <main className="flex-1 py-12 md:py-16">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl font-bold heading text-primary mb-8">Select Services</h1>
+        <div className="flex flex-col gap-12">
           {servicesByCategory.map(group => (
             <section key={group.category}>
               <h2 className="text-2xl font-bold heading text-primary mb-4">{group.category}</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {group.services.map(service => {
                   const selected = !!items.find(i => i.id === service.id);
-                  const price = (service.price * sizeMultipliers[vehicleSize]).toFixed(2);
+                  const price = (service.basePrice * sizeMultipliers[vehicleSize]).toFixed(2);
                   return (
                     <div key={service.id} className="relative group">
                       <ServiceCard
                         id={service.id}
                         title={service.title}
                         price={+price}
-                        basePrice={service.price}
+                        basePrice={service.basePrice}
                         category={service.category}
                         selected={selected}
                         onClick={() => selected
                           ? remove(service.id)
-                          : add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
+                          : add({ id: service.id, title: service.title, basePrice: service.basePrice, category: service.category, qty: 1 })}
                       />
-                      <button
-                        className={`absolute top-4 right-4 px-3 py-1 rounded shadow font-bold text-sm transition ${selected ? "bg-primary text-offWhite" : "bg-accent text-charcoal"}`}
-                        onClick={() => selected
-                          ? remove(service.id)
-                          : add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
-                        aria-label={selected ? `Remove ${service.title}` : `Add ${service.title}`}
-                      >
-                        {selected ? "Added" : "Add"}
-                      </button>
+                      
                     </div>
                   );
                 })}
@@ -78,6 +71,7 @@ function ServicesPageInner() {
         >
           View Cart ({count()})
         </button>
+        </div>
         <CartDrawer
           items={items}
           onRemove={remove}
