@@ -16,68 +16,34 @@ export interface GalleryImage {
 
 export const heroImages: GalleryImage[] = [
   {
-    file: "hero/hero1.jpg",
-    alt: "Clean car exterior with water beading",
-    caption: "Ceramic coating in action",
-    category: "Ceramic",
+    file: "hero/placeholder.svg",
+    alt: "Cruzn Clean hero image",
+    caption: "Cruzn Clean",
+    category: "Exterior",
     orientation: "landscape",
   },
-  {
-    file: "hero/hero2.jpg",
-    alt: "Interior detailing with vacuum",
-    caption: "Interior deep clean",
-    category: "Interior",
-    orientation: "landscape",
-  },
-  // Add more hero images as needed
 ];
 
 export const galleryImages: GalleryImage[] = [
   {
-    file: "gallery/exterior1.jpg",
-    alt: "Before and after exterior wash",
-    caption: "Exterior transformation",
+    file: "gallery/placeholder.svg",
+    alt: "Exterior detail result",
+    caption: "Exterior detailing",
     category: "Exterior",
     orientation: "landscape",
-    pairId: "ex1",
   },
   {
-    file: "gallery/exterior1b.jpg",
-    alt: "After exterior wash",
-    caption: "After wash",
-    category: "Exterior",
+    file: "gallery/placeholder.svg",
+    alt: "Interior detailing",
+    caption: "Interior detailing",
+    category: "Interior",
     orientation: "landscape",
-    pairId: "ex1",
   },
   {
-    file: "gallery/interior1.jpg",
-    alt: "Interior before cleaning",
-    caption: "Interior before",
-    category: "Interior",
-    orientation: "portrait",
-    pairId: "in1",
-  },
-  {
-    file: "gallery/interior1b.jpg",
-    alt: "Interior after cleaning",
-    caption: "Interior after",
-    category: "Interior",
-    orientation: "portrait",
-    pairId: "in1",
-  },
-  {
-    file: "gallery/ceramic1.jpg",
-    alt: "Ceramic coating water beading",
-    caption: "Ceramic beading",
+    file: "gallery/placeholder.svg",
+    alt: "Ceramic coating finish",
+    caption: "Ceramic coating",
     category: "Ceramic",
     orientation: "landscape",
   },
-  {
-    file: "gallery/specialty1.jpg",
-    alt: "Pet hair removal",
-    caption: "Specialty: Pet hair removal",
-    category: "Specialty",
-    orientation: "square",
-  },
-  // Add more images as needed
 ];
