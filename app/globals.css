@@ -1,17 +1,6 @@
-/*
-  The following Tailwind directives require processing by Tailwind CSS.
-  Make sure your build process includes Tailwind (e.g., via PostCSS).
-*/
-/*
-  The following Tailwind directives require processing by Tailwind CSS.
-  Make sure your build process includes Tailwind (e.g., via PostCSS).
-  If you see an error like "Unknown at rule @tailwind", ensure Tailwind is set up and this file is processed by Tailwind.
-*/
-/* @tailwind base; */
-/* @tailwind components; */
-/* @tailwind utilities; */
-```
-```
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 html, body { overflow-x: hidden; }
 *, *::before, *::after { box-sizing: border-box; }
