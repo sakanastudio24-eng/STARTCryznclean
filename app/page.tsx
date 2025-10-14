@@ -12,11 +12,12 @@ function ServicesPreview() {
   const { items, add } = useCart();
   const previewServices = services.slice(0, 6);
   return (
-    <section className="w-full py-12 px-4 bg-white fade-in">
-      <h2 className="text-3xl font-bold heading text-primary mb-8 text-center">Popular Services</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+    <section className="w-full fade-in">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-3xl font-bold heading text-primary mb-8 text-center">Popular Services</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {previewServices.map((service) => (
-          <div key={service.id} className="relative group">
+          <div key={service.id} className="relative">
             <ServiceCard
               id={service.id}
               title={service.title}
@@ -26,15 +27,9 @@ function ServicesPreview() {
               selected={!!items.find(i => i.id === service.id)}
               onClick={() => add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
             />
-            <button
-              className="absolute top-4 right-4 bg-accent text-charcoal px-3 py-1 rounded shadow font-bold text-sm opacity-90 group-hover:opacity-100 transition"
-              onClick={() => add({ id: service.id, title: service.title, basePrice: service.price, category: service.category, qty: 1 })}
-              aria-label={`Add ${service.title}`}
-            >
-              {items.find(i => i.id === service.id) ? "Added" : "Add"}
-            </button>
           </div>
         ))}
+        </div>
       </div>
     </section>
   );
@@ -66,16 +61,10 @@ function HomePage() {
   return (
     <div className={`flex flex-col min-h-screen bg-offWhite text-charcoal ${mounted ? "fade-in" : "opacity-0"}`}>
       <HeroSection />
-      <div className="flex flex-col gap-12">
-        <div className="flex flex-col gap-12">
-          <div className="container mx-auto px-0">
-            <div className="flex flex-col gap-12">
-              <ServicesPreview />
-              <GalleryPreview />
-              <CTABand />
-            </div>
-          </div>
-        </div>
+      <div className="flex flex-col gap-0">
+        <ServicesPreview />
+        <GalleryPreview />
+        <CTABand />
       </div>
       <Footer />
       <style>{`

@@ -12,19 +12,21 @@ interface ServiceCardProps {
 
 export default function ServiceCard({ id, title, price, basePrice, category, selected, onClick }: ServiceCardProps) {
   return (
-    <button
-      className={`w-full text-left rounded-lg border-2 p-4 mb-2 shadow transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-accent/70 ${selected ? "border-primary bg-primary/10" : "border-charcoal/10 bg-white"}`}
-      aria-pressed={selected}
-      onClick={onClick}
-      type="button"
-    >
-      <div className="flex justify-between items-center">
-        <div>
-          <h3 className="text-xl font-bold heading text-primary mb-1">{title}</h3>
-          <p className="text-sm text-charcoal mb-1">{category}</p>
-        </div>
-  <span className="text-lg font-bold text-primary">${price}</span>
+    <div
+      className={`group w-full rounded-xl bg-white/90 border border-black/5 shadow-sm hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 hover:scale-[1.02] p-5 flex flex-col`}>
+      <div className="flex-1">
+        <h3 className="text-lg md:text-xl font-bold heading text-primary">{title}</h3>
+        <div className="mt-1 text-sm text-charcoal/70">{category}</div>
+        <div className="mt-3 text-2xl font-extrabold text-primary">${price}</div>
       </div>
-    </button>
+      <button
+        className={`mt-5 inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-accent/60 ${selected ? "bg-primary text-offWhite" : "border-2 border-primary text-primary hover:bg-primary/5"}`}
+        aria-pressed={selected}
+        onClick={onClick}
+        type="button"
+      >
+        {selected ? "Added" : "Add"}
+      </button>
+    </div>
   );
 }
