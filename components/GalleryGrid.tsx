@@ -25,8 +25,8 @@ export default function GalleryGrid({ preview = false }: { preview?: boolean }) 
         ))}
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {displayImages.map((img) => (
-          <figure key={img.file} className="group rounded-xl overflow-hidden shadow bg-white/90">
+        {displayImages.map((img, i) => (
+          <figure key={img.file} className="group rounded-xl overflow-hidden shadow bg-white/90 fade-up" style={{ animationDelay: `${i * 60}ms` }}>
             <div className="aspect-[4/3] overflow-hidden">
               <img
                 src={"/images/" + img.file}

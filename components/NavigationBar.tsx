@@ -6,7 +6,7 @@ import { useCart } from "./cart/CartProvider";
 export default function NavigationBar() {
   const { count } = useCart();
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur bg-offWhite/80 border-b border-black/5">
+    <nav className="sticky top-0 z-50 backdrop-blur bg-base/70 border-b border-white/10">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold text-primary heading">Cruiz n Clean</Link>
         <div className="hidden md:flex items-center gap-6 text-base font-medium">
