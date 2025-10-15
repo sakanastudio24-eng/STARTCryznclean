@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useCart } from "./ui/CartProvider";
 import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function NavigationBar() {
   const { count } = useCart();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -48,10 +50,10 @@ export default function NavigationBar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex justify-between items-center">
         <Link href="/" className="text-2xl font-semibold tracking-tight">Cruiz n Clean</Link>
         <div className="hidden md:flex items-center gap-6 text-base font-medium">
-          <Link href="/services">Services</Link>
-          <Link href="/gallery">Gallery</Link>
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
+          <Link href="/services" aria-current={pathname === "/services" ? "page" : undefined} className={pathname === "/services" ? "font-semibold" : undefined}>Services</Link>
+          <Link href="/gallery" aria-current={pathname === "/gallery" ? "page" : undefined} className={pathname === "/gallery" ? "font-semibold" : undefined}>Gallery</Link>
+          <Link href="/about" aria-current={pathname === "/about" ? "page" : undefined} className={pathname === "/about" ? "font-semibold" : undefined}>About</Link>
+          <Link href="/contact" aria-current={pathname === "/contact" ? "page" : undefined} className={pathname === "/contact" ? "font-semibold" : undefined}>Contact</Link>
           <Link href="/cart" className="relative inline-block ml-2">
             <span className="sr-only">View cart</span>
             <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="inline align-middle"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A1 1 0 007.5 17h9a1 1 0 00.85-1.53L17 13M7 13V6a1 1 0 011-1h6a1 1 0 011 1v7" /></svg>
