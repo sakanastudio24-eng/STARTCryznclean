@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCart } from "./cart/CartProvider";
+import { useCart } from "./ui/CartProvider";
 import React, { useEffect, useRef, useState } from "react";
 
 export default function NavigationBar() {
