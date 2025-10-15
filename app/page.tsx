@@ -3,54 +3,56 @@
 import React, { useState, useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import GalleryGrid from "../components/GalleryGrid";
-import Footer from "../components/Footer";
 import { services } from "../data/services-data";
 import ServiceCard from "../components/ui/ServiceCard";
-import { CartProvider, useCart } from "../components/ui/CartProvider";
+import Section from "../components/layout/Section";
+import Heading from "../components/ui/Heading";
+import Button from "../components/ui/Button";
+import { useCart } from "../components/ui/CartProvider";
 
 function ServicesPreview() {
   const { items, add } = useCart();
   const previewServices = services.slice(0, 6);
   return (
-    <section className="w-full fade-in">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 className="text-3xl font-bold heading text-primary mb-8 text-center">Popular Services</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {previewServices.map((service) => (
-          <div key={service.id} className="relative">
-            <ServiceCard
-              id={service.id}
-              title={service.title}
-              price={service.basePrice}
-              basePrice={service.basePrice}
-              category={service.category}
-              selected={!!items.find(i => i.id === service.id)}
-              onClick={() => add({ id: service.id, title: service.title, basePrice: service.basePrice, category: service.category, qty: 1 })}
-            />
-          </div>
-        ))}
+    <Section>
+      <Heading level={2} className="mb-8 text-center">Popular Services</Heading>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {previewServices.map((service) => (
+        <div key={service.id} className="relative">
+          <ServiceCard
+            id={service.id}
+            title={service.title}
+            price={service.basePrice}
+            basePrice={service.basePrice}
+            category={service.category}
+            selected={!!items.find(i => i.id === service.id)}
+            onClick={() => add({ id: service.id, title: service.title, basePrice: service.basePrice, category: service.category, qty: 1 })}
+          />
         </div>
+      ))}
       </div>
-    </section>
+    </Section>
   );
 }
 
 function GalleryPreview() {
   return (
-    <div className="fade-in">
+    <Section>
       <GalleryGrid preview />
-    </div>
+    </Section>
   );
 }
 
 function CTABand() {
   return (
-    <section className="w-full bg-primary text-offWhite fade-in">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-        <h3 className="text-2xl font-bold heading mb-4">Ready for a spotless ride?</h3>
-        <a href="/request" className="inline-flex items-center justify-center rounded-xl px-6 py-3 bg-accent text-charcoal font-bold text-lg shadow hover:bg-accent/90 transition">Request a Quote</a>
+    <Section noContainer className="w-full bg-primary text-offWhite fade-in">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h3 className="text-2xl font-semibold tracking-tight mb-4">Ready for a spotless ride?</h3>
+        <Button asChild variant="secondary" className="text-charcoal text-lg font-semibold">
+          <a href="/request">Request a Quote</a>
+        </Button>
       </div>
-    </section>
+    </Section>
   );
 }
 
@@ -61,14 +63,11 @@ function HomePage() {
     setMounted(true);
   }, []);
   return (
-    <div className={`flex flex-col min-h-screen bg-offWhite text-charcoal ${mounted ? "fade-in" : "opacity-0"}`}>
+    <div className={`${mounted ? "fade-in" : "opacity-0"}`}>
       <HeroSection />
-      <div className="flex flex-col gap-0">
-        <ServicesPreview />
-        <GalleryPreview />
-        <CTABand />
-      </div>
-      <Footer />
+      <ServicesPreview />
+      <GalleryPreview />
+      <CTABand />
       <style>{`
         .fade-in {
           opacity: 1;
@@ -83,9 +82,5 @@ function HomePage() {
 }
 
 export default function Page() {
-  return (
-    <CartProvider>
-      <HomePage />
-    </CartProvider>
-  );
+  return <HomePage />;
 }

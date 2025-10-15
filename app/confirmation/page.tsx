@@ -2,8 +2,7 @@
 import { useState } from "react";
 import StepHeader from "../../components/ui/StepHeader";
 import ConfirmationPanel from "../../components/ui/ConfirmationPanel";
-import NavigationBar from "../../components/NavigationBar";
-import Footer from "../../components/Footer";
+import Section from "../../components/layout/Section";
 
 const steps = ["Select Services", "Request Details", "Book/Confirm"];
 
@@ -11,19 +10,13 @@ export default function ConfirmationPage() {
   // Placeholder: toggle booked/request sent state
   const [booked, setBooked] = useState(false);
   return (
-    <div className="flex flex-col min-h-screen bg-base text-text">
-      <NavigationBar />
-      <main className="flex-1 py-12 md:py-16">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <StepHeader step={2} steps={steps} />
-        <ConfirmationPanel booked={booked} />
-        <div className="flex justify-center mt-8 gap-4">
-          <button className="bg-accent text-charcoal px-6 py-2 rounded font-bold hover:bg-accent/80 transition" onClick={() => setBooked(false)}>Request Sent</button>
-          <button className="bg-primary text-offWhite px-6 py-2 rounded font-bold hover:bg-primary/90 transition" onClick={() => setBooked(true)}>Booked</button>
-        </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
+    <Section>
+      <StepHeader step={2} steps={steps} />
+      <ConfirmationPanel booked={booked} />
+      <div className="flex justify-center mt-8 gap-4">
+        <button className="bg-accent text-charcoal px-6 py-2 rounded font-bold hover:bg-accent/80 transition" onClick={() => setBooked(false)}>Request Sent</button>
+        <button className="bg-primary text-offWhite px-6 py-2 rounded font-bold hover:bg-primary/90 transition" onClick={() => setBooked(true)}>Booked</button>
+      </div>
+    </Section>
   );
 }

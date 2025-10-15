@@ -5,6 +5,39 @@
 html, body { overflow-x: hidden; }
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Base typography rhythm */
+@layer base {
+  :root {
+    --color-foreground: 17 24 39; /* slate-900 */
+    --color-muted-foreground: 71 85 105; /* slate-600 */
+    --color-subtle: 226 232 240; /* slate-200 */
+    --color-base: 255 255 255; /* white */
+  }
+
+  .dark {
+    --color-foreground: 241 245 249; /* slate-100 */
+    --color-muted-foreground: 148 163 184; /* slate-400 */
+    --color-subtle: 51 65 85; /* slate-700 */
+    --color-base: 2 6 23; /* slate-950 */
+  }
+
+  html { color-scheme: light dark; }
+  body {
+    @apply bg-[rgb(var(--color-base))] text-[rgb(var(--color-foreground))];
+  }
+
+  /* Link and focus styles */
+  a { @apply underline-offset-4; }
+  a:hover { @apply underline; }
+  :focus-visible { @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-[rgb(var(--color-base))]; }
+}
+
+@layer utilities {
+  .text-foreground { color: rgb(var(--color-foreground)); }
+  .text-muted-foreground { color: rgb(var(--color-muted-foreground)); }
+  .border-subtle { border-color: rgb(var(--color-subtle)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: .01ms !important;
