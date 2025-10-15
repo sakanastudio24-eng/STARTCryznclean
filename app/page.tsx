@@ -3,10 +3,9 @@
 import React, { useState, useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import GalleryGrid from "../components/GalleryGrid";
-import Footer from "../components/Footer";
 import { services } from "../data/services-data";
 import ServiceCard from "../components/ui/ServiceCard";
-import { CartProvider, useCart } from "../components/ui/CartProvider";
+import { useCart } from "../components/cart/CartProvider";
 
 function ServicesPreview() {
   const { items, add } = useCart();
@@ -68,7 +67,6 @@ function HomePage() {
         <GalleryPreview />
         <CTABand />
       </div>
-      <Footer />
       <style>{`
         .fade-in {
           opacity: 1;
@@ -83,9 +81,5 @@ function HomePage() {
 }
 
 export default function Page() {
-  return (
-    <CartProvider>
-      <HomePage />
-    </CartProvider>
-  );
+  return <HomePage />;
 }
