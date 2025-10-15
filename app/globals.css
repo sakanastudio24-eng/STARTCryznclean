@@ -12,3 +12,8 @@ html, body { overflow-x: hidden; }
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Focus visibility outline to ensure keyboard users can see focus */
+:focus-visible {
+  outline: none;
+}
