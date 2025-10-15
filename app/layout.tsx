@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 import ClientProviders from '../components/providers/ClientProviders'
 import NavigationBar from '../components/NavigationBar'
 import Footer from '../components/Footer'
-import Container from '../components/ui/Container'
 
 export const metadata: Metadata = {
   title: {
@@ -25,9 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <header>
               <NavigationBar />
             </header>
-            <main id="content" className="flex-1">
-              <Container>{children}</Container>
-            </main>
+            <main id="content" className="flex-1">{children}</main>
             <Footer />
           </div>
         </ClientProviders>
