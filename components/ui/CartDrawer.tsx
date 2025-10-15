@@ -1,6 +1,6 @@
 import React from "react";
 
-import type { CartItem as CartItemType } from "./CartProvider";
+import type { CartItem as CartItemType } from "../cart/CartProvider";
 
 interface CartItem extends CartItemType {
   // id, title, basePrice, category, qty
@@ -31,17 +31,17 @@ export default function CartDrawer({ items, onRemove, vehicleSize, setVehicleSiz
     <aside className={`fixed inset-y-0 right-0 max-w-md w-full bg-white shadow-xl z-50 transform transition-transform duration-200 ${open ? "translate-x-0" : "translate-x-full"}`} aria-label="Cart Drawer">
       <div className="flex justify-between items-center p-4 border-b">
         <h2 className="text-xl font-bold heading text-primary">Your Cart</h2>
-        <button onClick={onClose} aria-label="Close cart" className="text-charcoal hover:text-primary text-2xl">×</button>
+        <button onClick={onClose} aria-label="Close cart" className="text-neutral-900 hover:text-primary text-2xl">×</button>
       </div>
       <div className="p-4 flex-1 flex flex-col gap-2 overflow-y-auto">
         {items.length === 0 ? (
-          <p className="text-charcoal/60">No services selected.</p>
+          <p className="text-neutral-700">No services selected.</p>
         ) : (
           items.map(item => (
             <div key={item.id} className="flex justify-between items-center border-b py-2">
               <div>
-                <span className="font-medium text-charcoal">{item.title}</span>
-                <span className="block text-xs text-charcoal/60">${item.basePrice}</span>
+                <span className="font-medium text-neutral-900">{item.title}</span>
+                <span className="block text-xs text-neutral-700">${item.basePrice}</span>
               </div>
               <button onClick={() => onRemove(item.id)} aria-label={`Remove ${item.title}`} className="text-red-600 hover:text-primary text-lg font-bold">×</button>
             </div>
