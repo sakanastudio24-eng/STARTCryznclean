@@ -3,8 +3,6 @@ import { useState } from "react";
 import { services } from "../../data/services-data";
 import ServiceCard from "../../components/ui/ServiceCard";
 import CartDrawer from "../../components/ui/CartDrawer";
-import NavigationBar from "../../components/NavigationBar";
-import Footer from "../../components/Footer";
 import { CartProvider, useCart } from "../../components/ui/CartProvider";
 
 function ServicesPageInner() {
@@ -19,7 +17,6 @@ function ServicesPageInner() {
 
   return (
     <div className="flex flex-col min-h-screen bg-base text-text">
-      <NavigationBar />
       <main className="flex-1 py-12 md:py-16">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-4xl font-bold heading text-primary mb-8">Select Services</h1>
@@ -83,7 +80,6 @@ function ServicesPageInner() {
           onClose={() => setDrawerOpen(false)}
         />
       </main>
-      <Footer />
     </div>
   );
 }
