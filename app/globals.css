@@ -12,3 +12,45 @@ html, body { overflow-x: hidden; }
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Typography and color utilities */
+:root {
+  --brand: #FF6A3D;
+}
+
+.text-muted-foreground { @apply text-zinc-600 dark:text-zinc-400; }
+.border-subtle { @apply border-zinc-200 dark:border-zinc-800; }
+
+/* Base body text */
+body { @apply text-base leading-7 text-zinc-800 dark:text-zinc-100 bg-white dark:bg-black; }
+
+/* Link styles */
+a { @apply underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-700; }
+a:hover { @apply underline; }
+
+/* Skip link */
+.skip-link {
+  @apply sr-only focus:not-sr-only fixed top-2 left-2 z-[100] rounded-md bg-black text-white dark:bg-white dark:text-black px-3 py-2 shadow;
+}
+
+@layer base {
+  body {
+    @apply text-base leading-7;
+  }
+
+  /* Global link style */
+  a {
+    @apply underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600;
+  }
+}
+
+@layer components {
+  /* Utility tokens */
+  .text-muted-foreground { @apply text-zinc-600 dark:text-zinc-400; }
+  .border-subtle { @apply border-zinc-200 dark:border-zinc-800; }
+
+  /* Skip link */
+  .skip-link {
+    @apply sr-only focus:not-sr-only fixed top-2 left-2 z-[100] rounded-md bg-white px-3 py-2 text-sm font-medium text-zinc-900 shadow focus-visible:ring-2 focus-visible:ring-zinc-400;
+  }
+}

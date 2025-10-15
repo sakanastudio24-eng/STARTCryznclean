@@ -3,9 +3,9 @@ import { useState } from "react";
 import { services } from "../../data/services-data";
 import ServiceCard from "../../components/ui/ServiceCard";
 import CartDrawer from "../../components/ui/CartDrawer";
-import NavigationBar from "../../components/NavigationBar";
-import Footer from "../../components/Footer";
 import { CartProvider, useCart } from "../../components/ui/CartProvider";
+import Section from "../../components/ui/Section";
+import Heading from "../../components/ui/Heading";
 
 function ServicesPageInner() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -19,14 +19,13 @@ function ServicesPageInner() {
 
   return (
     <div className="flex flex-col min-h-screen bg-base text-text">
-      <NavigationBar />
-      <main className="flex-1 py-12 md:py-16">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold heading text-primary mb-8">Select Services</h1>
-        <div className="flex flex-col gap-12">
+      <main id="content" className="flex-1">
+        <Section>
+          <Heading level={1} className="text-primary mb-8">Select Services</Heading>
+          <div className="flex flex-col gap-12">
           {servicesByCategory.map(group => (
             <section key={group.category}>
-              <h2 className="text-2xl font-bold heading text-primary mb-4">{group.category}</h2>
+              <Heading level={2} className="text-primary mb-4">{group.category}</Heading>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {group.services.map(service => {
                   const selected = !!items.find(i => i.id === service.id);
@@ -51,8 +50,8 @@ function ServicesPageInner() {
               </div>
             </section>
           ))}
-        </div>
-        <div className="flex flex-col sm:flex-row items-center gap-4 mt-10">
+          </div>
+          <div className="flex flex-col sm:flex-row items-center gap-4 mt-10">
           <label className="font-medium text-charcoal">Vehicle Size:</label>
           <select
             value={vehicleSize}
@@ -63,7 +62,7 @@ function ServicesPageInner() {
             <option value="smallSUV">Small SUV</option>
             <option value="largeSUVTruck">Large SUV/Truck</option>
           </select>
-        </div>
+          </div>
         <button
           className="fixed bottom-6 right-6 bg-primary text-offWhite px-6 py-3 rounded-full shadow-lg font-bold text-lg hover:bg-primary/90 transition"
           onClick={() => setDrawerOpen(true)}
@@ -71,7 +70,7 @@ function ServicesPageInner() {
         >
           View Cart ({count()})
         </button>
-        </div>
+        </Section>
         <CartDrawer
           items={items}
           onRemove={remove}
@@ -83,7 +82,6 @@ function ServicesPageInner() {
           onClose={() => setDrawerOpen(false)}
         />
       </main>
-      <Footer />
     </div>
   );
 }
