@@ -21,6 +21,10 @@
       {
         "name": "next"
       }
+    ],
+    "types": [
+      "react",
+      "react-dom"
     ]
   },
   "include": [

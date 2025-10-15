@@ -1,8 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import ClientProviders from '../components/providers/ClientProviders'
-import Header from "../components/site/Header";  // adjust path if needed
-import Footer from "../components/site/Footer";
 
 export const metadata: Metadata = {
   title: 'Cruiz n Clean',
@@ -16,12 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <ClientProviders>{children}</ClientProviders>
         </div>
-<body className="min-h-dvh">
-  <a href="#content" className="sr-only focus:not-sr-only">Skip to content</a>
-  <Header />
-  <main id="content">{children}</main>
-  <Footer />
-</body>      </body>
+      </body>
     </html>
   )
 }
