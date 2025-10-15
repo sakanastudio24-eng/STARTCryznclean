@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { useCart } from "../cart/CartProvider";
+import { useCart } from "../ui/CartProvider";
 
 const VEHICLE_SIZES = [
   { label: "Car", value: "car" },
@@ -14,7 +14,7 @@ function isValidEmail(email: string) {
 }
 
 export default function RequestClient() {
-  const { items, size, setSize } = useCart();
+  const { items, vehicleSize, setVehicleSize } = useCart();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -49,7 +49,7 @@ export default function RequestClient() {
   const isValid =
     fullName.trim() &&
     isValidEmail(email) &&
-    size &&
+    vehicleSize &&
     items.length > 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,7 +64,7 @@ export default function RequestClient() {
       fullName,
       email,
       phone,
-      vehicleSize: size,
+      vehicleSize,
       make,
       model,
       year,
@@ -164,7 +164,7 @@ export default function RequestClient() {
       </div>
       <div>
         <label className="block text-sm font-medium text-charcoal mb-1">Vehicle Size <span className="text-red-600">*</span></label>
-        <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" value={size} onChange={e => setSize(e.target.value as any)} required>
+        <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" value={vehicleSize} onChange={e => setVehicleSize(e.target.value as any)} required>
           {VEHICLE_SIZES.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
