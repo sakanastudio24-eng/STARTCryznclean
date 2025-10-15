@@ -1,12 +1,13 @@
 
 "use client";
 import React, { useState, useEffect } from "react";
+import NavigationBar from "../components/NavigationBar";
 import HeroSection from "../components/HeroSection";
 import GalleryGrid from "../components/GalleryGrid";
 import Footer from "../components/Footer";
 import { services } from "../data/services-data";
 import ServiceCard from "../components/ui/ServiceCard";
-import { CartProvider, useCart } from "../components/ui/CartProvider";
+import { useCart } from "../components/ui/CartProvider";
 
 function ServicesPreview() {
   const { items, add } = useCart();
@@ -62,12 +63,15 @@ function HomePage() {
   }, []);
   return (
     <div className={`flex flex-col min-h-screen bg-offWhite text-charcoal ${mounted ? "fade-in" : "opacity-0"}`}>
-      <HeroSection />
-      <div className="flex flex-col gap-0">
-        <ServicesPreview />
-        <GalleryPreview />
-        <CTABand />
-      </div>
+      <NavigationBar />
+      <main id="content" className="flex-1" aria-label="Main content">
+        <HeroSection />
+        <div className="flex flex-col gap-0">
+          <ServicesPreview />
+          <GalleryPreview />
+          <CTABand />
+        </div>
+      </main>
       <Footer />
       <style>{`
         .fade-in {
@@ -83,9 +87,5 @@ function HomePage() {
 }
 
 export default function Page() {
-  return (
-    <CartProvider>
-      <HomePage />
-    </CartProvider>
-  );
+  return <HomePage />;
 }

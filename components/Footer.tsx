@@ -8,7 +8,7 @@ export default function Footer() {
     <footer aria-label="Site Footer" className="mt-12 bg-base text-text border-t border-white/10">
       {/* Top: link grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div>
             <h2 className="text-sm font-semibold tracking-wide text-text/80 mb-3">Company</h2>
             <ul className="space-y-2 text-sm">

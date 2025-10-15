@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { useCart } from "../cart/CartProvider";
+import { useCart } from "../ui/CartProvider";
 
 const VEHICLE_SIZES = [
   { label: "Car", value: "car" },

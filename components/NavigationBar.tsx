@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
-import { useCart } from "./cart/CartProvider";
+import { useCart } from "./ui/CartProvider";
 
 export default function NavigationBar() {
   const { count } = useCart();

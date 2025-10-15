@@ -5,6 +5,19 @@
 html, body { overflow-x: hidden; }
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Typography rhythm */
+:root {
+  --nav-height: 70px;
+}
+
+body {
+  font-family: theme('fontFamily.body');
+}
+
+.heading {
+  font-family: theme('fontFamily.heading');
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: .01ms !important;
@@ -13,7 +26,15 @@ html, body { overflow-x: hidden; }
   }
 }
 
-/* Focus visibility outline to ensure keyboard users can see focus */
+/* Focus visible outlines for accessibility */
 :focus-visible {
-  outline: none;
+  outline: 2px solid theme('colors.accent');
+  outline-offset: 2px;
+}
+
+/* Focus visibility outline to ensure keyboard users can see focus */
+/* Use focus-visible ring via Tailwind classes; ensure a visible default fallback */
+:focus-visible {
+  outline: 2px solid hsl(200 80% 60% / 0.6);
+  outline-offset: 2px;
 }

@@ -13,7 +13,7 @@ export default function ConfirmationPage() {
   return (
     <div className="flex flex-col min-h-screen bg-base text-text">
       <NavigationBar />
-      <main className="flex-1 py-12 md:py-16">
+      <main id="content" className="flex-1 py-12 md:py-16">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
         <StepHeader step={2} steps={steps} />
         <ConfirmationPanel booked={booked} />

@@ -5,7 +5,7 @@ import ServiceCard from "../../components/ui/ServiceCard";
 import CartDrawer from "../../components/ui/CartDrawer";
 import NavigationBar from "../../components/NavigationBar";
 import Footer from "../../components/Footer";
-import { CartProvider, useCart } from "../../components/ui/CartProvider";
+import { useCart } from "../../components/ui/CartProvider";
 
 function ServicesPageInner() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -89,9 +89,5 @@ function ServicesPageInner() {
 }
 
 export default function ServicesPage() {
-  return (
-    <CartProvider>
-      <ServicesPageInner />
-    </CartProvider>
-  );
+  return <ServicesPageInner />;
 }

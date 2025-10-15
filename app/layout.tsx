@@ -19,10 +19,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
 
-        <div id="content" className="block">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <ClientProviders>{children}</ClientProviders>
-          </div>
+        <div className="block">
+          <ClientProviders>{children}</ClientProviders>
         </div>
       </body>
     </html>
