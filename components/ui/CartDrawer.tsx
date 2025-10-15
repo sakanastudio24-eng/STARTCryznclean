@@ -1,6 +1,6 @@
 import React from "react";
 
-import type { CartItem as CartItemType } from "./CartProvider";
+import type { CartItem as CartItemType } from "../cart/CartProvider";
 
 interface CartItem extends CartItemType {
   // id, title, basePrice, category, qty
