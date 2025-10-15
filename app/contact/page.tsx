@@ -1,17 +1,35 @@
-import NavigationBar from "../../components/NavigationBar";
-import Footer from "../../components/Footer";
+import Section from "../../components/Section";
+import Heading from "../../components/Heading";
+import { Button } from "../../components/ui/Button";
 
 export default function ContactPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-base text-text">
-      <NavigationBar />
-      <main className="flex-1 py-12 md:py-16">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold heading text-primary mb-6">Contact Us</h1>
-          {/* ...content... */}
+    <main>
+      <Section>
+        <Heading level={1} className="mb-6">Contact Us</Heading>
+        <div className="grid gap-10 md:grid-cols-2">
+          <form className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium">Name</label>
+              <input className="mt-1 w-full border border-subtle rounded-md px-3 py-2" placeholder="Your name" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Email</label>
+              <input type="email" className="mt-1 w-full border border-subtle rounded-md px-3 py-2" placeholder="you@email.com" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Message</label>
+              <textarea className="mt-1 w-full border border-subtle rounded-md px-3 py-2" rows={4} placeholder="How can we help?" />
+            </div>
+            <Button type="submit">Send</Button>
+          </form>
+          <div className="space-y-3 text-sm text-muted-foreground">
+            <p>Email: <a href="mailto:info@cruiznclean.com">info@cruiznclean.com</a></p>
+            <p>Phone: <a href="tel:555-555-5555">(555) 555-5555</a></p>
+            <p>Hours: Mon–Sat, 8am–6pm</p>
+          </div>
         </div>
-      </main>
-      <Footer />
-    </div>
+      </Section>
+    </main>
   );
 }

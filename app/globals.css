@@ -5,6 +5,28 @@
 html, body { overflow-x: hidden; }
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Global typography baseline */
+@layer base {
+  html { @apply antialiased; }
+  body { @apply text-base leading-7 text-muted-foreground bg-white dark:bg-zinc-950; }
+  h1 { @apply text-4xl sm:text-5xl font-semibold tracking-tight; }
+  h2 { @apply text-3xl sm:text-4xl font-semibold; }
+  h3 { @apply text-2xl font-semibold; }
+}
+
+/* Utilities mapped per brief */
+@layer utilities {
+  .text-muted-foreground { @apply text-zinc-600 dark:text-zinc-400; }
+  .border-subtle { @apply border-zinc-200 dark:border-zinc-800; }
+}
+
+/* Global link and focus styles */
+@layer base {
+  a { @apply underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950; }
+  :root { --header-height: 64px; }
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: .01ms !important;

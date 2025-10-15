@@ -10,9 +10,9 @@ export default function GalleryGrid({ preview = false }: { preview?: boolean }) 
   if (category !== "All") filtered = filtered.filter(img => img.category === category);
   const displayImages = preview ? filtered.slice(0, 2) : filtered;
   return (
-    <section className="w-full">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-      <h2 className="text-3xl font-bold heading text-primary mb-8 text-center">Gallery</h2>
+    <section className="py-16 sm:py-20 lg:py-24 w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 className="text-3xl sm:text-4xl font-semibold mb-8 text-center">Gallery</h2>
       <div className="flex justify-center gap-2 mb-6 flex-wrap">
         {categories.map(cat => (
           <button

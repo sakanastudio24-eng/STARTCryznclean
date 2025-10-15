@@ -97,19 +97,19 @@ export default function RequestClient() {
 
   if (success) {
     return (
-      <div className="bg-white rounded-lg shadow p-8 text-center mt-8">
-        <h2 className="text-2xl font-bold heading text-primary mb-4">Request Sent!</h2>
-        <p className="mb-6">Thank you for your request. You can now book your appointment or return home.</p>
+      <div className="bg-white/90 dark:bg-zinc-900/60 border border-subtle rounded-xl shadow p-8 text-center mt-8">
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-4">Request Sent!</h2>
+        <p className="mb-6 text-muted-foreground">Thank you for your request. You can now book your appointment or return home.</p>
         <a
           href={process.env.NEXT_PUBLIC_SETMORE_BOOKING_URL || "https://setmore.com"}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block bg-accent text-charcoal px-6 py-2 rounded font-bold hover:bg-accent/80 transition mb-2"
+          className="inline-block bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 px-6 py-2 rounded-md font-medium hover:opacity-90 transition mb-2"
         >
           Book with Setmore
         </a>
         <br />
-        <a href="/confirmation?appointmentStarted=1" className="inline-block bg-primary text-offWhite px-6 py-2 rounded font-bold hover:bg-primary/90 transition">Go to Confirmation</a>
+        <a href="/confirmation?appointmentStarted=1" className="inline-block bg-brand text-white px-6 py-2 rounded-md font-medium hover:bg-brand/90 transition">Go to Confirmation</a>
       </div>
     );
   }
@@ -117,67 +117,67 @@ export default function RequestClient() {
   return (
     <form className="grid gap-6 md:grid-cols-2" onSubmit={handleSubmit}>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Full Name <span className="text-red-600">*</span></label>
-        <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="Your name" value={fullName} onChange={e => setFullName(e.target.value)} required />
+        <label className="block text-sm font-medium mb-1">Full Name <span className="text-red-600">*</span></label>
+        <input type="text" className="w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60" placeholder="Your name" value={fullName} onChange={e => setFullName(e.target.value)} required />
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Email <span className="text-red-600">*</span></label>
-        <input type="email" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="you@email.com" value={email} onChange={e => setEmail(e.target.value)} required />
+        <label className="block text-sm font-medium mb-1">Email <span className="text-red-600">*</span></label>
+        <input type="email" className="w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60" placeholder="you@email.com" value={email} onChange={e => setEmail(e.target.value)} required />
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Phone</label>
-        <input type="tel" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="(555) 123-4567" value={phone} onChange={e => setPhone(e.target.value)} />
+        <label className="block text-sm font-medium mb-1">Phone</label>
+        <input type="tel" className="w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60" placeholder="(555) 123-4567" value={phone} onChange={e => setPhone(e.target.value)} />
       </div>
       <div className="grid grid-cols-2 gap-2 md:col-span-2">
         <div>
-          <label className="block text-sm font-medium text-charcoal mb-1">Make</label>
-          <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="Make" value={make} onChange={e => setMake(e.target.value)} />
+          <label className="block text-sm font-medium mb-1">Make</label>
+          <input type="text" className="w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60" placeholder="Make" value={make} onChange={e => setMake(e.target.value)} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-charcoal mb-1">Model</label>
-          <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="Model" value={model} onChange={e => setModel(e.target.value)} />
-        </div>
-      </div>
-      <div className="grid grid-cols-2 gap-2 md:col-span-2">
-        <div>
-          <label className="block text-sm font-medium text-charcoal mb-1">Year</label>
-          <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="Year" value={year} onChange={e => setYear(e.target.value)} />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-charcoal mb-1">Color</label>
-          <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="Color" value={color} onChange={e => setColor(e.target.value)} />
+          <label className="block text-sm font-medium mb-1">Model</label>
+          <input type="text" className="w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60" placeholder="Model" value={model} onChange={e => setModel(e.target.value)} />
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2 md:col-span-2">
         <div>
-          <label className="block text-sm font-medium text-charcoal mb-1">City</label>
-          <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="City" value={city} onChange={e => setCity(e.target.value)} />
+          <label className="block text-sm font-medium mb-1">Year</label>
+          <input type="text" className="w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60" placeholder="Year" value={year} onChange={e => setYear(e.target.value)} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-charcoal mb-1">ZIP</label>
-          <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="ZIP" value={zip} onChange={e => setZip(e.target.value)} />
+          <label className="block text-sm font-medium mb-1">Color</label>
+          <input type="text" className="w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60" placeholder="Color" value={color} onChange={e => setColor(e.target.value)} />
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-2 md:col-span-2">
+        <div>
+          <label className="block text-sm font-medium mb-1">City</label>
+          <input type="text" className="w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60" placeholder="City" value={city} onChange={e => setCity(e.target.value)} />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">ZIP</label>
+          <input type="text" className="w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60" placeholder="ZIP" value={zip} onChange={e => setZip(e.target.value)} />
         </div>
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Address</label>
-        <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="Address or area" value={address} onChange={e => setAddress(e.target.value)} />
+        <label className="block text-sm font-medium mb-1">Address</label>
+        <input type="text" className="w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60" placeholder="Address or area" value={address} onChange={e => setAddress(e.target.value)} />
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Vehicle Size <span className="text-red-600">*</span></label>
-        <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" value={size} onChange={e => setSize(e.target.value as any)} required>
+        <label className="block text-sm font-medium mb-1">Vehicle Size <span className="text-red-600">*</span></label>
+        <select className="w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60" value={size} onChange={e => setSize(e.target.value as any)} required>
           {VEHICLE_SIZES.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Selected Services <span className="text-red-600">*</span></label>
-        <ul className="list-disc pl-6 text-charcoal">
+        <label className="block text-sm font-medium mb-1">Selected Services <span className="text-red-600">*</span></label>
+        <ul className="list-disc pl-6">
           {items.length === 0 ? <li className="text-red-600">No services selected</li> : items.map(s => <li key={s.id}>{s.title}</li>)}
         </ul>
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Parking, Power, Water Available?</label>
+        <label className="block text-sm font-medium mb-1">Parking, Power, Water Available?</label>
         <div className="flex gap-4">
           <label className="flex items-center gap-1"><input type="checkbox" checked={parking} onChange={e => setParking(e.target.checked)} />Parking</label>
           <label className="flex items-center gap-1"><input type="checkbox" checked={power} onChange={e => setPower(e.target.checked)} />Power</label>
@@ -185,11 +185,11 @@ export default function RequestClient() {
         </div>
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Notes</label>
-        <textarea className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="Anything else we should know?" rows={3} value={notes} onChange={e => setNotes(e.target.value)} />
+        <label className="block text-sm font-medium mb-1">Notes</label>
+        <textarea className="w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60" placeholder="Anything else we should know?" rows={3} value={notes} onChange={e => setNotes(e.target.value)} />
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Photos (up to 3, JPG/PNG/WebP, max 5MB each)</label>
+        <label className="block text-sm font-medium mb-1">Photos (up to 3, JPG/PNG/WebP, max 5MB each)</label>
         <input
           ref={fileInputRef}
           type="file"
@@ -201,7 +201,7 @@ export default function RequestClient() {
             files = files.filter(f => ["image/jpeg", "image/png", "image/webp"].includes(f.type) && f.size <= 5 * 1024 * 1024);
             setPhotos(files);
           }}
-          className="block w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent"
+          className="block w-full border-subtle border rounded-md px-3 py-2 focus-visible:ring-2 focus-visible:ring-brand/60"
           aria-label="Upload photos"
         />
         <div className="flex gap-2 mt-2 md:col-span-2">
@@ -215,7 +215,7 @@ export default function RequestClient() {
       </div>
       {error && <div className="text-red-600 font-medium">{error}</div>}
       <div className="md:col-span-2">
-      <button type="submit" className="w-full bg-primary text-offWhite rounded-xl px-5 py-3 font-bold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-accent transition" disabled={submitting}>
+      <button type="submit" className="w-full bg-brand text-white rounded-md px-5 py-3 font-medium hover:bg-brand/90 focus-visible:ring-2 focus-visible:ring-brand/60 transition" disabled={submitting}>
         {submitting ? "Submitting..." : "Submit Request"}
       </button>
       </div>
