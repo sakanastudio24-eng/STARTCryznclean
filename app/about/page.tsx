@@ -1,17 +1,26 @@
-import NavigationBar from "../../components/NavigationBar";
-import Footer from "../../components/Footer";
+import Section from "../../components/Section";
+import Heading from "../../components/Heading";
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-base text-text">
-      <NavigationBar />
-      <main className="flex-1 py-12 md:py-16">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold heading text-primary mb-6">About Cruiz n Clean</h1>
-          {/* ...content... */}
+    <main>
+      <Section>
+        <Heading level={1} className="mb-6">About Cruiz n Clean</Heading>
+        <div className="grid gap-10 md:grid-cols-2">
+          <div className="space-y-4">
+            <Heading level={3}>Our Mission</Heading>
+            <p className="text-muted-foreground">We deliver premium mobile detailing with reliable service, modern products, and meticulous care.</p>
+          </div>
+          <div>
+            <Heading level={3} className="mb-3">Values</Heading>
+            <ul className="list-disc pl-6 text-muted-foreground">
+              <li>Quality over speed</li>
+              <li>Clear, honest communication</li>
+              <li>Respect for your time and property</li>
+            </ul>
+          </div>
         </div>
-      </main>
-      <Footer />
-    </div>
+      </Section>
+    </main>
   );
 }

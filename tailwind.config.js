@@ -17,6 +17,7 @@ module.exports = {
         base:    '#10150F',
         text:    '#F9FAF9',
         muted:   '#E6E9EC',
+        brand:   '#FF6A3D', // temporary accent per design brief
       },
       borderRadius: { xl: '1rem', '2xl': '1.25rem' },
       boxShadow: { card: '0 6px 24px rgba(0,0,0,0.08)' },

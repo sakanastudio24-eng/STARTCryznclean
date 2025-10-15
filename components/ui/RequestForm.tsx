@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import PhotoPicker from "./PhotoPicker";
-import { useCart } from "./CartProvider";
+import { useCart } from "../cart/CartProvider";
 
 const VEHICLE_SIZES = [
   { label: "Car", value: "car" },
