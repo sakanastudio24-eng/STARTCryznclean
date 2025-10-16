@@ -5,6 +5,15 @@
 html, body { overflow-x: hidden; }
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Global utility tokens */
+:root{
+  --header-h: 64px;
+}
+.text-muted-foreground { @apply text-zinc-600 dark:text-zinc-400; }
+.border-subtle { @apply border-zinc-200 dark:border-zinc-800; }
+.bg-surface { @apply bg-white dark:bg-black; }
+.bg-page    { @apply bg-white dark:bg-black; }
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: .01ms !important;
