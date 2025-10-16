@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NAV_LINKS } from "@/components/site/SiteConfig";
+import { NAV_LINKS } from "./SiteConfig";
 import { SETMORE_URL } from "@/lib/config";
 
 export default function Header() {
