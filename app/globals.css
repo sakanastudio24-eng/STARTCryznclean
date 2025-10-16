@@ -12,4 +12,25 @@ html, body { overflow-x: hidden; }
     animation-iteration-count: 1 !important;
   }
 }
-:root{ --header-h: 64px; }
+
+/* Global CSS variables */
+:root { --header-h: 64px; }
+
+/* Theme tokens and utilities for light theme */
+@layer utilities {
+  .text-text { @apply text-zinc-900; }
+  .text-muted-foreground { @apply text-zinc-600; }
+  .border-subtle { @apply border-zinc-200; }
+  .bg-surface { @apply bg-white; }
+  .bg-page { @apply bg-white; }
+
+  /* Shared accessible focus ring using brand color */
+  .focus-ring { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6A3D]/40 focus-visible:ring-offset-2; }
+}
+
+/* Reusable component styles */
+@layer components {
+  .btn-primary { @apply inline-flex items-center justify-center rounded-md bg-[#FF6A3D] text-white font-medium px-4 py-2 shadow-sm hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6A3D]/40 focus-visible:ring-offset-2 transition; }
+  .btn-secondary { @apply inline-flex items-center justify-center rounded-md border border-subtle text-text font-medium px-4 py-2 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6A3D]/40 focus-visible:ring-offset-2 transition; }
+  .card { @apply rounded-2xl border border-subtle bg-white shadow-sm; }
+}

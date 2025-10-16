@@ -11,7 +11,7 @@ export default function Header() {
   useEffect(() => { setOpen(false); }, [pathname]);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 h-16 bg-white/90 border-b border-zinc-200 backdrop-blur text-zinc-900">
+    <header className="fixed top-0 inset-x-0 z-50 h-16 bg-white border-b border-subtle text-text">
       <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <Link href="/" className="font-semibold">Cruiz n Clean</Link>
 
@@ -24,7 +24,7 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 aria-current={active ? "page" : undefined}
-                className={`text-sm hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/40 ${active ? "font-semibold" : ""}`}
+                className={`text-sm hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6A3D]/40 ${active ? "font-semibold" : ""}`}
               >
                 {link.label}
               </Link>
@@ -34,7 +34,7 @@ export default function Header() {
             href={SETMORE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center rounded-md bg-[#FF6A3D] px-4 py-2 text-sm font-medium text-white shadow-sm hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/40 transition"
+            className="btn-primary"
           >
             Book now
           </a>
@@ -46,7 +46,7 @@ export default function Header() {
           aria-expanded={open}
           aria-controls="mobile-menu"
           onClick={() => setOpen(o => !o)}
-          className="md:hidden inline-flex items-center justify-center rounded-md p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/40"
+          className="md:hidden inline-flex items-center justify-center rounded-md p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6A3D]/40"
         >
           ☰
         </button>
@@ -54,7 +54,7 @@ export default function Header() {
 
       {/* Mobile menu */}
       {open && (
-        <div id="mobile-menu" className="md:hidden border-t border-zinc-200 bg-white">
+        <div id="mobile-menu" className="md:hidden border-t border-subtle bg-white">
           <div className="px-4 py-3 flex flex-col gap-2">
             {NAV_LINKS.map(link => {
               const active = pathname === link.href;
@@ -63,7 +63,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
-                  className={`py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/40 ${active ? "font-semibold underline underline-offset-4" : ""}`}
+                  className={`py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6A3D]/40 ${active ? "font-semibold underline underline-offset-4" : ""}`}
                 >
                   {link.label}
                 </Link>
@@ -73,7 +73,7 @@ export default function Header() {
               href={SETMORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center justify-center rounded-md bg-[#FF6A3D] px-4 py-2 text-sm font-medium text-white shadow-sm hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/40 transition"
+              className="mt-2 btn-primary justify-center text-sm"
             >
               Book now
             </a>
