@@ -1,0 +1,90 @@
+# Cursor Rules (v2) — Cruiz n Clean
+
+## Purpose
+Act like a senior Next.js + Tailwind engineer. Make **small, reversible** changes. For multi-file edits, present a **plan + files to touch + risks + acceptance** before applying.
+
+## Stack assumptions
+- Next.js 14+ (App Router) + TypeScript
+- Tailwind CSS
+- Vercel deploys
+- Framer Motion *optional* (reduced-motion aware)
+- Scheduling via **Setmore link** (no iframe by default)
+
+## Global policies
+- **Scheduling:** All “Book now” CTAs open **SETMORE_URL** in a new tab. The `/booking` page uses a validated form + emails (customer + internal). **No checkout pages.**
+- **CMS (optional):** If enabled, use Sanity (`siteSettings`, `service`, `package`, `addon`, `galleryItem`, `faq`, `siteFlags`) + next-sanity client + GROQ. Preview mode + webhook revalidation.
+- **Security:** Never expose server keys to client. Use `process.env` safely. No secrets in logs.
+
+## Editing rules
+1) **Scope** strictly: touch only listed files. Prefer server components; mark client ones with `"use client"`.
+2) Keep **Header/Footer** rendering in `app/layout.tsx`. `<Header />` above `<main id="content">`, `<Footer />` after.
+3) Fixed header offset: `:root{ --header-h: 64px }` and `<main class="pt-[var(--header-h)]">`.
+4) Maintain import aliases. If `@/` fails, fall back to relative and explain.
+5) When adding logic (forms, API), provide types + basic error handling.
+
+## A11y & UX
+- Landmarks: `header/nav/main/footer`; add skip link to `#content`.
+- Visible focus (`focus-visible:ring`); mobile menu uses `aria-expanded`, `aria-controls`, closes on **Esc**.
+- Honor **prefers-reduced-motion**; keep animations subtle.
+
+## Performance & SEO
+- Use `next/image` with `sizes` + explicit `alt`. Avoid CLS.
+- Lazy-load non-critical components.
+- Title template: `Page · SITE.name`; description present; canonical set.
+- Provide `/sitemap.xml` and `/robots.txt` when adding routes.
+
+## Code style
+- Strict TypeScript; avoid `any`. Narrow props.
+- Tailwind utilities over inline styles (except CSS vars).
+- Conventional commits: `feat`, `fix`, `refactor`, `chore`, `docs`, `perf`.
+
+## Tailwind tokens
+- Brand color for CTAs: `#FF6A3D` (hover ~600).
+- Utilities in `globals.css`:
+  - `.text-muted-foreground { @apply text-zinc-600 dark:text-zinc-400 }`
+  - `.border-subtle { @apply border-zinc-200 dark:border-zinc-800 }`
+  - `.bg-surface { @apply bg-white dark:bg-black }`
+  - `.bg-page { @apply bg-white dark:bg-black }`
+  - `:root { --header-h: 64px }`
+
+## Feature modules (what “good” looks like)
+- **Nav/Header (fixed + CTA):** fixed, backdrop blur; right-aligned CTA opens **SETMORE_URL** in new tab; active link via `usePathname()` and `aria-current="page"`.
+- **Booking (link flow):** cart selections prefill `/booking`; on submit POST `/api/booking` (zod validate) → email customer + internal → **open SETMORE_URL in new tab**; keep success state on page.
+- **Footer (full-face):** top CTA strip; link grid (Company/Services/Resources/Policies); contact + socials; bottom legal bar.
+- **About/FAQ:** real copy; headings in order; FAQ off the main nav but linked in footer.
+- **Transitions (optional):** behind `ENABLE_PAGE_TRANSITIONS`; reduced-motion disables.
+- **SEO:** canonical, OG/Twitter defaults, LocalBusiness JSON-LD on Home.
+
+## Foreground vs Background agent (how to use)
+- **Foreground** (Chat/Composer/Inline): all code edits, plans, refactors. Always show **files to touch**.
+- **Background**: may run dev/build/indexing. Don’t apply code changes without a foreground plan.
+
+## Build & test gates
+- Run `npm run build` locally for major changes. If failing, show exact error + file path and fix.
+- For forms/API: include basic happy-path manual test steps in summary.
+
+## High-risk files (ask before heavy changes)
+- `app/layout.tsx`, `tailwind.config.*`, `next.config.*`, `tsconfig.json`
+- `/api/*` that send emails or call external services
+- CI/deploy configs
+
+## Anti-patterns
+- Vague asks (“make it pretty”) → always require plan + acceptance.
+- Large rewrites without a preview plan.
+- Adding heavy deps for tiny effects.
+- Silently changing aliases/envs.
+
+## Acceptance template (use in summaries/PRs)
+- **Changed:** files list
+- **Why:** goal/intent
+- **A11y:** focus, landmarks, reduced-motion
+- **SEO:** title/description/canonical (if applicable)
+- **Perf:** no CLS, `next/image` sizes
+- **Manual test:** steps + expected result
+
+## Troubleshooting quick-fixes
+- Port busy → run `next dev -p 3002`.
+- Vercel case mismatch → filenames must match imports exactly (e.g., `Footer.tsx`).
+- JSX namespace error on Vercel → use `React.ElementType` (not `JSX.IntrinsicElements`).
+nano .cursorrules
+
