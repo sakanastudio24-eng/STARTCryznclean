@@ -100,16 +100,9 @@ export default function RequestClient() {
       <div className="bg-white rounded-lg shadow p-8 text-center mt-8">
         <h2 className="text-2xl font-bold heading text-primary mb-4">Request Sent!</h2>
         <p className="mb-6">Thank you for your request. You can now book your appointment or return home.</p>
-        <a
-          href={process.env.NEXT_PUBLIC_SETMORE_BOOKING_URL || "https://setmore.com"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block bg-accent text-charcoal px-6 py-2 rounded font-bold hover:bg-accent/80 transition mb-2"
-        >
-          Book with Setmore
-        </a>
+        <a href={process.env.NEXT_PUBLIC_SETMORE_BOOKING_URL || "https://setmore.com"} target="_blank" rel="noopener noreferrer" className="inline-block btn-primary mb-2">Book with Setmore</a>
         <br />
-        <a href="/confirmation?appointmentStarted=1" className="inline-block bg-primary text-offWhite px-6 py-2 rounded font-bold hover:bg-primary/90 transition">Go to Confirmation</a>
+        <a href="/confirmation?appointmentStarted=1" className="inline-block btn-secondary">Go to Confirmation</a>
       </div>
     );
   }

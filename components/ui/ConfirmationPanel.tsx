@@ -16,9 +16,9 @@ export default function ConfirmationPanel({ booked }: ConfirmationPanelProps) {
           : "Your request was sent. We'll contact you soon to confirm your booking."}
       </p>
       {booked ? (
-        <a href="https://www.setmore.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-accent text-charcoal px-6 py-3 rounded-xl font-bold hover:bg-accent/80 transition">View on Setmore</a>
+        <a href="https://www.setmore.com/" target="_blank" rel="noopener noreferrer" className="inline-block btn-primary">View on Setmore</a>
       ) : (
-        <a href="/" className="inline-block bg-primary text-offWhite px-6 py-3 rounded-xl font-bold hover:bg-primary/90 transition">Back to Home</a>
+        <a href="/" className="inline-block btn-secondary">Back to Home</a>
       )}
     </div>
   );

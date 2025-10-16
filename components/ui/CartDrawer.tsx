@@ -1,6 +1,6 @@
 import React from "react";
 
-import type { CartItem as CartItemType } from "./CartProvider";
+import type { CartItem as CartItemType } from "../cart/CartProvider";
 
 interface CartItem extends CartItemType {
   // id, title, basePrice, category, qty
@@ -50,7 +50,7 @@ export default function CartDrawer({ items, onRemove, vehicleSize, setVehicleSiz
       </div>
       <div className="p-4 border-t flex flex-col gap-2">
         <label className="text-sm font-medium text-charcoal mb-1">Vehicle Size</label>
-        <select value={vehicleSize} onChange={e => setVehicleSize(e.target.value as VehicleSize)} className="w-full border rounded p-2 focus:ring-accent">
+        <select value={vehicleSize} onChange={e => setVehicleSize(e.target.value as VehicleSize)} className="w-full border rounded p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6A3D]/40">
           {vehicleSizes.map(size => (
             <option key={size.value} value={size.value}>{size.label}</option>
           ))}
