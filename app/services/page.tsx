@@ -10,7 +10,7 @@ import { SETMORE_URL } from "@/lib/config";
 
 function ServicesPageInner() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { items, vehicleSize, add, remove, setVehicleSize, count, total } = useCart();
+  const { items, size, add, remove, setSize, count, total } = useCart();
   const sizeMultipliers = { car: 1.0, smallSUV: 1.15, largeSUVTruck: 1.3 };
   const categories = ["Exterior", "Interior", "Ceramic", "Specialty"];
   const servicesByCategory = categories.map(cat => ({
@@ -32,7 +32,7 @@ function ServicesPageInner() {
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {group.services.map(service => {
                   const selected = !!items.find(i => i.id === service.id);
-                  const price = (service.basePrice * sizeMultipliers[vehicleSize]).toFixed(2);
+                  const price = (service.basePrice * sizeMultipliers[size]).toFixed(2);
                   return (
                     <div key={service.id} className="relative group card p-5">
                       <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg">
@@ -63,8 +63,8 @@ function ServicesPageInner() {
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-10">
           <label className="font-medium text-charcoal">Vehicle Size:</label>
           <select
-            value={vehicleSize}
-            onChange={e => setVehicleSize(e.target.value as any)}
+            value={size}
+            onChange={e => setSize(e.target.value as any)}
             className="border-subtle border rounded p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6A3D]/40"
           >
             <option value="car">Car</option>
@@ -82,8 +82,8 @@ function ServicesPageInner() {
         <CartDrawer
           items={items}
           onRemove={remove}
-          vehicleSize={vehicleSize}
-          setVehicleSize={setVehicleSize}
+          vehicleSize={size}
+          setVehicleSize={setSize as any}
           estimate={total()}
           onContinue={() => { window.location.href = "/request"; }}
           open={drawerOpen}

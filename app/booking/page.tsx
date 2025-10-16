@@ -1,11 +1,11 @@
-"use client";
 import Link from "next/link";
 import RequestForm from "@/components/ui/RequestForm";
-import { useSearchParams } from "next/navigation";
 
-export default function BookingPage() {
-  const params = useSearchParams();
-  const pkg = params.get("pkg");
+export default function BookingPage(props: { searchParams?: { pkg?: string } } | { searchParams: Promise<{ pkg?: string }> }) {
+  // Handle Next 15 possible promise-wrapped searchParams
+  // @ts-expect-error next can pass a promise here during SSG extraction
+  const sp = props.searchParams?.then ? undefined : (props as any).searchParams;
+  const pkg = (sp && typeof sp === 'object') ? sp.pkg : undefined;
 
   return (
     <main className="pt-[var(--header-h)]">

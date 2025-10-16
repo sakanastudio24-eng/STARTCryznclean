@@ -101,7 +101,7 @@ export default function RequestForm() {
       <div className="bg-white rounded-lg shadow p-8 text-center mt-8">
         <h2 className="text-2xl font-bold heading text-primary mb-4">Request Sent!</h2>
         <p className="mb-6">Thank you for your request. You can now book your appointment or return home.</p>
-        <a href="https://www.setmore.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-accent text-charcoal px-6 py-2 rounded font-bold hover:bg-accent/80 transition mb-2">Book with Setmore</a>
+        <a href="https://www.setmore.com/" target="_blank" rel="noopener noreferrer" className="inline-block btn-primary mb-2">Book with Setmore</a>
         <br />
         <a href="/confirmation" className="inline-block bg-primary text-offWhite px-6 py-2 rounded font-bold hover:bg-primary/90 transition">Go to Confirmation</a>
       </div>
@@ -174,7 +174,7 @@ export default function RequestForm() {
       </div>
       <div>
         <label className="block text-sm font-medium text-charcoal mb-1">Notes</label>
-        <textarea className="w-full border rounded p-2" placeholder="Anything else we should know?" rows={3} value={notes} onChange={e => setNotes(e.target.value)} />
+        <textarea className="w-full border rounded p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6A3D]/40" placeholder="Anything else we should know?" rows={3} value={notes} onChange={e => setNotes(e.target.value)} />
       </div>
       <div>
         <label className="block text-sm font-medium text-charcoal mb-1">Photos (up to 3, JPG/PNG/WebP, max 5MB each)</label>
@@ -189,7 +189,7 @@ export default function RequestForm() {
             files = files.filter(f => ["image/jpeg", "image/png", "image/webp"].includes(f.type) && f.size <= 5 * 1024 * 1024);
             setPhotos(files);
           }}
-          className="block w-full border rounded p-2"
+          className="block w-full border rounded p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6A3D]/40"
           aria-label="Upload photos"
         />
         <div className="flex gap-2 mt-2">
@@ -202,7 +202,7 @@ export default function RequestForm() {
         </div>
       </div>
       {error && <div className="text-red-600 font-medium">{error}</div>}
-      <button type="submit" className="w-full bg-primary text-offWhite py-2 rounded font-bold hover:bg-primary/90 transition" disabled={submitting}>
+      <button type="submit" className="w-full btn-primary justify-center" disabled={submitting}>
         {submitting ? "Submitting..." : "Submit Request"}
       </button>
     </form>
