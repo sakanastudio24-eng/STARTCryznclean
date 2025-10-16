@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { services } from "../data/services-data";
 import ServiceCard from "../components/ui/ServiceCard";
-import { useCart } from "../components/ui/CartProvider";
+import { useCart } from "@/components/cart/CartProvider";
 import { SETMORE_URL } from "@/lib/config";
 
 function ServicesTeaser() {

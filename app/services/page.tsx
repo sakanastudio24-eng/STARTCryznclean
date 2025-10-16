@@ -5,7 +5,7 @@ import Link from "next/link";
 import { services } from "../../data/services-data";
 import ServiceCard from "../../components/ui/ServiceCard";
 import CartDrawer from "../../components/ui/CartDrawer";
-import { CartProvider, useCart } from "../../components/ui/CartProvider";
+import { CartProvider, useCart } from "@/components/cart/CartProvider";
 import { SETMORE_URL } from "@/lib/config";
 
 function ServicesPageInner() {
@@ -79,7 +79,6 @@ function ServicesPageInner() {
         >
           View Cart ({count()})
         </button>
-        </div>
         <CartDrawer
           items={items}
           onRemove={remove}

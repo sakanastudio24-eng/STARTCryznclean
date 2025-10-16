@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useRef } from "react";
 import PhotoPicker from "./PhotoPicker";
 import { useCart } from "./CartProvider";
