@@ -18,15 +18,15 @@ function ServicesPageInner() {
   })).filter(group => group.services.length > 0);
 
   return (
-    <div className="flex flex-col min-h-screen bg-base text-text">
+    <div className="flex flex-col min-h-screen bg-page text-text">
       <NavigationBar />
       <main className="flex-1 py-12 md:py-16">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold heading text-primary mb-8">Select Services</h1>
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl font-bold heading text-brand mb-8">Select Services</h1>
         <div className="flex flex-col gap-12">
           {servicesByCategory.map(group => (
             <section key={group.category}>
-              <h2 className="text-2xl font-bold heading text-primary mb-4">{group.category}</h2>
+              <h2 className="text-2xl font-bold heading text-brand mb-4">{group.category}</h2>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {group.services.map(service => {
                   const selected = !!items.find(i => i.id === service.id);
@@ -53,11 +53,11 @@ function ServicesPageInner() {
           ))}
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-10">
-          <label className="font-medium text-charcoal">Vehicle Size:</label>
+          <label className="font-medium text-muted-foreground">Vehicle Size:</label>
           <select
             value={vehicleSize}
             onChange={e => setVehicleSize(e.target.value as any)}
-            className="border rounded p-2 focus:ring-accent"
+            className="border rounded p-2 focus-ring"
           >
             <option value="car">Car</option>
             <option value="smallSUV">Small SUV</option>
@@ -65,7 +65,7 @@ function ServicesPageInner() {
           </select>
         </div>
         <button
-          className="fixed bottom-6 right-6 bg-primary text-offWhite px-6 py-3 rounded-full shadow-lg font-bold text-lg hover:bg-primary/90 transition"
+          className="fixed bottom-6 right-6 bg-brand text-white px-6 py-3 rounded-full shadow-lg font-bold text-lg hover:bg-brand-600 transition focus-ring"
           onClick={() => setDrawerOpen(true)}
           aria-label="Open cart"
         >

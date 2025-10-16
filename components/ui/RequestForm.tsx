@@ -98,11 +98,11 @@ export default function RequestForm() {
   if (success) {
     return (
       <div className="bg-white rounded-lg shadow p-8 text-center mt-8">
-        <h2 className="text-2xl font-bold heading text-primary mb-4">Request Sent!</h2>
+        <h2 className="text-2xl font-bold heading text-brand mb-4">Request Sent!</h2>
         <p className="mb-6">Thank you for your request. You can now book your appointment or return home.</p>
-        <a href="https://www.setmore.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-accent text-charcoal px-6 py-2 rounded font-bold hover:bg-accent/80 transition mb-2">Book with Setmore</a>
+        <a href="https://www.setmore.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-brand text-white px-6 py-2 rounded font-bold hover:bg-brand-600 transition mb-2 focus-ring">Book with Setmore</a>
         <br />
-        <a href="/confirmation" className="inline-block bg-primary text-offWhite px-6 py-2 rounded font-bold hover:bg-primary/90 transition">Go to Confirmation</a>
+        <a href="/confirmation" className="inline-block bg-brand text-white px-6 py-2 rounded font-bold hover:bg-brand-600 transition focus-ring">Go to Confirmation</a>
       </div>
     );
   }
@@ -110,15 +110,15 @@ export default function RequestForm() {
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Full Name <span className="text-red-600">*</span></label>
+        <label className="block text-sm font-medium text-text mb-1">Full Name <span className="text-red-600">*</span></label>
         <input type="text" className="w-full border rounded p-2" placeholder="Your name" value={fullName} onChange={e => setFullName(e.target.value)} required />
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Email <span className="text-red-600">*</span></label>
+        <label className="block text-sm font-medium text-text mb-1">Email <span className="text-red-600">*</span></label>
         <input type="email" className="w-full border rounded p-2" placeholder="you@email.com" value={email} onChange={e => setEmail(e.target.value)} required />
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Phone</label>
+        <label className="block text-sm font-medium text-text mb-1">Phone</label>
         <input type="tel" className="w-full border rounded p-2" placeholder="(555) 123-4567" value={phone} onChange={e => setPhone(e.target.value)} />
       </div>
       <div>
@@ -127,30 +127,30 @@ export default function RequestForm() {
       </div>
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <label className="block text-sm font-medium text-charcoal mb-1">Vehicle</label>
+          <label className="block text-sm font-medium text-text mb-1">Vehicle</label>
           <input type="text" className="w-full border rounded p-2" placeholder="Year, Make, Model" value={vehicle} onChange={e => setVehicle(e.target.value)} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-charcoal mb-1">Color</label>
+          <label className="block text-sm font-medium text-text mb-1">Color</label>
           <input type="text" className="w-full border rounded p-2" placeholder="Color" value={color} onChange={e => setColor(e.target.value)} />
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <label className="block text-sm font-medium text-charcoal mb-1">City</label>
+          <label className="block text-sm font-medium text-text mb-1">City</label>
           <input type="text" className="w-full border rounded p-2" placeholder="City" value={city} onChange={e => setCity(e.target.value)} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-charcoal mb-1">ZIP</label>
+          <label className="block text-sm font-medium text-text mb-1">ZIP</label>
           <input type="text" className="w-full border rounded p-2" placeholder="ZIP" value={zip} onChange={e => setZip(e.target.value)} />
         </div>
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Address</label>
+        <label className="block text-sm font-medium text-text mb-1">Address</label>
         <input type="text" className="w-full border rounded p-2" placeholder="Address or area" value={address} onChange={e => setAddress(e.target.value)} />
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Vehicle Size <span className="text-red-600">*</span></label>
+        <label className="block text-sm font-medium text-text mb-1">Vehicle Size <span className="text-red-600">*</span></label>
         <select className="w-full border rounded p-2" value={vehicleSize} onChange={e => setVehicleSize(e.target.value as any)} required>
           {VEHICLE_SIZES.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -158,13 +158,13 @@ export default function RequestForm() {
         </select>
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Selected Services <span className="text-red-600">*</span></label>
-        <ul className="list-disc pl-6 text-charcoal">
+        <label className="block text-sm font-medium text-text mb-1">Selected Services <span className="text-red-600">*</span></label>
+        <ul className="list-disc pl-6 text-text">
           {items.length === 0 ? <li className="text-red-600">No services selected</li> : items.map(s => <li key={s.id}>{s.title}</li>)}
         </ul>
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Parking, Power, Water Available?</label>
+        <label className="block text-sm font-medium text-text mb-1">Parking, Power, Water Available?</label>
         <div className="flex gap-4">
           <label className="flex items-center gap-1"><input type="checkbox" checked={parking} onChange={e => setParking(e.target.checked)} />Parking</label>
           <label className="flex items-center gap-1"><input type="checkbox" checked={power} onChange={e => setPower(e.target.checked)} />Power</label>
@@ -172,7 +172,7 @@ export default function RequestForm() {
         </div>
       </div>
       <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Notes</label>
+        <label className="block text-sm font-medium text-text mb-1">Notes</label>
         <textarea className="w-full border rounded p-2" placeholder="Anything else we should know?" rows={3} value={notes} onChange={e => setNotes(e.target.value)} />
       </div>
       <div>
@@ -201,7 +201,7 @@ export default function RequestForm() {
         </div>
       </div>
       {error && <div className="text-red-600 font-medium">{error}</div>}
-      <button type="submit" className="w-full bg-primary text-offWhite py-2 rounded font-bold hover:bg-primary/90 transition" disabled={submitting}>
+      <button type="submit" className="w-full bg-brand text-white py-2 rounded font-bold hover:bg-brand-600 transition focus-ring" disabled={submitting}>
         {submitting ? "Submitting..." : "Submit Request"}
       </button>
     </form>
