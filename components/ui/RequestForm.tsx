@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import PhotoPicker from "./PhotoPicker";
 import { useCart } from "./CartProvider";
+import { SETMORE_URL } from "@/lib/config";
 
 const VEHICLE_SIZES = [
   { label: "Car", value: "car" },
@@ -100,7 +101,7 @@ export default function RequestForm() {
       <div className="bg-white rounded-lg shadow p-8 text-center mt-8">
         <h2 className="text-2xl font-bold heading text-primary mb-4">Request Sent!</h2>
         <p className="mb-6">Thank you for your request. You can now book your appointment or return home.</p>
-        <a href="https://www.setmore.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-accent text-charcoal px-6 py-2 rounded font-bold hover:bg-accent/80 transition mb-2">Book with Setmore</a>
+        <a href={SETMORE_URL} target="_blank" rel="noopener noreferrer" className="inline-block bg-accent text-charcoal px-6 py-2 rounded font-bold hover:bg-accent/80 transition mb-2">Book now</a>
         <br />
         <a href="/confirmation" className="inline-block bg-primary text-offWhite px-6 py-2 rounded font-bold hover:bg-primary/90 transition">Go to Confirmation</a>
       </div>

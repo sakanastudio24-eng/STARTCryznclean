@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { useCart } from "../cart/CartProvider";
+import { SETMORE_URL } from "@/lib/config";
 
 const VEHICLE_SIZES = [
   { label: "Car", value: "car" },
@@ -101,12 +102,12 @@ export default function RequestClient() {
         <h2 className="text-2xl font-bold heading text-primary mb-4">Request Sent!</h2>
         <p className="mb-6">Thank you for your request. You can now book your appointment or return home.</p>
         <a
-          href={process.env.NEXT_PUBLIC_SETMORE_BOOKING_URL || "https://setmore.com"}
+          href={SETMORE_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-accent text-charcoal px-6 py-2 rounded font-bold hover:bg-accent/80 transition mb-2"
         >
-          Book with Setmore
+          Book now
         </a>
         <br />
         <a href="/confirmation?appointmentStarted=1" className="inline-block bg-primary text-offWhite px-6 py-2 rounded font-bold hover:bg-primary/90 transition">Go to Confirmation</a>

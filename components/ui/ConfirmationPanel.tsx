@@ -15,8 +15,8 @@ export default function ConfirmationPanel({ booked }: ConfirmationPanelProps) {
           ? "Your appointment is booked. Check your email for details."
           : "Your request was sent. We'll contact you soon to confirm your booking."}
       </p>
-      {booked ? (
-        <a href="https://www.setmore.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-accent text-charcoal px-6 py-3 rounded-xl font-bold hover:bg-accent/80 transition">View on Setmore</a>
+        {booked ? (
+        <a href={process.env.NEXT_PUBLIC_SETMORE_URL || "https://sakanastudiollc.setmore.com/zechariah"} target="_blank" rel="noopener noreferrer" className="inline-block bg-accent text-charcoal px-6 py-3 rounded-xl font-bold hover:bg-accent/80 transition">View on Setmore</a>
       ) : (
         <a href="/" className="inline-block bg-primary text-offWhite px-6 py-3 rounded-xl font-bold hover:bg-primary/90 transition">Back to Home</a>
       )}
