@@ -5,10 +5,42 @@
 html, body { overflow-x: hidden; }
 *, *::before, *::after { box-sizing: border-box; }
 
+/* CSS variables */
+:root { --header-h: 64px; }
+
+@layer base {
+  body {
+    @apply bg-page text-text antialiased;
+  }
+
+  a {
+    @apply text-brand underline-offset-4 hover:underline focus-visible:underline;
+  }
+}
+
+@layer utilities {
+  .text-muted-foreground { @apply text-zinc-600; }
+  .border-subtle { @apply border-zinc-200; }
+  .bg-page { @apply bg-white; }
+  .bg-surface { @apply bg-white; }
+
+  /* Visible, accessible focus ring */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700/50 focus-visible:ring-offset-2 focus-visible:ring-offset-surface;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: .01ms !important;
     transition-duration: .01ms !important;
     animation-iteration-count: 1 !important;
   }
+  html:focus-within { scroll-behavior: auto; }
+}
+
+/* Helper variable for JS/animation libs to read */
+:root { --motion-ok: 1; }
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion-ok: 0; }
 }
