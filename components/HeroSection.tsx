@@ -19,8 +19,8 @@ export default function HeroSection() {
             Premium interior and exterior care that comes to you. Shine, protect, and drive happy.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
-            <a href="/request" className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-primary text-offWhite font-semibold shadow-lg hover:bg-primary/90 transition-colors">
-              Book Now
+            <a href="/booking" className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-primary text-offWhite font-semibold shadow-lg hover:bg-primary/90 transition-colors">
+              Book now
             </a>
             <a href="/services" className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-offWhite/80 text-offWhite font-semibold hover:bg-offWhite/10 transition-colors">
               Detailing Packages

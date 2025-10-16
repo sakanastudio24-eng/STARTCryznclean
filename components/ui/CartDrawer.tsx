@@ -28,10 +28,10 @@ export default function CartDrawer({ items, onRemove, vehicleSize, setVehicleSiz
   return (
     <>
     {open && <div className="fixed inset-0 bg-black/40 z-40" onClick={onClose} aria-hidden="true" />}
-    <aside className={`fixed inset-y-0 right-0 max-w-md w-full bg-white shadow-xl z-50 transform transition-transform duration-200 ${open ? "translate-x-0" : "translate-x-full"}`} aria-label="Cart Drawer">
+    <aside className={`fixed inset-y-0 right-0 max-w-md w-full bg-white shadow-xl z-50 transform transition-transform duration-200 ${open ? "translate-x-0" : "translate-x-full"}`} aria-label="Booking Drawer">
       <div className="flex justify-between items-center p-4 border-b">
-        <h2 className="text-xl font-bold heading text-primary">Your Cart</h2>
-        <button onClick={onClose} aria-label="Close cart" className="text-charcoal hover:text-primary text-2xl">×</button>
+        <h2 className="text-xl font-bold heading text-primary">Your Booking</h2>
+        <button onClick={onClose} aria-label="Close booking" className="text-charcoal hover:text-primary text-2xl">×</button>
       </div>
       <div className="p-4 flex-1 flex flex-col gap-2 overflow-y-auto">
         {items.length === 0 ? (
@@ -59,7 +59,7 @@ export default function CartDrawer({ items, onRemove, vehicleSize, setVehicleSiz
           <span className="font-semibold text-charcoal">Estimate</span>
           <span className="font-bold text-primary">${estimate}</span>
         </div>
-        <button onClick={onContinue} className="w-full mt-4 bg-primary text-offWhite py-2 rounded font-bold hover:bg-primary/90 transition">Continue</button>
+        <button onClick={onContinue} className="w-full mt-4 bg-primary text-offWhite py-2 rounded font-bold hover:bg-primary/90 transition">Add to Booking</button>
       </div>
     </aside>
     </>

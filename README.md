@@ -9,7 +9,7 @@ A modern, accessible Next.js + Tailwind site for mobile detailing bookings.
    - Required:
      - `CONTACT_EMAIL` (where requests are sent)
      - `RESEND_API_KEY` (preferred) or `SENDGRID_API_KEY`
-     - `NEXT_PUBLIC_SETMORE_BOOKING_URL` (your Setmore booking link)
+     - `NEXT_PUBLIC_SETMORE_URL` (your Setmore booking link)
 
 2. **Install dependencies:**
    ```bash
