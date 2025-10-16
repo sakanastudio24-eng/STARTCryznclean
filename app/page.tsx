@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import GalleryGrid from "../components/GalleryGrid";
-import Footer from "../components/Footer";
 import { services } from "../data/services-data";
 import ServiceCard from "../components/ui/ServiceCard";
 import { CartProvider, useCart } from "../components/ui/CartProvider";
@@ -61,14 +60,13 @@ function HomePage() {
     setMounted(true);
   }, []);
   return (
-    <div className={`flex flex-col min-h-screen bg-offWhite text-charcoal ${mounted ? "fade-in" : "opacity-0"}`}>
+    <div className={`flex flex-col min-h-screen bg-page ${mounted ? "fade-in" : "opacity-0"}`}>
       <HeroSection />
       <div className="flex flex-col gap-0">
         <ServicesPreview />
         <GalleryPreview />
         <CTABand />
       </div>
-      <Footer />
       <style>{`
         .fade-in {
           opacity: 1;

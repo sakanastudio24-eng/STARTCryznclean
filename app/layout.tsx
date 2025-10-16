@@ -1,6 +1,7 @@
 import Header from "../components/site/Header";
 import Footer from "../components/site/Footer";
 import './globals.css'
+import PageTransition from "../components/ux/PageTransition";
 import type { Metadata } from 'next'
 import ClientProviders from '../components/providers/ClientProviders'
 
@@ -12,11 +13,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-base text-text antialiased">
+      <body className="min-h-screen bg-page antialiased">
   <a href="#content" className="sr-only focus:not-sr-only">Skip to content</a>
   <Header />
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ClientProviders><main id="content">{children}</main></ClientProviders>
+          <ClientProviders>
+            <main id="content" className="pt-[var(--header-h)]">
+              <PageTransition>
+                {children}
+              </PageTransition>
+            </main>
+          </ClientProviders>
         </div>
   <Footer />
       </body>
