@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import NavigationBar from "../../components/NavigationBar";
 import Footer from "../../components/Footer";
 import { CartProvider, useCart } from "../../components/ui/CartProvider";
@@ -162,7 +163,9 @@ function BookingClient() {
 export default function BookingPage() {
   return (
     <CartProvider>
-      <BookingClient />
+      <Suspense fallback={<div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">Loading…</div>}>
+        <BookingClient />
+      </Suspense>
     </CartProvider>
   );
 }
