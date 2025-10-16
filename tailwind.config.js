@@ -17,6 +17,9 @@ module.exports = {
         base:    '#10150F',
         text:    '#F9FAF9',
         muted:   '#E6E9EC',
+        // Brand color for CTAs
+        brand:   '#0EA5E9',
+        'brand-600': '#0284C7',
       },
       borderRadius: { xl: '1rem', '2xl': '1.25rem' },
       boxShadow: { card: '0 6px 24px rgba(0,0,0,0.08)' },
