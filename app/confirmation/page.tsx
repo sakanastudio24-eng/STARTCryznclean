@@ -5,7 +5,7 @@ import ConfirmationPanel from "../../components/ui/ConfirmationPanel";
 import NavigationBar from "../../components/NavigationBar";
 import Footer from "../../components/Footer";
 
-const steps = ["Select Services", "Request Details", "Book/Confirm"];
+const steps = ["Select Services", "Booking Details", "Schedule Time"];
 
 export default function ConfirmationPage() {
   // Placeholder: toggle booked/request sent state

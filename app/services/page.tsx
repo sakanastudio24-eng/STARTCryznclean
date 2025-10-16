@@ -3,6 +3,8 @@ import { useState } from "react";
 import { services } from "../../data/services-data";
 import ServiceCard from "../../components/ui/ServiceCard";
 import CartDrawer from "../../components/ui/CartDrawer";
+import { SETMORE_URL } from "@/lib/config";
+import { trackEvent } from "@/lib/analytics";
 import NavigationBar from "../../components/NavigationBar";
 import Footer from "../../components/Footer";
 import { CartProvider, useCart } from "../../components/ui/CartProvider";
@@ -64,13 +66,24 @@ function ServicesPageInner() {
             <option value="largeSUVTruck">Large SUV/Truck</option>
           </select>
         </div>
-        <button
-          className="fixed bottom-6 right-6 bg-primary text-offWhite px-6 py-3 rounded-full shadow-lg font-bold text-lg hover:bg-primary/90 transition"
-          onClick={() => setDrawerOpen(true)}
-          aria-label="Open cart"
-        >
-          View Cart ({count()})
-        </button>
+        <div className="fixed bottom-6 right-6 flex flex-col items-end gap-3">
+          <a
+            href={SETMORE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent("book_now_clicked", { location: "services" })}
+            className="bg-primary text-offWhite px-6 py-3 rounded-full shadow-lg font-bold text-lg hover:bg-primary/90 transition"
+          >
+            Book now
+          </a>
+          <button
+            className="bg-primary text-offWhite px-6 py-3 rounded-full shadow-lg font-bold text-lg hover:bg-primary/90 transition"
+            onClick={() => setDrawerOpen(true)}
+            aria-label="Open booking"
+          >
+            Open Booking ({count()})
+          </button>
+        </div>
         </div>
         <CartDrawer
           items={items}
@@ -78,7 +91,13 @@ function ServicesPageInner() {
           vehicleSize={vehicleSize}
           setVehicleSize={setVehicleSize}
           estimate={total()}
-          onContinue={() => { window.location.href = "/request"; }}
+          onContinue={() => {
+            const pkg = items[0]?.id || "custom";
+            const addons = items.slice(1).map((i) => i.id).join(",");
+            const price = total();
+            const qs = new URLSearchParams({ pkg, addons, price: String(price) }).toString();
+            window.location.href = `/booking?${qs}`;
+          }}
           open={drawerOpen}
           onClose={() => setDrawerOpen(false)}
         />

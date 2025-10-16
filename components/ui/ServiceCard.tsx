@@ -25,7 +25,7 @@ export default function ServiceCard({ id, title, price, basePrice, category, sel
         onClick={onClick}
         type="button"
       >
-        {selected ? "Added" : "Add"}
+        {selected ? "Added" : "Add to Booking"}
       </button>
     </div>
   );
