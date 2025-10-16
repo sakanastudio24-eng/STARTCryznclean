@@ -12,3 +12,12 @@ html, body { overflow-x: hidden; }
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Semantic tokens and header height */
+:root { --header-h: 64px; }
+
+.text-text { @apply text-zinc-900; }
+.text-muted-foreground { @apply text-zinc-600; }
+.border-subtle { @apply border-zinc-200; }
+.bg-page { @apply bg-white; }
+.bg-surface { @apply bg-white; }

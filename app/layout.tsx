@@ -12,11 +12,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-base text-text antialiased">
+      <body className="min-h-screen bg-page text-text antialiased">
   <a href="#content" className="sr-only focus:not-sr-only">Skip to content</a>
   <Header />
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ClientProviders><main id="content">{children}</main></ClientProviders>
+          <ClientProviders>
+            <main id="content" className="pt-[var(--header-h)]">{children}</main>
+          </ClientProviders>
         </div>
   <Footer />
       </body>
