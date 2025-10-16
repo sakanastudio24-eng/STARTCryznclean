@@ -17,6 +17,10 @@ module.exports = {
         base:    '#10150F',
         text:    '#F9FAF9',
         muted:   '#E6E9EC',
+        brand: {
+          DEFAULT: '#FF6A3D',
+          600: '#e65e35',
+        },
       },
       borderRadius: { xl: '1rem', '2xl': '1.25rem' },
       boxShadow: { card: '0 6px 24px rgba(0,0,0,0.08)' },
