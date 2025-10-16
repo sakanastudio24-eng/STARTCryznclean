@@ -20,3 +20,4 @@ yarn-error.log*
 
 # design exports (reference only)
 design/code-reference/**
+.vercel
