@@ -5,6 +5,10 @@
 html, body { overflow-x: hidden; }
 *, *::before, *::after { box-sizing: border-box; }
 
+:root {
+  --header-h: 64px; /* 16 * 4 */
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: .01ms !important;
