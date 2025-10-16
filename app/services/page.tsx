@@ -3,9 +3,10 @@ import { useState } from "react";
 import { services } from "../../data/services-data";
 import ServiceCard from "../../components/ui/ServiceCard";
 import CartDrawer from "../../components/ui/CartDrawer";
-import NavigationBar from "../../components/NavigationBar";
-import Footer from "../../components/Footer";
-import { CartProvider, useCart } from "../../components/ui/CartProvider";
+import { useCart } from "../../components/ui/CartProvider";
+import Section from "../../components/layout/Section";
+import Container from "../../components/layout/Container";
+import { Heading } from "../../components/ui/Heading";
 
 function ServicesPageInner() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -18,15 +19,13 @@ function ServicesPageInner() {
   })).filter(group => group.services.length > 0);
 
   return (
-    <div className="flex flex-col min-h-screen bg-base text-text">
-      <NavigationBar />
-      <main className="flex-1 py-12 md:py-16">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold heading text-primary mb-8">Select Services</h1>
+    <Section>
+      <Container>
+        <Heading as={1} className="mb-8">Select Services</Heading>
         <div className="flex flex-col gap-12">
           {servicesByCategory.map(group => (
             <section key={group.category}>
-              <h2 className="text-2xl font-bold heading text-primary mb-4">{group.category}</h2>
+              <Heading as={2} className="mb-4">{group.category}</Heading>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {group.services.map(service => {
                   const selected = !!items.find(i => i.id === service.id);
@@ -53,11 +52,11 @@ function ServicesPageInner() {
           ))}
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-10">
-          <label className="font-medium text-charcoal">Vehicle Size:</label>
+          <label className="font-medium">Vehicle Size:</label>
           <select
             value={vehicleSize}
             onChange={e => setVehicleSize(e.target.value as any)}
-            className="border rounded p-2 focus:ring-accent"
+            className="border rounded p-2 focus-ring"
           >
             <option value="car">Car</option>
             <option value="smallSUV">Small SUV</option>
@@ -65,14 +64,14 @@ function ServicesPageInner() {
           </select>
         </div>
         <button
-          className="fixed bottom-6 right-6 bg-primary text-offWhite px-6 py-3 rounded-full shadow-lg font-bold text-lg hover:bg-primary/90 transition"
+          className="fixed bottom-6 right-6 bg-brand text-white px-6 py-3 rounded-full shadow-lg font-bold text-lg hover:bg-brand/90 focus-ring transition"
           onClick={() => setDrawerOpen(true)}
           aria-label="Open cart"
         >
           View Cart ({count()})
         </button>
-        </div>
-        <CartDrawer
+      </Container>
+      <CartDrawer
           items={items}
           onRemove={remove}
           vehicleSize={vehicleSize}
@@ -82,16 +81,12 @@ function ServicesPageInner() {
           open={drawerOpen}
           onClose={() => setDrawerOpen(false)}
         />
-      </main>
-      <Footer />
-    </div>
+    </Section>
   );
 }
 
 export default function ServicesPage() {
   return (
-    <CartProvider>
-      <ServicesPageInner />
-    </CartProvider>
+    <ServicesPageInner />
   );
 }

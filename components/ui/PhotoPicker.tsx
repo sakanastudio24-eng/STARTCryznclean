@@ -15,7 +15,7 @@ export default function PhotoPicker({ photos, setPhotos, max = 3 }: PhotoPickerP
   };
   return (
     <div>
-      <label className="block text-sm font-medium text-charcoal mb-1">Photos (up to {max})</label>
+      <label className="block text-sm font-medium mb-1">Photos (up to {max})</label>
       <input
         ref={inputRef}
         type="file"
@@ -27,7 +27,7 @@ export default function PhotoPicker({ photos, setPhotos, max = 3 }: PhotoPickerP
       />
       <div className="flex gap-2 mt-2">
         {photos.map((file, i) => (
-          <span key={i} className="inline-block bg-accent/20 text-charcoal px-2 py-1 rounded text-xs truncate max-w-[100px]">{file.name}</span>
+          <span key={i} className="inline-block bg-brand/10 text-foreground px-2 py-1 rounded text-xs truncate max-w-[100px]">{file.name}</span>
         ))}
       </div>
     </div>

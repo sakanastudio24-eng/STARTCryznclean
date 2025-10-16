@@ -7,12 +7,12 @@ const faqs = [
 export default function FAQAccordion() {
   return (
     <section className="w-full bg-white py-12 px-4">
-      <h2 className="text-3xl font-bold heading text-primary mb-8 text-center">FAQs</h2>
-      <div className="max-w-2xl mx-auto divide-y divide-charcoal/10">
+      <h2 className="text-3xl font-semibold mb-8 text-center">FAQs</h2>
+      <div className="max-w-2xl mx-auto divide-y border-subtle/50">
         {faqs.map((faq, i) => (
           <details key={i} className="py-4">
-            <summary className="cursor-pointer text-lg font-semibold text-charcoal mb-2">{faq.q}</summary>
-            <p className="text-base text-charcoal mt-2">{faq.a}</p>
+            <summary className="cursor-pointer text-lg font-semibold mb-2">{faq.q}</summary>
+            <p className="text-base text-foreground mt-2">{faq.a}</p>
           </details>
         ))}
       </div>

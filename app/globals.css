@@ -5,10 +5,32 @@
 html, body { overflow-x: hidden; }
 *, *::before, *::after { box-sizing: border-box; }
 
+@layer base {
+  :root { --header-h: 64px; }
+
+  body { @apply bg-page text-foreground antialiased; }
+
+  /* Default link treatment: brand color with clear focus/hover */
+  a { @apply text-brand underline-offset-4; }
+  a:hover { @apply underline; }
+  a:focus-visible { @apply underline; }
+}
+
+@layer utilities {
+  .text-muted-foreground { @apply text-zinc-600; }
+  .border-subtle { @apply border-zinc-200; }
+  .bg-page { @apply bg-white; }
+  .bg-surface { @apply bg-white; }
+
+  /* Common visible focus ring utility */
+  .focus-ring { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: .01ms !important;
     transition-duration: .01ms !important;
     animation-iteration-count: 1 !important;
   }
+  html:focus-within { scroll-behavior: auto !important; }
 }

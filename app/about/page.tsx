@@ -1,17 +1,14 @@
-import NavigationBar from "../../components/NavigationBar";
-import Footer from "../../components/Footer";
+import Section from "../../components/layout/Section";
+import Container from "../../components/layout/Container";
+import { Heading } from "../../components/ui/Heading";
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-base text-text">
-      <NavigationBar />
-      <main className="flex-1 py-12 md:py-16">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold heading text-primary mb-6">About Cruiz n Clean</h1>
-          {/* ...content... */}
-        </div>
-      </main>
-      <Footer />
-    </div>
+    <Section>
+      <Container>
+        <Heading as={1} className="mb-6">About Cruiz n Clean</Heading>
+        {/* ...content... */}
+      </Container>
+    </Section>
   );
 }
