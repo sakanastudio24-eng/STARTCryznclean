@@ -3,6 +3,7 @@ import { useState } from "react";
 import { services } from "../../data/services-data";
 import ServiceCard from "../../components/ui/ServiceCard";
 import CartDrawer from "../../components/ui/CartDrawer";
+import { SETMORE_URL } from "../../lib/config";
 import NavigationBar from "../../components/NavigationBar";
 import Footer from "../../components/Footer";
 import { CartProvider, useCart } from "../../components/ui/CartProvider";
@@ -64,13 +65,26 @@ function ServicesPageInner() {
             <option value="largeSUVTruck">Large SUV/Truck</option>
           </select>
         </div>
-        <button
-          className="fixed bottom-6 right-6 bg-primary text-offWhite px-6 py-3 rounded-full shadow-lg font-bold text-lg hover:bg-primary/90 transition"
-          onClick={() => setDrawerOpen(true)}
-          aria-label="Open cart"
-        >
-          View Cart ({count()})
-        </button>
+        <div className="fixed bottom-6 right-6 flex flex-col gap-2 items-end">
+          <button
+            className="bg-primary text-offWhite px-6 py-3 rounded-full shadow-lg font-bold text-lg hover:bg-primary/90 transition"
+            onClick={() => setDrawerOpen(true)}
+            aria-label="Open booking selections"
+          >
+            View Booking ({count()})
+          </button>
+          <a
+            href={SETMORE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 transition"
+            onClick={() => {
+              try { window.dispatchEvent(new CustomEvent('analytics', { detail: { event: 'book_now_clicked', location: 'services' } })); } catch {}
+            }}
+          >
+            Book now
+          </a>
+        </div>
         </div>
         <CartDrawer
           items={items}
@@ -78,7 +92,20 @@ function ServicesPageInner() {
           vehicleSize={vehicleSize}
           setVehicleSize={setVehicleSize}
           estimate={total()}
-          onContinue={() => { window.location.href = "/request"; }}
+          onContinue={() => {
+            try {
+              const pkg = items[0]?.id || "";
+              const addons = items.slice(1).map(i => i.id).join(",");
+              const price = Math.round(total() * 100) / 100;
+              const q = new URLSearchParams();
+              if (pkg) q.set("pkg", pkg);
+              if (addons) q.set("addons", addons);
+              if (price) q.set("price", String(price));
+              window.location.href = "/booking" + (q.toString() ? `?${q.toString()}` : "");
+            } catch {
+              window.location.href = "/booking";
+            }
+          }}
           open={drawerOpen}
           onClose={() => setDrawerOpen(false)}
         />
