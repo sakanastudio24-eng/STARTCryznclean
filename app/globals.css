@@ -13,3 +13,19 @@ html, body { overflow-x: hidden; }
   }
 }
 :root{ --header-h: 64px; }
+
+/* Design tokens and utility classes per .cursorrules */
+.text-muted-foreground { @apply text-zinc-600 dark:text-zinc-400; }
+.border-subtle { @apply border-zinc-200 dark:border-zinc-800; }
+.bg-surface { @apply bg-white dark:bg-black; }
+.bg-page { @apply bg-white dark:bg-black; }
+
+/* Basic card + button primitives */
+.card { @apply bg-surface border border-subtle rounded-xl shadow-card; }
+.btn { @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 transition; }
+.btn-primary { @apply text-white bg-[#FF6A3D]; }
+.btn-primary:hover { @apply brightness-95; }
+.btn-primary:focus-visible { @apply ring-[#FF6A3D]; }
+.btn-secondary { @apply border border-subtle; }
+.btn-secondary:hover { @apply bg-black/5 dark:bg-white/5; }
+.btn-secondary:focus-visible { @apply ring-[#FF6A3D]; }
