@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import GalleryGrid from "../components/GalleryGrid";
-import Footer from "../components/Footer";
 import { services } from "../data/services-data";
 import ServiceCard from "../components/ui/ServiceCard";
 import { CartProvider, useCart } from "../components/ui/CartProvider";
@@ -64,9 +63,45 @@ function HomePage() {
     <div className={`flex flex-col min-h-screen bg-offWhite text-charcoal ${mounted ? "fade-in" : "opacity-0"}`}>
       <HeroSection />
       <div className="flex flex-col gap-0">
+        {/* Reliability strip */}
+        <section aria-label="Service highlights" className="bg-white border-y border-black/5">
+          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-charcoal/80">
+              <li>We come to you</li>
+              <li>• Same-week appointments</li>
+              <li>• Eco-conscious on request</li>
+              <li>• Transparent pricing</li>
+              <li>• Photo proof on request</li>
+            </ul>
+          </div>
+        </section>
         <ServicesPreview />
         <GalleryPreview />
         <CTABand />
+        {/* Why choose Cruiz n Clean */}
+        <section className="w-full">
+          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h2 className="text-3xl font-bold heading text-primary mb-6 text-center">Why choose Cruiz n Clean</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="rounded-xl border border-black/10 bg-white p-5">
+                <h3 className="font-semibold mb-1">We come to you</h3>
+                <p className="text-sm text-charcoal/80">Driveway or office.</p>
+              </div>
+              <div className="rounded-xl border border-black/10 bg-white p-5">
+                <h3 className="font-semibold mb-1">Clear prices</h3>
+                <p className="text-sm text-charcoal/80">Packages that match how you use your car.</p>
+              </div>
+              <div className="rounded-xl border border-black/10 bg-white p-5">
+                <h3 className="font-semibold mb-1">Detail mindset</h3>
+                <p className="text-sm text-charcoal/80">Tools for the spots drive-throughs miss.</p>
+              </div>
+              <div className="rounded-xl border border-black/10 bg-white p-5">
+                <h3 className="font-semibold mb-1">Your finish, your way</h3>
+                <p className="text-sm text-charcoal/80">Eco-friendly or high-gloss on request.</p>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
       <Footer />
       <style>{`
@@ -83,9 +118,5 @@ function HomePage() {
 }
 
 export default function Page() {
-  return (
-    <CartProvider>
-      <HomePage />
-    </CartProvider>
-  );
+  return <HomePage />;
 }

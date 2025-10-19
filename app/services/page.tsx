@@ -91,7 +91,37 @@ function ServicesPageInner() {
 export default function ServicesPage() {
   return (
     <CartProvider>
-      <ServicesPageInner />
+      <div className="flex flex-col gap-8">
+        {/* Packages section */}
+        <section className="mt-8">
+          <h2 className="text-3xl font-bold heading text-primary mb-4">Packages</h2>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <article className="rounded-xl border border-black/10 bg-white p-5 flex flex-col">
+              <h3 className="text-xl font-bold heading text-primary">Quick Wash</h3>
+              <p className="mt-2 text-sm text-charcoal/80">For drivers who want a clean car every week without the hassle.</p>
+              <div className="mt-4 flex gap-2">
+                <a href="/booking?pkg=quick" className="btn btn-secondary">Choose</a>
+              </div>
+            </article>
+            <article className="rounded-xl border border-black/10 bg-white p-5 flex flex-col">
+              <h3 className="text-xl font-bold heading text-primary">Standard Detail</h3>
+              <p className="mt-2 text-sm text-charcoal/80">For owners who care about maintenance and resale value.</p>
+              <div className="mt-4 flex gap-2">
+                <a href="/booking?pkg=standard" className="btn btn-secondary">Choose</a>
+              </div>
+            </article>
+            <article className="rounded-xl border border-black/10 bg-white p-5 flex flex-col">
+              <h3 className="text-xl font-bold heading text-primary">Premium Restoration</h3>
+              <p className="mt-2 text-sm text-charcoal/80">For enthusiasts who want showroom-level attention to every surface.</p>
+              <div className="mt-4 flex gap-2">
+                <a href="/booking?pkg=premium" className="btn btn-secondary">Choose</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <ServicesPageInner />
+      </div>
     </CartProvider>
   );
 }
