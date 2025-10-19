@@ -1,17 +1,12 @@
-import NavigationBar from "../../components/NavigationBar";
-import Footer from "../../components/Footer";
+import type { Metadata } from "next";
+import ContactClient from "@/components/site/ContactClient";
+
+export const metadata: Metadata = {
+  title: "Contact · Cruiz n Clean",
+  description:
+    "Questions or ready to book? Send us a note or outline your vehicles. We’ll confirm timing and any travel details.",
+};
 
 export default function ContactPage() {
-  return (
-    <div className="flex flex-col min-h-screen bg-base text-text">
-      <NavigationBar />
-      <main className="flex-1 py-12 md:py-16">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold heading text-primary mb-6">Contact Us</h1>
-          {/* ...content... */}
-        </div>
-      </main>
-      <Footer />
-    </div>
-  );
+  return <ContactClient />;
 }

@@ -12,4 +12,29 @@ html, body { overflow-x: hidden; }
     animation-iteration-count: 1 !important;
   }
 }
-:root{ --header-h: 64px; }
+:root { --header-h: 64px; }
+
+@layer components {
+  /* Token utilities */
+  .container { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+
+  .bg-page { @apply bg-white dark:bg-black; }
+  .bg-surface { @apply bg-white dark:bg-black; }
+
+  .text-muted-foreground { @apply text-zinc-600 dark:text-zinc-400; }
+  .border-subtle { @apply border-zinc-200 dark:border-zinc-800; }
+
+  .card { @apply rounded-xl bg-surface border border-subtle shadow-sm p-4 sm:p-6; }
+
+  .btn { @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/40 transition; }
+  .btn-primary { @apply btn text-white; background-color: #FF6A3D; }
+  .btn-primary:hover { filter: brightness(0.95); }
+  .btn-secondary { @apply btn border border-subtle bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100; }
+  .btn-secondary:hover { @apply bg-zinc-200/60 dark:bg-zinc-800/60; }
+
+  /* Contact form field tokens */
+  .ck-field { @apply grid gap-2; }
+  .ck-label { @apply text-sm font-medium text-muted-foreground; }
+  .ck-input { @apply block w-full rounded-md border border-subtle bg-surface px-3 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/40; }
+  .ck-textarea { @apply block w-full rounded-md border border-subtle bg-surface px-3 py-2 h-28 resize-vertical focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/40; }
+}
