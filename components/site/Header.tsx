@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NAV_LINKS } from "@/components/site/SiteConfig";
-import { SETMORE_URL } from "@/lib/config";
+import { NAV_LINKS } from "./SiteConfig";
+import { SETMORE_URL } from "../../lib/config";
 
 export default function Header() {
   const pathname = usePathname();
@@ -34,7 +34,7 @@ export default function Header() {
             href={SETMORE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center rounded-md bg-[#FF6A3D] px-4 py-2 text-sm font-medium text-white shadow-sm hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/40 transition"
+            className="btn btn-primary"
           >
             Book now
           </a>
@@ -73,7 +73,7 @@ export default function Header() {
               href={SETMORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center justify-center rounded-md bg-[#FF6A3D] px-4 py-2 text-sm font-medium text-white shadow-sm hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/40 transition"
+              className="mt-2 btn btn-primary"
             >
               Book now
             </a>

@@ -12,4 +12,47 @@ html, body { overflow-x: hidden; }
     animation-iteration-count: 1 !important;
   }
 }
-:root{ --header-h: 64px; }
+
+:root { --header-h: 64px; }
+
+/* Tokens and utilities (CruizKit) */
+.text-muted-foreground { @apply text-zinc-600 dark:text-zinc-400; }
+.border-subtle { @apply border-zinc-200 dark:border-zinc-800; }
+.bg-surface { @apply bg-white dark:bg-black; }
+.bg-page { @apply bg-white dark:bg-black; }
+
+/* Button system: solid colors only; hover uses brightness */
+.btn { @apply inline-flex items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/40; }
+.btn-primary { @apply bg-[#FF6A3D] text-white hover:brightness-95; }
+.btn-secondary { @apply bg-zinc-900 text-white hover:brightness-95 dark:bg-zinc-100 dark:text-zinc-900; }
+.btn:disabled { @apply opacity-60 cursor-not-allowed; }
+
+/* Reflective shine for large hero CTAs (opt-in) */
+.btn-reflect { position: relative; overflow: hidden; }
+.btn-reflect::after {
+  content: "";
+  position: absolute;
+  top: -120%;
+  left: -30%;
+  width: 60%;
+  height: 300%;
+  transform: translateX(-150%) rotate(25deg);
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.35) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  pointer-events: none;
+}
+.btn-reflect:hover::after { animation: reflectShine 800ms ease; }
+@keyframes reflectShine {
+  0% { transform: translateX(-150%) rotate(25deg); }
+  100% { transform: translateX(150%) rotate(25deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-reflect:hover::after { animation: none; }
+}
+
+/* Social icon hit areas */
+.social { @apply inline-flex items-center justify-center w-10 h-10 p-2 rounded-md border border-subtle text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/40; }
