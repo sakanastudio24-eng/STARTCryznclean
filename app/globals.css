@@ -13,3 +13,18 @@ html, body { overflow-x: hidden; }
   }
 }
 :root{ --header-h: 64px; }
+
+/* Optional: visible focus ring that respects Tailwind color tokens */
+@layer utilities {
+  .focus-visible-ring {
+    @apply outline-none ring-2 ring-offset-2 ring-brand/60 ring-offset-white dark:ring-offset-black focus-visible:ring-2;
+  }
+}
+
+/* Workspace utility tokens per rules */
+@layer utilities {
+  .text-muted-foreground { @apply text-zinc-600 dark:text-zinc-400; }
+  .border-subtle { @apply border-zinc-200 dark:border-zinc-800; }
+  .bg-surface { @apply bg-white dark:bg-black; }
+  .bg-page { @apply bg-white dark:bg-black; }
+}
