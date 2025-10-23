@@ -11,7 +11,7 @@ export default function Header() {
   useEffect(() => { setOpen(false); }, [pathname]);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 h-16 bg-white border-b border-slate-200 text-slate-900">
+    <header className="fixed top-0 inset-x-0 z-50 h-14 sm:h-16 bg-white border-b border-slate-200 text-slate-900">
       <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <Link href="/" className="font-semibold text-slate-900">Cruiz n Clean</Link>
 

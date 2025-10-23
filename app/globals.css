@@ -14,10 +14,16 @@ html, body { overflow-x: hidden; }
 }
 
 :root {
-  --header-h: 64px;
+  --header-h: 3.5rem; /* 56px / h-14 for mobile */
   --brand-primary: #7A001F;
   --brand-primary-hover: #69001A;
   --brand-accent: #1259A6;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --header-h: 4rem; /* 64px / h-16 for desktop */
+  }
 }
 
 /* Brand Button Animations */
@@ -79,5 +85,27 @@ html, body { overflow-x: hidden; }
   }
   .btn-small:hover {
     transform: none;
+  }
+}
+
+/* Toast fade-in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in {
+    animation: none;
   }
 }

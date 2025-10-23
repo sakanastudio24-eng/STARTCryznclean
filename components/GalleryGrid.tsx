@@ -11,7 +11,7 @@ export default function GalleryGrid({ preview = false }: { preview?: boolean }) 
   const displayImages = preview ? filtered.slice(0, 2) : filtered;
   return (
     <section className="w-full">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
       <h2 className="text-3xl font-bold heading text-primary mb-8 text-center">Gallery</h2>
       <div className="flex justify-center gap-2 mb-6 flex-wrap">
         {categories.map(cat => (

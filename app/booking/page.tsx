@@ -135,7 +135,7 @@ export default function BookingPage() {
   // Empty cart state
   if (cart.items.length === 0) {
     return (
-      <div className="py-12 md:py-16">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
         <div className="max-w-2xl mx-auto text-center">
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-12">
             <h1 className="text-3xl font-bold text-slate-900 mb-4">
@@ -160,7 +160,7 @@ export default function BookingPage() {
   const tooManyVehicles = totalVehicles() > MAX_CARS_PER_BOOKING;
 
   return (
-    <div className="py-12 md:py-16">
+    <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-primary mb-2">Complete Your Booking</h1>
         <p className="text-slate-600 text-lg">Review your selections and provide details to finalize your appointment.</p>

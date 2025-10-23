@@ -87,3 +87,4 @@ export function getAddonsByIds(ids: string[]): Addon[] {
   return ids.map(id => getAddonById(id)).filter((addon): addon is Addon => addon !== undefined);
 }
 
+

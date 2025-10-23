@@ -10,7 +10,7 @@ import PackageCard from "../components/cart/PackageCard";
 function ServicesPreview() {
   return (
     <section className="w-full fade-in bg-white">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
         <h2 className="text-3xl font-bold text-primary mb-8 text-center">Our Packages</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {PACKAGES.map((pkg) => (
@@ -41,7 +41,7 @@ function GalleryPreview() {
 function CTABand() {
   return (
     <section className="w-full bg-primary text-white fade-in">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 text-center">
         <h3 className="text-2xl font-bold mb-4">Ready for a spotless ride?</h3>
         <a href="/contact" className="btn-primary-cta inline-flex items-center justify-center rounded-xl px-6 py-3 bg-white text-slate-900 font-bold text-lg shadow-lg">Request a Quote</a>
       </div>

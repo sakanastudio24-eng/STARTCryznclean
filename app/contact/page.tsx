@@ -93,7 +93,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="py-12 md:py-16">
+    <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-primary mb-2">Contact Us</h1>
         <p className="text-slate-600 text-lg">

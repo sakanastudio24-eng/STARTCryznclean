@@ -205,7 +205,7 @@ export default function RequestClient() {
       </div>
       {error && <div className="text-red-600 font-medium">{error}</div>}
       <div className="md:col-span-2">
-      <button type="submit" className="w-full bg-primary text-offWhite rounded-xl px-5 py-3 font-bold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-accent transition" disabled={submitting}>
+      <button type="submit" className="btn-primary-cta w-full rounded-xl px-5 py-3 font-bold disabled:opacity-50" disabled={submitting}>
         {submitting ? "Submitting..." : "Submit Request"}
       </button>
       </div>

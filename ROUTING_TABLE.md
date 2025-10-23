@@ -92,3 +92,4 @@
 ✅ **Navigation**: All internal links use Link component  
 ✅ **Performance**: Client-side navigation enabled for footer links
 
+

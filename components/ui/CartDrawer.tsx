@@ -59,7 +59,7 @@ export default function CartDrawer({ items, onRemove, vehicleSize, setVehicleSiz
           <span className="font-semibold text-charcoal">Estimate</span>
           <span className="font-bold text-primary">${estimate}</span>
         </div>
-        <button onClick={onContinue} className="w-full mt-4 bg-primary text-offWhite py-2 rounded font-bold hover:bg-primary/90 transition">Continue</button>
+        <button onClick={onContinue} className="btn-primary-cta w-full mt-4 py-2 rounded font-bold">Continue</button>
       </div>
     </aside>
     </>

@@ -9,7 +9,7 @@ function ConfirmationContent() {
   const booked = searchParams.get("booked") === "true";
 
   return (
-    <div className="py-12 md:py-16">
+    <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
       <div className="max-w-3xl mx-auto">
         <div className="bg-white border border-slate-200 rounded-xl p-8 md:p-12 shadow-sm text-center">
           {/* Success Icon */}
@@ -103,7 +103,7 @@ function ConfirmationContent() {
 export default function ConfirmationPage() {
   return (
     <Suspense fallback={
-      <div className="py-12 md:py-16">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
         <div className="max-w-3xl mx-auto text-center">
           <div className="animate-pulse">Loading...</div>
         </div>
