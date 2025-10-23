@@ -22,11 +22,28 @@ html, body { overflow-x: hidden; }
 .border-subtle { border-color: var(--border); }
 
 /* button primitives (no blues) */
-.btn { @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2; }
-.btn-primary { @apply text-white; background: var(--brand); }
-.btn-primary:hover { filter: brightness(0.95); }
-.btn-secondary { @apply border border-subtle text-text bg-white; }
-.btn-secondary:hover { @apply bg-zinc-50; }
+.btn { 
+  @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-opacity-40 focus-visible:ring-offset-2; 
+}
+
+.btn-primary { 
+  @apply text-white; 
+  background: var(--brand); 
+}
+
+.btn-primary:hover { 
+  filter: brightness(0.95); 
+}
+
+.btn-secondary { 
+  @apply border border-subtle text-text bg-white; 
+}
+
+.btn-secondary:hover { 
+  @apply bg-zinc-50; 
+}
 
 /* card */
-.card { @apply rounded-2xl border border-subtle bg-white shadow-sm; }
+.card { 
+  @apply rounded-2xl border border-subtle bg-white shadow-sm; 
+}
