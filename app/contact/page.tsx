@@ -5,7 +5,7 @@ import { Info, Mail, Phone, Clock } from "lucide-react";
 import { PACKAGES } from "../../data/pricing";
 import { getServiceAreaMessage, SERVICE_AREA_INFO } from "../../data/serviceArea";
 
-export default function ContactPage() {
+function ContactPageContent() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -441,5 +441,40 @@ export default function ContactPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Wrap in layout-breaking container for full-width CTA
+export default function ContactPageWrapper() {
+  return (
+    <>
+      <ContactPageContent />
+      
+      {/* Ready to Book Full-Width Band - Outside main container */}
+      <section className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen bg-primary text-white py-8 mt-12">
+        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="text-center md:text-left">
+              <h3 className="text-2xl font-bold text-white mb-2">Ready to book?</h3>
+              <p className="text-white/90">Pick your time now or request a custom quote.</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+              <a 
+                href="/booking" 
+                className="inline-flex items-center justify-center rounded-md bg-white px-6 py-3 text-primary font-semibold hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 transition shadow-sm"
+              >
+                Book Now
+              </a>
+              <a 
+                href="/contact#quote" 
+                className="inline-flex items-center justify-center rounded-md border-2 border-white/40 bg-white/10 px-6 py-3 text-white font-semibold hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 transition"
+              >
+                Request a Quote
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

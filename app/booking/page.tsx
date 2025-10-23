@@ -2,10 +2,11 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useCart } from "../../components/cart/CartContext";
+import { CartProvider, useCart } from "../../components/cart/CartContext";
 import { getPackageById, calculatePrice, SIZE_LABELS } from "../../data/pricing";
 import { getServiceAreaMessage } from "../../data/serviceArea";
 import { MAX_CARS_PER_BOOKING } from "../../lib/config";
+import VehicleSizeBar from "../../components/ui/VehicleSizeBar";
 
 // Mock available time slots
 const AVAILABLE_TIMES = [
@@ -18,7 +19,7 @@ const AVAILABLE_TIMES = [
   "4:00 PM",
 ];
 
-export default function BookingPage() {
+function BookingPageInner() {
   const router = useRouter();
   const { cart, removeItem, updateQty, setVehicleForItem, subtotal, totalVehicles, clearCart } = useCart();
   
@@ -165,6 +166,8 @@ export default function BookingPage() {
         <h1 className="text-4xl font-bold text-primary mb-2">Complete Your Booking</h1>
         <p className="text-slate-600 text-lg">Review your selections and provide details to finalize your appointment.</p>
       </div>
+
+      <VehicleSizeBar />
 
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -550,5 +553,13 @@ export default function BookingPage() {
         </div>
       </form>
     </div>
+  );
+}
+
+export default function BookingPage() {
+  return (
+    <CartProvider>
+      <BookingPageInner />
+    </CartProvider>
   );
 }

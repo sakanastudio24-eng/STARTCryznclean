@@ -43,7 +43,7 @@ export default function MiniCart() {
 
           {/* Drawer */}
           <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white shadow-2xl z-50 overflow-y-auto">
-            <div className="p-6">
+            <div className="p-6 pb-20">
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-slate-900">Your Cart</h2>
@@ -120,7 +120,7 @@ export default function MiniCart() {
               </div>
 
               {/* Total */}
-              <div className="border-t border-slate-200 pt-4 mb-6">
+              <div className="border-t border-slate-200 pt-4">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-slate-600">Total Vehicles:</span>
                   <span className="font-semibold text-slate-900">
@@ -136,14 +136,18 @@ export default function MiniCart() {
                   </span>
                 </div>
               </div>
+            </div>
 
-              {/* CTA */}
-              <button
-                onClick={handleGoToBooking}
-                className="btn-primary-cta w-full py-4 rounded-lg font-bold text-lg"
-              >
-                Go to Booking
-              </button>
+            {/* CTA Footer */}
+            <div className="fixed bottom-0 right-0 w-full max-w-md bg-white/95 backdrop-blur-sm border-t border-slate-200 z-50">
+              <div className="px-4 py-4 flex items-center justify-center">
+                <button
+                  onClick={handleGoToBooking}
+                  className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 transition"
+                >
+                  View Cart
+                </button>
+              </div>
             </div>
           </div>
         </>

@@ -9,7 +9,7 @@ import PackageCard from "../components/cart/PackageCard";
 
 function ServicesPreview() {
   return (
-    <section className="w-full fade-in bg-white">
+    <section className="w-full fade-in bg-offWhite">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
         <h2 className="text-3xl font-bold text-primary mb-8 text-center">Our Packages</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

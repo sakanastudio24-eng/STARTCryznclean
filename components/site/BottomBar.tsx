@@ -15,6 +15,7 @@ export default function BottomBar() {
 
   return (
     <nav
+      aria-label="Mobile navigation"
       className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 shadow-sm"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
@@ -26,8 +27,9 @@ export default function BottomBar() {
             <Link
               key={item.href}
               href={item.href}
+              aria-label={item.label}
               aria-current={isActive ? "page" : undefined}
-              className={`flex flex-col items-center justify-center gap-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
+              className={`flex flex-col items-center justify-center gap-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 ${
                 isActive ? "text-primary" : "text-slate-600 hover:text-slate-900"
               }`}
             >

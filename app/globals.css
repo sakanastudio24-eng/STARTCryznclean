@@ -15,9 +15,9 @@ html, body { overflow-x: hidden; }
 
 :root {
   --header-h: 3.5rem; /* 56px / h-14 for mobile */
-  --brand-primary: #7A001F;
-  --brand-primary-hover: #69001A;
-  --brand-accent: #1259A6;
+  --brand-primary: #6B0F1A;
+  --brand-primary-hover: #5E0D17;
+  --brand-accent: #1F5A93;
 }
 
 @media (min-width: 640px) {
@@ -58,6 +58,11 @@ html, body { overflow-x: hidden; }
   }
 }
 
+.btn-primary-cta:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(107, 15, 26, 0.4);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .btn-primary-cta,
   .btn-primary-cta::before {
@@ -77,6 +82,11 @@ html, body { overflow-x: hidden; }
     transform: scale(0.98);
     opacity: 0.9;
   }
+}
+
+.btn-small:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(107, 15, 26, 0.4);
 }
 
 @media (prefers-reduced-motion: reduce) {
