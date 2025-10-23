@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -12,4 +12,72 @@ html, body { overflow-x: hidden; }
     animation-iteration-count: 1 !important;
   }
 }
-:root{ --header-h: 64px; }
+
+:root {
+  --header-h: 64px;
+  --brand-primary: #7A001F;
+  --brand-primary-hover: #69001A;
+  --brand-accent: #1259A6;
+}
+
+/* Brand Button Animations */
+.btn-primary-cta {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--brand-primary);
+  color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (hover: hover) {
+  .btn-primary-cta:hover {
+    background-color: var(--brand-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(122, 0, 31, 0.25);
+  }
+  
+  .btn-primary-cta:hover::before {
+    left: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary-cta,
+  .btn-primary-cta::before {
+    transition: none;
+  }
+  .btn-primary-cta:hover {
+    transform: none;
+  }
+}
+
+.btn-small {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (hover: hover) {
+  .btn-small:hover {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-small {
+    transition: none;
+  }
+  .btn-small:hover {
+    transform: none;
+  }
+}

@@ -1,9 +1,9 @@
-export const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/services" },
-  { label: "Detailing", href: "/detailing" },
-  { label: "Booking", href: "/booking" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-] as const;
+﻿export type NavLink = { href: string; label: string };
+
+export const NAV_LINKS: NavLink[] = [
+  { href: "/",        label: "Home" },
+  { href: "/about",   label: "About" },
+  { href: "/services",label: "Services" },
+  { href: "/gallery", label: "Gallery" },
+  { href: "/contact", label: "Contact" },
+];

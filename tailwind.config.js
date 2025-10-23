@@ -12,11 +12,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#56070F',
-        accent:  '#8CC0D6',
-        base:    '#10150F',
-        text:    '#F9FAF9',
-        muted:   '#E6E9EC',
+        primary: '#7A001F',
+        'primary-600': '#69001A',
+        accent: '#1259A6',
+        charcoal: '#2D2D2D',
+        offWhite: '#FAFAFA',
       },
       borderRadius: { xl: '1rem', '2xl': '1.25rem' },
       boxShadow: { card: '0 6px 24px rgba(0,0,0,0.08)' },

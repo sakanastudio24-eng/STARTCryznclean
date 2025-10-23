@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { useCart } from "../cart/CartProvider";
 
 const VEHICLE_SIZES = [
   { label: "Car", value: "car" },
@@ -14,7 +13,7 @@ function isValidEmail(email: string) {
 }
 
 export default function RequestClient() {
-  const { items, size, setSize } = useCart();
+  const [size, setSize] = useState<"car" | "smallSUV" | "largeSUVTruck">("car");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -49,14 +48,13 @@ export default function RequestClient() {
   const isValid =
     fullName.trim() &&
     isValidEmail(email) &&
-    size &&
-    items.length > 0;
+    size;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     if (!isValid) {
-      setError("Please fill all required fields and select at least one service.");
+      setError("Please fill all required fields.");
       return;
     }
     setSubmitting(true);
@@ -76,7 +74,7 @@ export default function RequestClient() {
       power,
       water,
       notes,
-      services: items,
+      services: [],
       photos: photos.map(f => ({ name: f.name, url: URL.createObjectURL(f) })),
     };
     try {
@@ -98,18 +96,16 @@ export default function RequestClient() {
   if (success) {
     return (
       <div className="bg-white rounded-lg shadow p-8 text-center mt-8">
-        <h2 className="text-2xl font-bold heading text-primary mb-4">Request Sent!</h2>
-        <p className="mb-6">Thank you for your request. You can now book your appointment or return home.</p>
+        <h2 className="text-2xl font-bold text-primary mb-4">Request Sent!</h2>
+        <p className="text-slate-700 mb-6">Thank you for your request. You can now book your appointment or return home.</p>
         <a
-          href={process.env.NEXT_PUBLIC_SETMORE_BOOKING_URL || "https://setmore.com"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block bg-accent text-charcoal px-6 py-2 rounded font-bold hover:bg-accent/80 transition mb-2"
+          href="/booking"
+          className="btn-primary-cta inline-block px-6 py-3 rounded font-bold mb-2"
         >
-          Book with Setmore
+          Book Appointment
         </a>
         <br />
-        <a href="/confirmation?appointmentStarted=1" className="inline-block bg-primary text-offWhite px-6 py-2 rounded font-bold hover:bg-primary/90 transition">Go to Confirmation</a>
+        <a href="/confirmation?appointmentStarted=1" className="btn-small inline-block bg-slate-100 text-slate-900 px-6 py-3 rounded font-bold hover:bg-slate-200 transition-colors mt-2">View Confirmation</a>
       </div>
     );
   }
@@ -169,12 +165,6 @@ export default function RequestClient() {
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-charcoal mb-1">Selected Services <span className="text-red-600">*</span></label>
-        <ul className="list-disc pl-6 text-charcoal">
-          {items.length === 0 ? <li className="text-red-600">No services selected</li> : items.map(s => <li key={s.id}>{s.title}</li>)}
-        </ul>
       </div>
       <div>
         <label className="block text-sm font-medium text-charcoal mb-1">Parking, Power, Water Available?</label>

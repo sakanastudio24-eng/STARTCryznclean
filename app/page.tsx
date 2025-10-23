@@ -3,32 +3,27 @@
 import React, { useState, useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import GalleryGrid from "../components/GalleryGrid";
-import Footer from "../components/Footer";
-import { services } from "../data/services-data";
-import ServiceCard from "../components/ui/ServiceCard";
-import { CartProvider, useCart } from "../components/ui/CartProvider";
+import MiniCart from "../components/cart/MiniCart";
+import { PACKAGES } from "../data/pricing";
+import PackageCard from "../components/cart/PackageCard";
 
 function ServicesPreview() {
-  const { items, add } = useCart();
-  const previewServices = services.slice(0, 6);
   return (
-    <section className="w-full fade-in">
+    <section className="w-full fade-in bg-white">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 className="text-3xl font-bold heading text-primary mb-8 text-center">Popular Services</h2>
+        <h2 className="text-3xl font-bold text-primary mb-8 text-center">Our Packages</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {previewServices.map((service) => (
-          <div key={service.id} className="relative">
-            <ServiceCard
-              id={service.id}
-              title={service.title}
-              price={service.basePrice}
-              basePrice={service.basePrice}
-              category={service.category}
-              selected={!!items.find(i => i.id === service.id)}
-              onClick={() => add({ id: service.id, title: service.title, basePrice: service.basePrice, category: service.category, qty: 1 })}
-            />
-          </div>
-        ))}
+          {PACKAGES.map((pkg) => (
+            <PackageCard key={pkg.id} package={pkg} />
+          ))}
+        </div>
+        <div className="text-center mt-8">
+          <a
+            href="/services"
+            className="btn-primary-cta inline-block px-6 py-3 rounded-lg font-semibold"
+          >
+            View All Services
+          </a>
         </div>
       </div>
     </section>
@@ -45,10 +40,10 @@ function GalleryPreview() {
 
 function CTABand() {
   return (
-    <section className="w-full bg-primary text-offWhite fade-in">
+    <section className="w-full bg-primary text-white fade-in">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-        <h3 className="text-2xl font-bold heading mb-4">Ready for a spotless ride?</h3>
-        <a href="/request" className="inline-flex items-center justify-center rounded-xl px-6 py-3 bg-accent text-charcoal font-bold text-lg shadow hover:bg-accent/90 transition">Request a Quote</a>
+        <h3 className="text-2xl font-bold mb-4">Ready for a spotless ride?</h3>
+        <a href="/contact" className="btn-primary-cta inline-flex items-center justify-center rounded-xl px-6 py-3 bg-white text-slate-900 font-bold text-lg shadow-lg">Request a Quote</a>
       </div>
     </section>
   );
@@ -61,14 +56,14 @@ function HomePage() {
     setMounted(true);
   }, []);
   return (
-    <div className={`flex flex-col min-h-screen bg-offWhite text-charcoal ${mounted ? "fade-in" : "opacity-0"}`}>
+    <div className={`${mounted ? "fade-in" : "opacity-0"}`}>
       <HeroSection />
       <div className="flex flex-col gap-0">
         <ServicesPreview />
         <GalleryPreview />
         <CTABand />
       </div>
-      <Footer />
+      <MiniCart />
       <style>{`
         .fade-in {
           opacity: 1;
@@ -83,9 +78,5 @@ function HomePage() {
 }
 
 export default function Page() {
-  return (
-    <CartProvider>
-      <HomePage />
-    </CartProvider>
-  );
+  return <HomePage />;
 }
