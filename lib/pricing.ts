@@ -1,30 +1,28 @@
-import { VehicleSize, SIZE_MULTIPLIER } from "../data/pricing";
+import { PACKAGES, VehicleSize, SIZE_MULTIPLIER } from "../data/pricing";
 
 /**
- * Format price as currency string
+ * Compute the current price for a package at a given vehicle size
+ */
+export function computeCurrentPrice(basePrice: number, size: VehicleSize): number {
+  return Math.round(basePrice * SIZE_MULTIPLIER[size]);
+}
+
+/**
+ * Compute the compare-at price (usually higher for showing discounts)
+ */
+export function computeCompareAt(basePrice: number, size: VehicleSize): number {
+  // Add 20% to show as "compare at" price
+  return Math.round(basePrice * SIZE_MULTIPLIER[size] * 1.2);
+}
+
+/**
+ * Format a price as currency
  */
 export function formatPrice(price: number): string {
-  return `$${price}`;
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(price);
 }
-
-/**
- * Compute current price based on base price and vehicle size
- */
-export function computeCurrentPrice(base: number, size: VehicleSize): number {
-  return Math.round(base * SIZE_MULTIPLIER[size]);
-}
-
-/**
- * Compute compare-at price (only shown if greater than current)
- * For now, we'll use the base price as compare-at for larger sizes
- */
-export function computeCompareAt(base: number, size: VehicleSize): number | null {
-  // Only show compare-at for larger sizes when they're more expensive than base
-  const current = computeCurrentPrice(base, size);
-  if (current > base) {
-    return base; // Show base price as compare-at
-  }
-  return null; // No compare-at to show
-}
-
-

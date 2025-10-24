@@ -1,11 +1,7 @@
 import React from "react";
-import Link from "next/link";
-import WashosStyleHero from "../components/ui/WashosStyleHero";
-import WashosStyleServiceCard from "../components/ui/WashosStyleServiceCard";
-import ServiceAreas from "../components/ui/ServiceAreas";
-import WhyChooseUs from "../components/ui/WhyChooseUs";
-import HowItWorks from "../components/ui/HowItWorks";
-import ReviewsStrip from "../components/ui/ReviewsStrip";
+import HeroSection from "../components/HeroSection";
+import BookingPreview from "../components/ui/BookingPreview";
+import CorporateServiceCard from "../components/ui/CorporateServiceCard";
 
 export const metadata = {
   title: "Auto Detailing in Yorba Linda, Anaheim Hills & Placentia | Cruiz n Clean",
@@ -22,64 +18,42 @@ function ServicesSection() {
   const services = [
     {
       title: "Express Wash",
-      subtitle: "Essential inside-out wash for regular upkeep.",
-      frequency: "Weekly or every 200 mi.",
+      description: "Quick exterior clean with interior vacuum for regular maintenance",
       price: "From $60",
-      memberPrice: "from $42 for members*",
       features: [
-        "Full exterior hand wash",
-        "Tire dressing & rim cleaning", 
-        "Exterior window cleaning",
-        "Thorough interior & trunk vacuum",
-        "Interior wipe down",
-        "Door jambs",
-        "Window cleaning inside",
-        "Glossy exterior finish"
+        "Hand wash & dry",
+        "Wheel cleaning",
+        "Tire shine",
+        "Interior vacuum",
+        "Window cleaning"
       ],
       image: "https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
       href: "/services"
     },
     {
       title: "Standard Detail",
-      subtitle: "Comprehensive wash and wax for an eye-catching finish.",
-      frequency: "Monthly or every 500 mi.",
+      description: "Complete interior and exterior care for thorough cleaning",
       price: "From $140",
-      memberPrice: "from $98 for members*",
       features: [
-        "Full exterior hand wash",
-        "Tire dressing & rim cleaning",
-        "Exterior window cleaning", 
-        "Thorough interior & trunk vacuum",
-        "Interior wipe down",
+        "Full wash & wax",
+        "Deep interior clean",
+        "Window cleaning",
         "Door jambs",
-        "Window cleaning inside",
-        "Complete wax for protection & shine",
-        "Leather cleaning & conditioning",
-        "Light stain removal"
+        "Tire dressing"
       ],
       image: "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      href: "/services",
-      isPopular: true
+      href: "/services"
     },
     {
       title: "Premium Detail",
-      subtitle: "Essential detailing to protect and maintain your car's shine.",
-      frequency: "Every 3 months or 1500 mi.",
+      description: "Ultimate protection and restoration for showroom finish",
       price: "From $220",
-      memberPrice: "from $154 for members*",
       features: [
-        "Full exterior hand wash",
-        "Tire dressing & rim cleaning",
-        "Exterior window cleaning",
-        "Thorough interior & trunk vacuum", 
-        "Interior wipe down",
-        "Door jambs",
-        "Window cleaning inside",
-        "Complete wax for protection & shine",
-        "Leather cleaning & conditioning",
-        "Clay bar paint treatment",
-        "Outside plastic dressing",
-        "Mats & carpets shampooed"
+        "Clay bar treatment",
+        "Paint sealant",
+        "Leather conditioning",
+        "Engine bay cleaning",
+        "Ceramic prep"
       ],
       image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
       href: "/services"
@@ -87,54 +61,64 @@ function ServicesSection() {
   ];
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4">Services available for your lifestyle</h2>
-          <p className="text-xl text-slate-600">Professional detailers, fully equipped and insured.</p>
+    <section className="py-20 bg-white creative-bg-pattern relative overflow-hidden">
+      {/* Creative Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 right-10 w-32 h-32 bg-[#6B0F1A]/5 rounded-full blur-2xl animate-pulse-slow"></div>
+        <div className="absolute bottom-20 left-10 w-40 h-40 bg-[#1F5A93]/5 rounded-full blur-2xl animate-pulse-slow" style={{animationDelay: '2s'}}></div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16 animate-slide-in">
+          <h2 className="text-4xl font-bold text-slate-900 mb-4 text-shadow-creative">Our Services</h2>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            Professional mobile detailing packages designed for every need and budget
+          </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <WashosStyleServiceCard
-              key={index}
-              title={service.title}
-              subtitle={service.subtitle}
-              frequency={service.frequency}
-              price={service.price}
-              memberPrice={service.memberPrice}
-              features={service.features}
-              image={service.image}
-              href={service.href}
-              isPopular={service.isPopular}
-            />
+            <div key={index} className="animate-fade-in-scale" style={{animationDelay: `${index * 0.2}s`}}>
+              <CorporateServiceCard
+                title={service.title}
+                description={service.description}
+                price={service.price}
+                features={service.features}
+                image={service.image}
+                href={service.href}
+              />
+            </div>
           ))}
-        </div>
-        
-        <div className="text-center mt-8">
-          <p className="text-sm text-slate-500">*Price may vary per market.</p>
         </div>
       </div>
     </section>
   );
 }
 
-function FinalCTA() {
+function CTASection() {
   return (
-    <section className="py-20 bg-[#6B0F1A] text-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-6">
-          Let us help you get that new car smell today
-        </h2>
-        <p className="text-xl text-white/90 mb-8">
-          Sign up and we'll get a fully equipped detailer to your location in as little as 90 minutes.
-        </p>
-        <Link 
-          href="/booking" 
-          className="inline-flex items-center justify-center px-8 py-4 bg-white text-[#6B0F1A] font-bold text-lg rounded-xl shadow-lg hover:shadow-xl hover:bg-white/90 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2"
-        >
-          Book now
-        </Link>
+    <section className="py-20 corporate-cta-band relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div className="animate-slide-in">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-shadow-creative">Ready to Transform Your Vehicle?</h2>
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            Book your professional mobile detailing service today. We'll bring the shine to your driveway.
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-scale" style={{animationDelay: '0.3s'}}>
+          <a 
+            href="/booking" 
+            className="inline-flex items-center justify-center px-8 py-4 bg-white text-[#6B0F1A] font-bold text-lg rounded-xl shadow-lg hover:shadow-xl hover:bg-white/90 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 hover:scale-105"
+          >
+            Book Now
+          </a>
+          <a 
+            href="/services" 
+            className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white font-semibold text-lg rounded-xl border-2 border-white hover:bg-white hover:text-[#6B0F1A] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 hover:scale-105"
+          >
+            View Services
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -143,13 +127,10 @@ function FinalCTA() {
 export default function Page() {
   return (
     <div>
-      <WashosStyleHero />
-      <ServiceAreas />
-      <WhyChooseUs />
+      <HeroSection />
+      <BookingPreview />
       <ServicesSection />
-      <ReviewsStrip />
-      <HowItWorks />
-      <FinalCTA />
+      <CTASection />
     </div>
   );
 }

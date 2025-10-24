@@ -4,18 +4,16 @@ import { useState, Suspense } from "react";
 import StockImage from "../../components/site/StockImage";
 import { useSearchParams } from "next/navigation";
 import { useCart } from "../../components/cart/CartContext";
-import { PACKAGES, VehicleSize, ADDONS, ADDONS_ENABLED, SIZE_LABELS } from "../../data/pricing";
+import { PACKAGES, VehicleSize, SIZE_LABELS } from "../../data/pricing";
 import { computeCurrentPrice, computeCompareAt, formatPrice } from "../../lib/pricing";
-import AddOnsGrid from "../../components/services/AddOnsGrid";
 import { Check } from "lucide-react";
-import VehicleSizeBar from "../../components/ui/VehicleSizeBar";
+import CorporateVehicleSizeBar from "../../components/ui/CorporateVehicleSizeBar";
 import MiniCart from "../../components/cart/MiniCart";
 
 export default function ServicesPageClient() {
   const [toast, setToast] = useState<string | null>(null);
-  const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
   const searchParams = useSearchParams();
-  const { cart, selectedSize, setSelectedSize, addPackage, removeItem, totalVehicles, canAddMore } = useCart();
+  const { cart, selectedSize, setSelectedSize, addItem, removeItem, totalVehicles, canAddMore } = useCart();
   
   // Map URL size to VehicleSize type
   const urlSize = searchParams.get('size') || 'md';
@@ -32,7 +30,7 @@ export default function ServicesPageClient() {
     
     // Check if this package+size combo already exists
     const existingItem = cart.items.find(
-      item => item.kind === "package" && item.packageId === pkg.id && item.size === vehicleSize
+      item => item.packageId === pkg.id && item.size === vehicleSize
     );
     
     if (existingItem && existingItem.qty >= 3) {
@@ -41,19 +39,11 @@ export default function ServicesPageClient() {
       return;
     }
     
-    addPackage(pkg.id, vehicleSize);
+    addItem(pkg.id, vehicleSize);
     setToast(`Added ${pkg.name} (${SIZE_LABELS[vehicleSize]})`);
     setTimeout(() => setToast(null), 3000);
   };
 
-  // Toggle add-on selection
-  const handleToggleAddon = (addonId: string) => {
-    setSelectedAddons(prev => 
-      prev.includes(addonId) 
-        ? prev.filter(id => id !== addonId)
-        : [...prev, addonId]
-    );
-  };
 
   return (
     <>
@@ -64,7 +54,7 @@ export default function ServicesPageClient() {
             <p className="text-xl text-slate-600">Professional mobile detailing packages with transparent pricing</p>
           </div>
           
-          <VehicleSizeBar 
+          <CorporateVehicleSizeBar 
             selectedSize={urlSize} 
             onSizeChange={(size) => {
               const sizeMap: Record<string, VehicleSize> = { small: 'compact', medium: 'sedan', large: 'suv' };
@@ -81,7 +71,7 @@ export default function ServicesPageClient() {
                 const currentPrice = computeCurrentPrice(pkg.base, vehicleSize);
                 const compareAtPrice = computeCompareAt(pkg.base, vehicleSize);
                 const cartItem = cart.items.find(
-                  item => item.kind === "package" && item.packageId === pkg.id && item.size === vehicleSize
+                  item => item.packageId === pkg.id && item.size === vehicleSize
                 );
                 const isAdded = !!cartItem;
                 const qty = cartItem?.qty || 0;
@@ -89,51 +79,48 @@ export default function ServicesPageClient() {
                 return (
                   <div
                     key={pkg.id}
-                    className="relative bg-white border-2 border-slate-200 rounded-2xl p-6 hover:shadow-xl transition-shadow h-full flex flex-col"
+                    className="corporate-service-card rounded-2xl p-6 hover:shadow-lg transition-all duration-300"
                   >
-                    <div className="flex-1 space-y-4">
-                      <div>
-                        <h3 className="text-2xl font-bold text-slate-900 mb-2">{pkg.name}</h3>
-                        <p className="text-slate-600 text-sm mb-3">{pkg.summary}</p>
-                        <div className="text-3xl font-bold text-[#6B0F1A]">
-                          {formatPrice(currentPrice)}
-                          {compareAtPrice && compareAtPrice > currentPrice && (
-                            <span className="text-sm text-slate-400 line-through ml-2">
-                              {formatPrice(compareAtPrice)}
-                            </span>
-                          )}
-                        </div>
-                        <div className="text-xs text-slate-500 mt-1">for {SIZE_LABELS[vehicleSize]} vehicles</div>
+                    <div className="mb-6">
+                      <h3 className="text-2xl font-bold text-slate-900 mb-2">{pkg.name}</h3>
+                      <p className="text-slate-600 text-sm mb-3">{pkg.summary}</p>
+                      <div className="text-3xl font-bold text-[#6B0F1A]">
+                        {formatPrice(currentPrice)}
+                        {compareAtPrice && compareAtPrice > currentPrice && (
+                          <span className="text-sm text-slate-400 line-through ml-2">
+                            {formatPrice(compareAtPrice)}
+                          </span>
+                        )}
                       </div>
-                      
-                      {pkg.features && pkg.features.length > 0 && (
-                        <div>
-                          <h4 className="text-sm font-semibold text-slate-700 mb-3">Package details</h4>
-                          <ul className="space-y-2">
-                            {pkg.features.map((feature, idx) => (
-                              <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
-                                <Check className="w-4 h-4 text-[#6B0F1A] flex-shrink-0 mt-0.5" aria-hidden="true" focusable="false" />
-                                <span>{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                      <div className="text-xs text-slate-500 mt-1">for {SIZE_LABELS[vehicleSize]} vehicles</div>
                     </div>
                     
-                    <div className="mt-auto pt-6">
-                      <button
-                        onClick={() => handleAddPackage(pkg)}
-                        aria-label={`Add ${pkg.name} to cart`}
-                        className={`w-full inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B0F1A]/40 focus-visible:ring-offset-2 ${
-                          isAdded
-                            ? "bg-[#6B0F1A]/10 text-[#6B0F1A] border-2 border-[#6B0F1A]"
-                            : "bg-[#6B0F1A] text-white hover:bg-[#6B0F1A]/90"
-                        }`}
-                      >
-                        {isAdded ? `Added (${qty})` : "Book now"}
-                      </button>
-                    </div>
+                    {pkg.features && pkg.features.length > 0 && (
+                      <div className="mb-6">
+                        <h4 className="text-sm font-semibold text-slate-700 mb-3">What's included:</h4>
+                        <ul className="space-y-2">
+                          {pkg.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
+                              <Check className="w-4 h-4 text-[#1F5A93] flex-shrink-0 mt-0.5" aria-hidden="true" focusable="false" />
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    
+                    <button
+                      onClick={() => handleAddPackage(pkg)}
+                      aria-label={`Add ${pkg.name} to cart`}
+                      className={`w-full inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B0F1A]/40 focus-visible:ring-offset-2 ${
+                        isAdded
+                          ? "bg-[#6B0F1A]/10 text-[#6B0F1A] border-2 border-[#6B0F1A]"
+                          : "btn-corporate-primary"
+                      }`}
+                      onKeyDown={(e) => e.key === 'Enter' && handleAddPackage(pkg)}
+                    >
+                      {isAdded ? `Added (${qty})` : "Book now"}
+                    </button>
                   </div>
                 );
               })}
@@ -195,18 +182,6 @@ export default function ServicesPageClient() {
         </div>
       </section>
 
-      {/* Add-ons Section */}
-      {ADDONS_ENABLED && ADDONS.some(a => a.enabled) && (
-        <section className="py-20 pb-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Add-On Services</h2>
-            <AddOnsGrid 
-              selectedAddons={selectedAddons} 
-              onToggleAddon={handleToggleAddon} 
-            />
-          </div>
-        </section>
-      )}
 
       <MiniCart />
 

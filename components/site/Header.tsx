@@ -3,20 +3,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X, ShoppingCart } from "lucide-react";
-import { NAV_LINKS, LIVE_FLAGS } from "./SiteConfig";
-import { SETMORE_URL } from "../../lib/config";
+import { NAV_LINKS } from "./SiteConfig";
 
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   useEffect(() => { setOpen(false); }, [pathname]);
 
-  const LiveDot = () => (
-    <span aria-hidden className="sr-only" />
-  );
-
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-[#6B0F1A] text-white">
+    <header className="fixed top-0 left-0 right-0 z-50 h-16 corporate-header">
       <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <Link 
           href="/" 
@@ -43,11 +38,10 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 aria-current={active ? "page" : undefined}
-                className={`text-sm font-medium text-white/90 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 transition-colors ${active ? "font-semibold text-white" : ""}`}
-                aria-label={link.href === '/services' && LIVE_FLAGS.services ? `${link.label} (live)` : link.label}
+                className={`text-sm font-medium nav-link focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 transition-colors ${active ? "active" : ""}`}
+                aria-label={link.label}
               >
                 {link.label}
-                {link.href === '/services' && LIVE_FLAGS.services ? <LiveDot/> : null}
               </Link>
             );
           })}
@@ -76,7 +70,7 @@ export default function Header() {
 
       {/* Mobile menu */}
       {open && (
-        <div id="mobile-menu" className="md:hidden border-t border-white/20 bg-[#6B0F1A]">
+        <div id="mobile-menu" className="md:hidden border-t border-white/20 corporate-header">
           <div className="px-4 py-3 flex flex-col gap-2">
             {/* Mobile brand text */}
             <div className="text-center py-2 mb-2">
@@ -89,21 +83,19 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
-                  className={`py-3 px-2 text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 transition-colors ${active ? "font-semibold text-white bg-white/10" : ""}`}
-                  aria-label={link.href === '/services' && LIVE_FLAGS.services ? `${link.label} (live)` : link.label}
+                  className={`py-3 px-2 text-sm font-medium nav-link rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 transition-colors ${active ? "active bg-white/10" : ""}`}
+                  aria-label={link.label}
                 >
                   {link.label}
-                  {link.href === '/services' && LIVE_FLAGS.services ? <LiveDot/> : null}
                 </Link>
               );
             })}
             <Link
               href="/booking"
               className="mt-2 inline-flex items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-semibold text-[#6B0F1A] shadow-sm hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 transition"
-              aria-label={LIVE_FLAGS.booking ? "Book Now (live)" : "Book Now"}
+              aria-label="Book Now"
             >
               Book Now
-              {LIVE_FLAGS.booking ? <LiveDot/> : null}
             </Link>
           </div>
         </div>

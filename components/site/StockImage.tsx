@@ -1,26 +1,31 @@
 import Image from "next/image";
 
-type Props = {
+interface StockImageProps {
   src: string;
   alt: string;
-  width?: number;
-  height?: number;
+  width: number;
+  height: number;
   className?: string;
   priority?: boolean;
-};
-
-export default function StockImage({ src, alt, width=1200, height=800, className="", priority=false }: Props) {
-  return (
-    <div className={`relative overflow-hidden rounded-2xl bg-slate-100 ${className}`}>
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        className="h-full w-full object-cover"
-        priority={priority}
-      />
-    </div>
-  );
 }
 
+export default function StockImage({ 
+  src, 
+  alt, 
+  width, 
+  height, 
+  className = "", 
+  priority = false 
+}: StockImageProps) {
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      className={className}
+      priority={priority}
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  );
+}
