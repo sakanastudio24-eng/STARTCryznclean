@@ -1,6 +1,9 @@
+﻿/** Next.js 15+ PostCSS config: plugin names as strings */
 module.exports = {
   plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
+    "postcss-import": {},
+    "postcss-nesting": {},
+    "tailwindcss": {},
+    "autoprefixer": {}
   },
-}
+};

@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -12,4 +12,134 @@ html, body { overflow-x: hidden; }
     animation-iteration-count: 1 !important;
   }
 }
-:root{ --header-h: 64px; }
+
+:root {
+  --header-h: 3.5rem; /* 56px / h-14 for mobile */
+  --brand-primary: #6B0F1A;
+  --brand-primary-hover: #5E0D17;
+  --brand-accent: #1F5A93;
+  --ring: 0 63% 33%; /* burgundy hue match */
+}
+
+@media (min-width: 640px) {
+  :root {
+    --header-h: 4rem; /* 64px / h-16 for desktop */
+  }
+}
+
+/* Brand Button Animations */
+.btn-primary-cta {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--brand-primary);
+  color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (hover: hover) {
+  .btn-primary-cta:hover {
+    background-color: var(--brand-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(122, 0, 31, 0.25);
+  }
+  
+  .btn-primary-cta:hover::before {
+    left: 100%;
+  }
+}
+
+.btn-primary-cta:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(107, 15, 26, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary-cta,
+  .btn-primary-cta::before {
+    transition: none;
+  }
+  .btn-primary-cta:hover {
+    transform: none;
+  }
+}
+
+.btn-small {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (hover: hover) {
+  .btn-small:hover {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+.btn-small:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(107, 15, 26, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-small {
+    transition: none;
+  }
+  .btn-small:hover {
+    transform: none;
+  }
+}
+
+/* Toast fade-in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in {
+    animation: none;
+  }
+}
+
+/* Focus ring utility class */
+.focus-ring { 
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2; 
+}
+
+/* Section spacing utilities */
+.section {
+  padding-top: var(--section-y);
+  padding-bottom: var(--section-y);
+}
+@media (min-width:768px){
+  .section { 
+    padding-top: var(--section-y-md); 
+    padding-bottom: var(--section-y-md);
+  }
+}
+.section-muted { background: #F9F9FA; } /* use on alternating sections */

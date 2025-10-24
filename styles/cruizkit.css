@@ -1,0 +1,52 @@
+/* Cruiz n Clean Brand Colors */
+:root {
+  --brand-primary: #6B0F1A;
+  --brand-secondary: #1F5A93;
+  --brand-accent: #FF6A3D;
+}
+
+/* Focus styles for accessibility */
+.focus-visible:ring-2 {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--brand-primary);
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: var(--brand-primary);
+  color: white;
+  border: 2px solid var(--brand-primary);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-primary);
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background-color: white;
+  color: var(--brand-primary);
+  border: 2px solid var(--brand-primary);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--brand-primary);
+  color: white;
+}
+
+/* Header height for fixed positioning */
+:root {
+  --header-h: 64px;
+}
+
+/* Main content offset */
+main {
+  padding-top: var(--header-h);
+}
+
+/* Smooth transitions */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}

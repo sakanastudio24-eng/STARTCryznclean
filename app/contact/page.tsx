@@ -1,17 +1,16 @@
-import NavigationBar from "../../components/NavigationBar";
-import Footer from "../../components/Footer";
+import ContactPageClient from "./ContactPageClient";
 
-export default function ContactPage() {
-  return (
-    <div className="flex flex-col min-h-screen bg-base text-text">
-      <NavigationBar />
-      <main className="flex-1 py-12 md:py-16">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold heading text-primary mb-6">Contact Us</h1>
-          {/* ...content... */}
-        </div>
-      </main>
-      <Footer />
-    </div>
-  );
+export const metadata = {
+  title: "Contact Us | Request Quote | Mobile Car Detailing | Cruiz n Clean",
+  description: "Get a free quote for mobile car detailing in Yorba Linda, Anaheim Hills, Placentia. Contact Cruiz n Clean for professional auto detailing services. We come to you!",
+  openGraph: {
+    title: "Contact Cruiz n Clean | Mobile Detailing Quote (Yorba Linda)",
+    description: "Request a free quote for mobile car detailing. We serve Yorba Linda, Anaheim Hills, Placentia and nearby areas.",
+    type: "website",
+    locale: "en_US",
+  },
+};
+
+export default function ContactPageWrapper() {
+  return <ContactPageClient />;
 }

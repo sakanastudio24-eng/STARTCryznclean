@@ -1,0 +1,7 @@
+srge branch 'feat/ref-hodetail' into feat/showcase-merged
+# Please enter a commit message to explain why this merge is necessary,
+# especially if it merges an updated upstream into a topic branch.
+#
+# Lines starting with '#' will be ignored, and an empty message aborts
+Merge HoDetail variant into showcase branch
+the commit.

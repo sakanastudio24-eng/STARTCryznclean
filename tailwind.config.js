@@ -12,11 +12,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#56070F',
-        accent:  '#8CC0D6',
-        base:    '#10150F',
-        text:    '#F9FAF9',
-        muted:   '#E6E9EC',
+        primary: '#6B0F1A',        // burgundy
+        'primary-hover': '#5E0D17',
+        'primary-600': '#5E0D17',  // kept for backwards compatibility
+        accent: '#1F5A93',         // companion blue (no neon)
+        charcoal: '#222222',
+        offWhite: '#F7F7F8',
+        surface: '#FFFFFF',
+        border: '#E5E7EB',
       },
       borderRadius: { xl: '1rem', '2xl': '1.25rem' },
       boxShadow: { card: '0 6px 24px rgba(0,0,0,0.08)' },
