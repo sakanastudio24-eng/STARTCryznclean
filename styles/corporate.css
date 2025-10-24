@@ -1,24 +1,8 @@
-﻿@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-html, body { overflow-x: hidden; }
-*, *::before, *::after { box-sizing: border-box; }
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-  }
-}
-
+/* Cruiz n Clean Creative Corporate Variant - Enhanced */
 :root {
-  --header-h: 3.5rem; /* 56px / h-14 for mobile */
   --brand-primary: #6B0F1A;
-  --brand-primary-hover: #5E0D17;
-  --brand-accent: #1F5A93;
   --brand-secondary: #1F5A93;
+  --brand-accent: #1F5A93;
   --brand-text: #1a1a1a;
   --brand-text-light: #6b7280;
   --brand-bg: #ffffff;
@@ -29,109 +13,10 @@ html, body { overflow-x: hidden; }
   --brand-gradient-light: linear-gradient(135deg, #1F5A93 0%, #2D6BA3 100%);
   --brand-shadow: 0 10px 40px rgba(107, 15, 26, 0.15);
   --brand-shadow-hover: 0 20px 60px rgba(107, 15, 26, 0.25);
+  --header-h: 4rem;
 }
 
-@media (min-width: 640px) {
-  :root {
-    --header-h: 4rem; /* 64px / h-16 for desktop */
-  }
-}
-
-/* Brand Button Animations */
-.btn-primary-cta {
-  position: relative;
-  overflow: hidden;
-  background-color: var(--brand-primary);
-  color: white;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-primary-cta::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@media (hover: hover) {
-  .btn-primary-cta:hover {
-    background-color: var(--brand-primary-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(122, 0, 31, 0.25);
-  }
-  
-  .btn-primary-cta:hover::before {
-    left: 100%;
-  }
-}
-
-.btn-primary-cta:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(107, 15, 26, 0.4);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .btn-primary-cta,
-  .btn-primary-cta::before {
-    transition: none;
-  }
-  .btn-primary-cta:hover {
-    transform: none;
-  }
-}
-
-.btn-small {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@media (hover: hover) {
-  .btn-small:hover {
-    transform: scale(0.98);
-    opacity: 0.9;
-  }
-}
-
-.btn-small:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(107, 15, 26, 0.4);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .btn-small {
-    transition: none;
-  }
-  .btn-small:hover {
-    transform: none;
-  }
-}
-
-/* Toast fade-in animation */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.3s ease-out;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-fade-in {
-    animation: none;
-  }
-}
-
-/* Corporate Styles */
+/* Creative Corporate Header Styles */
 .corporate-header {
   background: var(--brand-gradient);
   color: white;
@@ -155,6 +40,7 @@ html, body { overflow-x: hidden; }
   text-underline-offset: 4px;
 }
 
+/* Corporate Hero Styles */
 .corporate-hero {
   background-color: var(--brand-bg);
   color: var(--brand-text);
@@ -168,6 +54,7 @@ html, body { overflow-x: hidden; }
   color: var(--brand-text-light);
 }
 
+/* Creative Corporate Button Styles */
 .btn-corporate-primary {
   background: var(--brand-gradient);
   color: white;
@@ -228,6 +115,7 @@ html, body { overflow-x: hidden; }
   width: 100%;
 }
 
+/* Creative Corporate Service Cards */
 .corporate-service-card {
   background-color: white;
   border: 1px solid var(--brand-border);
@@ -258,6 +146,28 @@ html, body { overflow-x: hidden; }
   transform: scaleX(1);
 }
 
+/* Corporate Dividers */
+.corporate-divider {
+  border-color: var(--brand-divider);
+  opacity: 0.3;
+}
+
+/* Corporate Footer */
+.corporate-footer {
+  background-color: var(--brand-primary);
+  color: white;
+}
+
+.corporate-footer a {
+  color: rgba(255, 255, 255, 0.9);
+  transition: color 0.2s ease;
+}
+
+.corporate-footer a:hover {
+  color: white;
+}
+
+/* Creative Corporate CTA Band */
 .corporate-cta-band {
   background: var(--brand-gradient);
   color: white;
@@ -281,21 +191,23 @@ html, body { overflow-x: hidden; }
   50% { transform: translateY(-10px); }
 }
 
-.corporate-footer {
-  background-color: var(--brand-primary);
-  color: white;
+/* Focus styles for accessibility */
+.focus-visible:ring-2 {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--brand-accent);
 }
 
-.corporate-footer a {
-  color: rgba(255, 255, 255, 0.9);
-  transition: color 0.2s ease;
+/* Main content offset */
+main {
+  padding-top: var(--header-h);
 }
 
-.corporate-footer a:hover {
-  color: white;
+/* Smooth transitions */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Creative Animations */
+/* Creative Animations and Effects */
 @keyframes slideInUp {
   from {
     opacity: 0;
@@ -389,8 +301,13 @@ html, body { overflow-x: hidden; }
   opacity: 0.05;
 }
 
-/* Reduced motion support for corporate styles */
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none;
+    animation: none !important;
+  }
+  
   .btn-corporate-primary:hover,
   .btn-corporate-secondary:hover,
   .corporate-service-card:hover {
@@ -398,12 +315,6 @@ html, body { overflow-x: hidden; }
   }
   
   .corporate-cta-band::before {
-    animation: none;
-  }
-  
-  .animate-slide-in,
-  .animate-fade-in-scale,
-  .animate-pulse-slow {
     animation: none;
   }
 }
