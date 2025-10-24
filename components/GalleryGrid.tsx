@@ -5,41 +5,18 @@ import { galleryImages, ImageCategory } from "../data/images-manifest";
 const categories: ("All" | ImageCategory)[] = ["All", "Exterior", "Interior", "Ceramic", "Specialty"];
 
 export default function GalleryGrid({ preview = false }: { preview?: boolean }) {
-  const [category, setCategory] = useState<(typeof categories)[number]>("All");
-  let filtered = galleryImages;
-  if (category !== "All") filtered = filtered.filter(img => img.category === category);
-  const displayImages = preview ? filtered.slice(0, 2) : filtered;
   return (
-    <section className="w-full">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-      <h2 className="text-3xl font-bold heading text-primary mb-8 text-center">Gallery</h2>
-      <div className="flex justify-center gap-2 mb-6 flex-wrap">
-        {categories.map(cat => (
-          <button
-            key={cat}
-            className={`px-4 py-1 rounded-full font-medium border transition ${category === cat ? "bg-primary text-offWhite border-primary" : "bg-white text-primary border-primary/30"}`}
-            onClick={() => setCategory(cat)}
-          >
-            {cat}
-          </button>
-        ))}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="rounded-xl border border-slate-200 bg-white p-6 text-center">
+        <div className="mx-auto mb-4 inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+          Coming soon
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="aspect-video rounded-lg bg-slate-200 grid place-items-center text-slate-500 text-sm">Before</div>
+          <div className="aspect-video rounded-lg bg-slate-200 grid place-items-center text-slate-500 text-sm">After</div>
+        </div>
+        <p className="mt-4 text-sm text-slate-600">Real client photos will appear here. CMS slots preserved.</p>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {displayImages.map((img) => (
-          <figure key={img.file} className="group rounded-xl overflow-hidden shadow bg-white/90">
-            <div className="aspect-[4/3] overflow-hidden">
-              <img
-                src={"/images/" + img.file}
-                alt={img.alt}
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-            <figcaption className="p-2 text-sm text-charcoal/80 text-center">{img.caption}</figcaption>
-          </figure>
-        ))}
-      </div>
-      </div>
-    </section>
+    </div>
   );
 }

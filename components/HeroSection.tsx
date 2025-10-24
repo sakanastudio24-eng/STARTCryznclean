@@ -1,36 +1,34 @@
-"use client";
-import { heroImages } from "../data/images-manifest";
-
-const heroImage = heroImages[0];
+import React from "react";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full text-white overflow-hidden">
-      <div className="relative w-full">
-        <img
-          src={(heroImage && heroImage.file) ? `/images/${heroImage.file}` : "/images/hero/hero1.jpg"}
-          alt={heroImage?.alt || "Hero image"}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
-        <div className="relative z-10 max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36 flex flex-col items-center text-center">
-          <h1 className="font-bold text-5xl md:text-7xl tracking-tight mb-4">Professional Mobile Detailing</h1>
-          <p className="max-w-2xl text-base md:text-lg text-white/90 mb-2">
-            Premium interior and exterior care that comes to you. Shine, protect, and drive happy.
-          </p>
-          <p className="max-w-xl text-sm md:text-base text-white/80 mb-8">
-            Proudly serving Yorba Linda, Anaheim Hills, Placentia, Brea, and nearby communities.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <a href="/booking" className="btn-primary-cta inline-flex items-center justify-center px-6 py-3 rounded-full font-semibold shadow-lg">
-              Book Now
-            </a>
-            <a href="/services" className="btn-small inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-white/80 text-white font-semibold hover:bg-white/10 transition-colors">
-              Detailing Packages
-            </a>
-          </div>
+    <section className="pt-16 pb-20 bg-white">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 className="text-4xl md:text-6xl font-bold text-[#6B0F1A] mb-6">
+          Professional Mobile Detailing
+        </h1>
+        <p className="text-xl md:text-2xl text-slate-600 mb-8 max-w-3xl mx-auto">
+          Premium interior and exterior care that comes to you. Shine, protect, and drive happy.
+        </p>
+        <p className="text-lg text-slate-500 mb-12 max-w-2xl mx-auto">
+          Proudly serving Yorba Linda, Anaheim Hills, Placentia, Brea, and nearby communities.
+        </p>
+        
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link 
+            href="/booking" 
+            className="inline-flex items-center justify-center px-8 py-4 bg-[#6B0F1A] text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl hover:bg-[#6B0F1A]/90 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B0F1A]/40 focus-visible:ring-offset-2"
+          >
+            Book Now
+          </Link>
+          <Link 
+            href="/services" 
+            className="inline-flex items-center justify-center px-8 py-4 bg-white text-[#6B0F1A] font-semibold text-lg rounded-xl border-2 border-[#6B0F1A] hover:bg-[#6B0F1A] hover:text-white transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6B0F1A]/40 focus-visible:ring-offset-2"
+          >
+            View Services
+          </Link>
         </div>
-        <span className="block w-full pt-[40%] md:pt-[32%]" />
       </div>
     </section>
   );

@@ -1,0 +1,56 @@
+<svg width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with rounded corners -->
+  <rect width="200" height="80" fill="white" rx="8"/>
+  
+  <!-- Truck -->
+  <g transform="translate(20, 35)">
+    <!-- Truck body -->
+    <rect x="0" y="8" width="60" height="20" fill="#8B0000" rx="2"/>
+    <!-- Truck bed -->
+    <rect x="45" y="12" width="25" height="16" fill="#8B0000" rx="1"/>
+    <!-- Front grille -->
+    <rect x="0" y="10" width="8" height="16" fill="#C0C0C0" rx="1"/>
+    <!-- Headlights -->
+    <circle cx="2" cy="14" r="1.5" fill="#FFD700"/>
+    <circle cx="2" cy="22" r="1.5" fill="#FFD700"/>
+    <!-- Bumper -->
+    <rect x="-2" y="24" width="12" height="3" fill="#C0C0C0" rx="1"/>
+    <!-- Wheels -->
+    <circle cx="15" cy="30" r="4" fill="#696969"/>
+    <circle cx="15" cy="30" r="2.5" fill="#A9A9A9"/>
+    <circle cx="50" cy="30" r="4" fill="#696969"/>
+    <circle cx="50" cy="30" r="2.5" fill="#A9A9A9"/>
+    <!-- Chrome strip -->
+    <rect x="8" y="12" width="40" height="1" fill="#C0C0C0"/>
+  </g>
+  
+  <!-- Wash gun -->
+  <g transform="translate(10, 5)">
+    <rect x="0" y="0" width="8" height="20" fill="black" rx="1"/>
+    <rect x="2" y="18" width="4" height="8" fill="black" rx="1"/>
+    <rect x="1" y="24" width="6" height="2" fill="black" rx="1"/>
+  </g>
+  
+  <!-- Bubbles -->
+  <g opacity="0.7">
+    <circle cx="160" cy="15" r="3" fill="#87CEEB"/>
+    <circle cx="170" cy="25" r="2" fill="#87CEEB"/>
+    <circle cx="155" cy="30" r="2.5" fill="#87CEEB"/>
+    <circle cx="175" cy="10" r="1.5" fill="#87CEEB"/>
+    <circle cx="165" cy="35" r="2" fill="#87CEEB"/>
+    <!-- Foam mass -->
+    <ellipse cx="75" cy="20" rx="15" ry="8" fill="#87CEEB" opacity="0.6"/>
+  </g>
+  
+  <!-- Text: CRUIZN CLEAN -->
+  <g transform="translate(10, 5)">
+    <text x="0" y="15" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#8B0000" stroke="white" stroke-width="0.5">CRUIZN</text>
+    <text x="0" y="28" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#8B0000" stroke="white" stroke-width="0.5">CLEAN</text>
+  </g>
+  
+  <!-- Text: AUTOMOTIVE DETAILING -->
+  <g transform="translate(10, 60)">
+    <text x="0" y="12" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#8B0000" stroke="white" stroke-width="0.3">AUTOMOTIVE</text>
+    <text x="0" y="22" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#8B0000" stroke="white" stroke-width="0.3">DETAILING</text>
+  </g>
+</svg>

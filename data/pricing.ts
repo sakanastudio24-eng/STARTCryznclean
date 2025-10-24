@@ -28,6 +28,15 @@ export interface Package {
   features?: string[];
 }
 
+export type AddOn = {
+  id: string;
+  name: string;
+  price: number;        // flat price, no size multiplier
+  description: string;
+  icon?: string;        // lucide-react icon name (string)
+  enabled?: boolean;    // default true
+};
+
 export const PACKAGES: Package[] = [
   {
     id: "express",
@@ -92,4 +101,17 @@ export function priceFor(pkgId: string, size: VehicleSize): number {
   if (!pkg) return 0;
   return Math.round(pkg.base * SIZE_MULTIPLIER[size]);
 }
+
+export const ADDONS: AddOn[] = [
+  { id: "engine-bay",       name: "Engine Bay Clean",  price: 45, description: "Degrease & wipe plastics",      icon: "Wrench", enabled: true },
+  { id: "headlight-restore",name: "Headlight Restore", price: 60, description: "Polish & UV protect",           icon: "SunMedium", enabled: true },
+  { id: "odor-removal",     name: "Odor Removal",      price: 50, description: "Targeted ozone treatment",      icon: "Wind", enabled: true },
+  { id: "pet-hair",         name: "Pet Hair Removal",  price: 35, description: "Intensive extraction",          icon: "Scissors", enabled: true },
+  { id: "wheel-detail",     name: "Wheel Detail",      price: 40, description: "Iron decon & tire shine",       icon: "Cog", enabled: true },
+  { id: "glass-coat",       name: "Glass Hydrophobic", price: 45, description: "Rain-repellent on all glass",   icon: "Droplets", enabled: true },
+  { id: "clay-bar",         name: "Clay Bar",          price: 65, description: "Surface decontamination",       icon: "Cube", enabled: true },
+  // Paint correction intentionally omitted (owner not ready yet)
+];
+
+export const ADDONS_ENABLED = true;
 

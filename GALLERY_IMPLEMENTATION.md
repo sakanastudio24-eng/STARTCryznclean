@@ -301,3 +301,5 @@ app/gallery/page.tsx (Server Component)
 **Dev Server**: http://localhost:3003/gallery 🎨
 
 
+
+

@@ -31,7 +31,11 @@ export default function RequestForm() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [formStatus, setFormStatus] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const successHeadingRef = useRef<HTMLHeadingElement>(null);
+  const firstErrorRef = useRef<HTMLInputElement>(null);
 
   // Generate previews
   React.useEffect(() => {
@@ -54,10 +58,26 @@ export default function RequestForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (!isValid) {
-      setError("Please fill all required fields.");
+    setFieldErrors({});
+    setFormStatus("");
+    
+    // Validate
+    const errors: Record<string, string> = {};
+    if (!fullName.trim()) errors.fullName = "Full name is required";
+    if (!isValidEmail(email)) errors.email = "Valid email is required";
+    
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setError("Please fix the errors below.");
+      setFormStatus("Form has errors. Please check and try again.");
+      
+      // Focus first error field
+      setTimeout(() => {
+        firstErrorRef.current?.focus();
+      }, 100);
       return;
     }
+    
     setSubmitting(true);
     // Prepare payload
     const payload = {
@@ -86,8 +106,15 @@ export default function RequestForm() {
       });
       if (!res.ok) throw new Error("Failed to submit request");
       setSuccess(true);
+      setFormStatus("Request submitted successfully!");
+      
+      // Focus success heading
+      setTimeout(() => {
+        successHeadingRef.current?.focus();
+      }, 100);
     } catch (err: any) {
       setError(err.message || "Something went wrong");
+      setFormStatus("Error submitting form. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -96,7 +123,13 @@ export default function RequestForm() {
   if (success) {
     return (
       <div className="bg-white rounded-lg shadow p-8 text-center mt-8">
-        <h2 className="text-2xl font-bold text-primary mb-4">Request Sent!</h2>
+        <h2 
+          ref={successHeadingRef}
+          tabIndex={-1}
+          className="text-2xl font-bold text-primary mb-4"
+        >
+          Request Sent!
+        </h2>
         <p className="text-slate-700 mb-6">Thank you for your request. You can now book your appointment or return home.</p>
         <a href="/booking" className="btn-primary-cta inline-block px-6 py-3 rounded font-bold mb-2">Book Appointment</a>
         <br />
@@ -107,13 +140,55 @@ export default function RequestForm() {
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
+      {/* Form status live region */}
+      <p id="form-status" role="status" aria-live="polite" className="sr-only">
+        {formStatus}
+      </p>
+      
       <div>
-        <label className="block text-sm font-medium text-slate-900 mb-1">Full Name <span className="text-red-500">*</span></label>
-        <input type="text" className="w-full border border-slate-300 rounded p-2 focus:ring-2 focus:ring-primary/40 focus:border-primary" placeholder="Your name" value={fullName} onChange={e => setFullName(e.target.value)} required />
+        <label htmlFor="fullName" className="block text-sm font-medium text-slate-900 mb-1">
+          Full Name <span className="text-red-500">*</span>
+        </label>
+        <input 
+          type="text"
+          id="fullName"
+          ref={fieldErrors.fullName ? firstErrorRef : null}
+          className={`w-full border rounded p-2 focus:ring-2 focus:ring-primary/40 focus:border-primary ${
+            fieldErrors.fullName ? 'border-red-500' : 'border-slate-300'
+          }`}
+          placeholder="Your name"
+          value={fullName}
+          onChange={e => setFullName(e.target.value)}
+          aria-invalid={!!fieldErrors.fullName}
+          aria-describedby={fieldErrors.fullName ? "fullName-error" : undefined}
+          required
+        />
+        {fieldErrors.fullName && (
+          <p id="fullName-error" className="text-red-600 text-sm mt-1">{fieldErrors.fullName}</p>
+        )}
       </div>
+      
       <div>
-        <label className="block text-sm font-medium text-slate-900 mb-1">Email <span className="text-red-500">*</span></label>
-        <input type="email" className="w-full border border-slate-300 rounded p-2 focus:ring-2 focus:ring-primary/40 focus:border-primary" placeholder="you@email.com" value={email} onChange={e => setEmail(e.target.value)} required />
+        <label htmlFor="email" className="block text-sm font-medium text-slate-900 mb-1">
+          Email <span className="text-red-500">*</span>
+        </label>
+        <input 
+          type="email"
+          id="email"
+          ref={!fieldErrors.fullName && fieldErrors.email ? firstErrorRef : null}
+          className={`w-full border rounded p-2 focus:ring-2 focus:ring-primary/40 focus:border-primary ${
+            fieldErrors.email ? 'border-red-500' : 'border-slate-300'
+          }`}
+          placeholder="you@email.com"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          aria-invalid={!!fieldErrors.email}
+          aria-describedby={fieldErrors.email ? "email-error" : undefined}
+          required
+        />
+        {fieldErrors.email && (
+          <p id="email-error" className="text-red-600 text-sm mt-1">{fieldErrors.email}</p>
+        )}
       </div>
       <div>
         <label className="block text-sm font-medium text-slate-900 mb-1">Phone</label>

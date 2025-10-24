@@ -1,0 +1,204 @@
+"use client";
+
+import React from "react";
+import { Car, Droplets, Wrench, Sparkles, Lightbulb, Zap, Shield, Star, Layers } from "lucide-react";
+
+interface AddOn {
+  id: string;
+  name: string;
+  price: number;
+  desc: string;
+  isAvailable?: boolean;
+  icon?: React.ComponentType<{ className?: string }>;
+}
+
+const ADD_ONS: AddOn[] = [
+  { 
+    id: "headlight-restoration", 
+    name: "Headlight Restoration", 
+    price: 45, 
+    desc: "Per headlight, removes oxidation and restores clarity.",
+    isAvailable: false,
+    icon: Lightbulb
+  },
+  { 
+    id: "fog-light-restoration", 
+    name: "Fog Light Restoration", 
+    price: 25, 
+    desc: "Restores smaller lights for consistent shine.",
+    isAvailable: false,
+    icon: Lightbulb
+  },
+  { 
+    id: "engine-bay-detail", 
+    name: "Engine Bay Detail", 
+    price: 50, 
+    desc: "Degreases and restores plastic surfaces for a fresh look.",
+    isAvailable: false,
+    icon: Wrench
+  },
+  { 
+    id: "aluminum-wheel-polish", 
+    name: "Aluminum Wheel Polish", 
+    price: 60, 
+    desc: "Deep polish for intricate wheels.",
+    isAvailable: false,
+    icon: Sparkles
+  },
+  { 
+    id: "plastic-coating", 
+    name: "Plastic Coating", 
+    price: 20, 
+    desc: "Brings faded plastics back to life.",
+    isAvailable: false,
+    icon: Shield
+  },
+  { 
+    id: "acid-wash", 
+    name: "Acid Wash", 
+    price: 40, 
+    desc: "Removes hard water spots from paint (shade required).",
+    isAvailable: false,
+    icon: Droplets
+  },
+  { 
+    id: "single-spot-stain-care", 
+    name: "Single Spot Stain Care", 
+    price: 15, 
+    desc: "Removes targeted stains from upholstery.",
+    isAvailable: false,
+    icon: Star
+  },
+  { 
+    id: "leather-vinyl-coating", 
+    name: "Leather/Vinyl Coating", 
+    price: 25, 
+    desc: "Protects and deepens color on leather or vinyl.",
+    isAvailable: false,
+    icon: Layers
+  },
+  { 
+    id: "floor-mat-coating", 
+    name: "Floor Mat Coating", 
+    price: 10, 
+    desc: "Restores door mats' original color.",
+    isAvailable: false,
+    icon: Car
+  },
+  { 
+    id: "window-polish", 
+    name: "Window Polish", 
+    price: 30, 
+    desc: "Restores clarity by removing water spot etching (side windows).",
+    isAvailable: false,
+    icon: Zap
+  },
+];
+
+export default function AddOnsSection() {
+  const handleKeyDown = (event: React.KeyboardEvent, addonId: string) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      // Handle keyboard activation for addon cards
+      console.log(`Keyboard activated addon: ${addonId}`);
+    }
+  };
+
+  return (
+    <section className="section bg-offWhite">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Add-On Services</h2>
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            Enhance your detailing experience with our premium add-on services. 
+            Each service is designed to address specific needs and bring your vehicle to perfection.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+          {ADD_ONS.map((addon) => {
+            const IconComponent = addon.icon || Car;
+            return (
+        <div 
+          key={addon.id}
+          className="relative bg-white border-2 border-[#6B0F1A] rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:border-[#1F5A93] group focus-ring"
+          tabIndex={0}
+          role="article"
+          aria-labelledby={`addon-title-${addon.id}`}
+          aria-describedby={`addon-desc-${addon.id} addon-price-${addon.id}`}
+          onKeyDown={(e) => handleKeyDown(e, addon.id)}
+        >
+                {/* Coming Soon Ribbon */}
+                {!addon.isAvailable && (
+                  <div 
+                    className="absolute -top-2 -right-2 bg-[#6B0F1A] text-white px-3 py-1 rounded-full text-xs font-semibold transform rotate-12 shadow-lg"
+                    aria-live="polite"
+                    role="status"
+                  >
+                    Coming Soon
+                  </div>
+                )}
+                
+                {/* Icon */}
+                <div 
+                  className="flex items-center justify-center w-12 h-12 bg-[#6B0F1A]/10 rounded-lg mb-4 group-hover:bg-[#1F5A93]/10 transition-colors"
+                  aria-hidden="true"
+                >
+                  <IconComponent className="w-6 h-6 text-[#6B0F1A] group-hover:text-[#1F5A93] transition-colors" />
+                </div>
+                
+                {/* Content */}
+                <div className="space-y-3">
+                  <div>
+                    <h3 
+                      id={`addon-title-${addon.id}`}
+                      className="text-lg font-semibold text-slate-900 mb-1"
+                    >
+                      {addon.name}
+                    </h3>
+                    <p 
+                      id={`addon-desc-${addon.id}`}
+                      className="text-sm text-slate-600 leading-relaxed"
+                    >
+                      {addon.desc}
+                    </p>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <span 
+                      id={`addon-price-${addon.id}`}
+                      className="text-xl font-bold text-[#6B0F1A]"
+                      aria-label={`Price: $${addon.price}`}
+                    >
+                      ${addon.price}
+                    </span>
+                    
+          <button 
+            disabled={!addon.isAvailable}
+            aria-describedby={`addon-desc-${addon.id}`}
+            className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all focus-ring ${
+              addon.isAvailable 
+                ? 'bg-[#6B0F1A] text-white hover:bg-[#1F5A93] focus:bg-[#1F5A93]' 
+                : 'bg-slate-200 text-slate-500 cursor-not-allowed'
+            }`}
+          >
+                      {addon.isAvailable ? 'Add to Cart' : 'Coming Soon'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        
+        {/* Footer Note */}
+        <div className="mt-12 text-center">
+          <p className="text-slate-600 text-sm">
+            All add-on services are priced per vehicle and can be combined with any of our detailing packages.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+

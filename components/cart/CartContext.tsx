@@ -1,8 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { VehicleSize, priceFor } from "../../data/pricing";
-import { calculateAddonsTotal } from "../../data/addons";
+import { VehicleSize, priceFor, SIZE_LABELS, AddOn, ADDONS } from "../../data/pricing";
 
 export const MAX_CARS_PER_BOOKING = 3;
 
@@ -13,14 +12,9 @@ export interface VehicleInfo {
   color?: string;
 }
 
-export interface CartItem {
-  id: string; // Unique ID for this cart item
-  packageId: string;
-  size: VehicleSize;
-  qty: number;
-  addons?: string[]; // Array of addon IDs
-  vehicle?: VehicleInfo;
-}
+export type CartItem = 
+  | { kind: "package"; id: string; packageId: string; size: VehicleSize; qty: number; unitPrice: number; name: string; vehicle?: VehicleInfo }
+  | { kind: "addon"; id: string; addonId: string; qty: number; unitPrice: number; name: string };
 
 export interface Cart {
   items: CartItem[];
@@ -30,26 +24,44 @@ interface CartContextType {
   cart: Cart;
   selectedSize: VehicleSize;
   setSelectedSize: (size: VehicleSize) => void;
-  addItem: (packageId: string, size: VehicleSize, addons?: string[]) => void;
+  addPackage: (packageId: string, size: VehicleSize) => void;
+  addAddon: (addonId: string) => void;
   removeItem: (itemId: string) => void;
   updateQty: (itemId: string, qty: number) => void;
-  updateItem: (itemId: string, updates: Partial<CartItem>) => void;
   setVehicleForItem: (itemId: string, vehicle: VehicleInfo) => void;
-  setAddonsForItem: (itemId: string, addons: string[]) => void;
   clearCart: () => void;
+  clearLocalStorage: () => void;
   totalVehicles: () => number;
   canAddMore: () => boolean;
   subtotal: () => number;
+  showToast: (message: string, type?: 'success' | 'info' | 'warning') => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-const CART_STORAGE_KEY = "cart";
+const CART_STORAGE_KEY = "cruiz_cart";
+
+// Helper function to announce cart updates
+const announce = (msg: string) => {
+  if (typeof window !== "undefined") {
+    const node = document.getElementById('cart-live');
+    if (node) {
+      node.textContent = msg;
+    }
+  }
+};
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<Cart>({ items: [] });
   const [selectedSize, setSelectedSize] = useState<VehicleSize>("sedan");
   const [isHydrated, setIsHydrated] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' | 'warning' } | null>(null);
+
+  // Show toast notification
+  const showToast = (message: string, type: 'success' | 'info' | 'warning' = 'info') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -57,9 +69,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        setCart(parsed);
+        if (parsed.items && parsed.items.length > 0) {
+          setCart(parsed);
+          showToast("Your selections are saved locally", 'success');
+        }
       } catch (e) {
         console.error("Failed to parse cart from localStorage:", e);
+        // Clear corrupted data
+        localStorage.removeItem(CART_STORAGE_KEY);
       }
     }
     setIsHydrated(true);
@@ -73,50 +90,132 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [cart, isHydrated]);
 
   const totalVehicles = () => {
-    return cart.items.reduce((sum, item) => sum + item.qty, 0);
+    return cart.items.reduce((sum, item) => {
+      return item.kind === "package" ? sum + item.qty : sum;
+    }, 0);
   };
 
   const canAddMore = () => {
     return totalVehicles() < MAX_CARS_PER_BOOKING;
   };
 
-  const addItem = (packageId: string, size: VehicleSize, addons?: string[]) => {
+  const addPackage = (packageId: string, size: VehicleSize) => {
     if (!canAddMore()) {
+      announce("Cannot add more vehicles. Maximum 3 per booking.");
       return;
     }
 
     setCart(prev => {
       // Check if we already have this exact package + size combo
       const existingIndex = prev.items.findIndex(
-        item => item.packageId === packageId && item.size === size && item.qty < 3
+        item => item.kind === "package" && item.packageId === packageId && item.size === size && item.qty < 3
       );
 
       if (existingIndex >= 0) {
         // Increment quantity
         const newItems = [...prev.items];
-        newItems[existingIndex] = {
-          ...newItems[existingIndex],
-          qty: Math.min(newItems[existingIndex].qty + 1, 3)
-        };
+        const existingItem = newItems[existingIndex];
+        if (existingItem.kind === "package") {
+          const newQty = Math.min(existingItem.qty + 1, 3);
+          newItems[existingIndex] = {
+            ...existingItem,
+            qty: newQty
+          };
+          
+          // Announce the update with total count
+          const totalCount = newItems.reduce((sum, item) => sum + item.qty, 0);
+          announce(`${existingItem.name} quantity updated to ${newQty}. Total items in cart: ${totalCount}.`);
+        }
+        
         return { items: newItems };
       } else {
-        // Add new item
+        // Add new package item
+        const packagePrice = priceFor(packageId, size);
         const newItem: CartItem = {
-          id: `${packageId}-${size}-${Date.now()}`,
+          kind: "package",
+          id: `pkg-${packageId}-${size}-${Date.now()}`,
           packageId,
           size,
           qty: 1,
-          addons: addons || []
+          unitPrice: packagePrice,
+          name: `Package ${packageId}`
         };
-        return { items: [...prev.items, newItem] };
+        
+        // Announce the addition with total count
+        const newItems = [...prev.items, newItem];
+        const totalCount = newItems.reduce((sum, item) => sum + item.qty, 0);
+        announce(`${newItem.name} (${SIZE_LABELS[size]} size) added to cart. Quantity 1. Total items: ${totalCount}.`);
+        showToast("Item added to cart and saved locally", 'success');
+        
+        return { items: newItems };
+      }
+    });
+  };
+
+  const addAddon = (addonId: string) => {
+    const addon = ADDONS.find(a => a.id === addonId);
+    if (!addon) return;
+
+    setCart(prev => {
+      // Check if we already have this addon
+      const existingIndex = prev.items.findIndex(
+        item => item.kind === "addon" && item.addonId === addonId && item.qty < 3
+      );
+
+      if (existingIndex >= 0) {
+        // Increment quantity
+        const newItems = [...prev.items];
+        const existingItem = newItems[existingIndex];
+        if (existingItem.kind === "addon") {
+          const newQty = Math.min(existingItem.qty + 1, 3);
+          newItems[existingIndex] = {
+            ...existingItem,
+            qty: newQty
+          };
+          
+          // Announce the update with total count
+          const totalCount = newItems.reduce((sum, item) => sum + item.qty, 0);
+          announce(`${existingItem.name} add-on quantity updated to ${newQty}. Total items in cart: ${totalCount}.`);
+        }
+        
+        return { items: newItems };
+      } else {
+        // Add new addon item
+        const newItem: CartItem = {
+          kind: "addon",
+          id: `addon-${addonId}-${Date.now()}`,
+          addonId,
+          qty: 1,
+          unitPrice: addon.price,
+          name: addon.name
+        };
+        
+        // Announce the addition with total count
+        const newItems = [...prev.items, newItem];
+        const totalCount = newItems.reduce((sum, item) => sum + item.qty, 0);
+        announce(`${newItem.name} add-on added to cart. Quantity 1. Total items: ${totalCount}.`);
+        showToast("Add-on added to cart and saved locally", 'success');
+        
+        return { items: newItems };
       }
     });
   };
 
   const removeItem = (itemId: string) => {
-    setCart(prev => ({
-      items: prev.items.filter(item => item.id !== itemId)
-    }));
+    setCart(prev => {
+      const itemToRemove = prev.items.find(item => item.id === itemId);
+      
+      if (itemToRemove) {
+        const itemName = itemToRemove.name;
+        const newItems = prev.items.filter(item => item.id !== itemId);
+        const totalCount = newItems.reduce((sum, item) => sum + item.qty, 0);
+        announce(`Removed ${itemName} from cart. Total items: ${totalCount}.`);
+        
+        return { items: newItems };
+      }
+      
+      return prev;
+    });
   };
 
   const updateQty = (itemId: string, qty: number) => {
@@ -126,57 +225,50 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
 
     setCart(prev => {
-      const newItems = prev.items.map(item =>
-        item.id === itemId ? { ...item, qty: Math.min(qty, 3) } : item
-      );
-      return { items: newItems };
+      const item = prev.items.find(i => i.id === itemId);
+      
+      if (item) {
+        const newQty = Math.min(qty, 3);
+        const newItems = prev.items.map(item =>
+          item.id === itemId ? { ...item, qty: newQty } : item
+        );
+        const totalCount = newItems.reduce((sum, item) => sum + item.qty, 0);
+        announce(`${item.name} quantity updated to ${newQty}. Total items in cart: ${totalCount}.`);
+        
+        return { items: newItems };
+      }
+      
+      return prev;
     });
-  };
-
-  const updateItem = (itemId: string, updates: Partial<CartItem>) => {
-    setCart(prev => ({
-      items: prev.items.map(item =>
-        item.id === itemId ? { ...item, ...updates } : item
-      )
-    }));
   };
 
   const setVehicleForItem = (itemId: string, vehicle: VehicleInfo) => {
     setCart(prev => ({
       items: prev.items.map(item =>
-        item.id === itemId ? { ...item, vehicle } : item
-      )
-    }));
-  };
-
-  const setAddonsForItem = (itemId: string, addons: string[]) => {
-    setCart(prev => ({
-      items: prev.items.map(item =>
-        item.id === itemId ? { ...item, addons } : item
+        item.id === itemId && item.kind === "package" ? { ...item, vehicle } : item
       )
     }));
   };
 
   const clearCart = () => {
     setCart({ items: [] });
+    localStorage.removeItem(CART_STORAGE_KEY);
+    showToast("Cart cleared", 'info');
+  };
+
+  // Function to manually clear localStorage (for testing/debugging)
+  const clearLocalStorage = () => {
+    localStorage.removeItem(CART_STORAGE_KEY);
+    showToast("Local storage cleared", 'warning');
   };
 
   /**
    * Calculate subtotal with packages + addons
-   * Formula: sum( priceFor(pkg, size) + sum(addon.price) ) * qty
+   * Formula: sum( unitPrice * qty ) for all items
    */
   const subtotal = () => {
     return cart.items.reduce((sum, item) => {
-      // Package price for this size
-      const packagePrice = priceFor(item.packageId, item.size);
-      
-      // Addons price (fixed, not size-dependent)
-      const addonsPrice = calculateAddonsTotal(item.addons || []);
-      
-      // Total for this line item
-      const lineTotal = (packagePrice + addonsPrice) * item.qty;
-      
-      return sum + lineTotal;
+      return sum + (item.unitPrice * item.qty);
     }, 0);
   };
 
@@ -186,18 +278,35 @@ export function CartProvider({ children }: { children: ReactNode }) {
         cart,
         selectedSize,
         setSelectedSize,
-        addItem,
+        addPackage,
+        addAddon,
         removeItem,
         updateQty,
-        updateItem,
         setVehicleForItem,
-        setAddonsForItem,
         clearCart,
+        clearLocalStorage,
         totalVehicles,
         canAddMore,
-        subtotal
+        subtotal,
+        showToast
       }}
     >
+      {/* Live region for cart announcements */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only" id="cart-live" />
+      
+      {/* Toast notification */}
+      {toast && (
+        <div className="fixed top-20 right-4 z-50 bg-white border border-gray-200 rounded-lg shadow-lg p-4 max-w-sm animate-fade-in">
+          <div className="flex items-center gap-3">
+            <div className={`w-2 h-2 rounded-full ${
+              toast.type === 'success' ? 'bg-green-500' : 
+              toast.type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
+            }`} />
+            <p className="text-sm text-gray-700">{toast.message}</p>
+          </div>
+        </div>
+      )}
+      
       {children}
     </CartContext.Provider>
   );

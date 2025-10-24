@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { CartProvider, useCart } from "../../components/cart/CartContext";
 import { getPackageById, calculatePrice, SIZE_LABELS } from "../../data/pricing";
@@ -43,10 +43,17 @@ function BookingPageInner() {
   // UI state
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [formStatus, setFormStatus] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  
+  // Refs for focus management
+  const firstErrorRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
 
   const handleVehicleChange = (itemId: string, field: string, value: string) => {
     const item = cart.items.find(i => i.id === itemId);
-    if (!item) return;
+    if (!item || item.kind !== "package") return;
 
     setVehicleForItem(itemId, {
       ...item.vehicle,
@@ -54,23 +61,52 @@ function BookingPageInner() {
     });
   };
 
+  // Handle keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && e.target instanceof HTMLInputElement) {
+      const form = e.target.closest('form');
+      if (form) {
+        const inputs = Array.from(form.querySelectorAll('input, select, textarea, button')) as HTMLElement[];
+        const currentIndex = inputs.indexOf(e.target);
+        const nextInput = inputs[currentIndex + 1];
+        
+        if (nextInput && nextInput.tagName !== 'BUTTON') {
+          e.preventDefault();
+          nextInput.focus();
+        }
+      }
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setFieldErrors({});
+    setFormStatus("");
 
-    // Validation
-    if (!fullName.trim() || !email.trim() || !phone.trim()) {
-      setError("Please fill in all required contact fields.");
-      return;
-    }
-
-    if (!city.trim() || !zip.trim()) {
-      setError("Please provide your city and ZIP code.");
-      return;
-    }
+    // Validation with field-level errors
+    const errors: Record<string, string> = {};
+    if (!fullName.trim()) errors.fullName = "Full name is required";
+    if (!email.trim()) errors.email = "Email is required";
+    if (!phone.trim()) errors.phone = "Phone number is required";
+    if (!city.trim()) errors.city = "City is required";
+    if (!zip.trim()) errors.zip = "ZIP code is required";
 
     if (cart.items.length === 0) {
       setError("Your cart is empty. Please add packages from the services page.");
+      setFormStatus("Error: Cart is empty");
+      return;
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setError("Please fix the errors below.");
+      setFormStatus("Form has errors. Please check and try again.");
+      
+      // Focus first error field
+      setTimeout(() => {
+        firstErrorRef.current?.focus();
+      }, 100);
       return;
     }
 
@@ -89,17 +125,29 @@ function BookingPageInner() {
         address,
       },
       items: cart.items.map(item => {
-        const pkg = getPackageById(item.packageId);
-        return {
-          packageId: item.packageId,
-          packageName: pkg?.name || "Unknown",
-          size: item.size,
-          sizeLabel: SIZE_LABELS[item.size],
-          qty: item.qty,
-          basePrice: pkg?.base || 0,
-          totalPrice: pkg ? calculatePrice(pkg.base, item.size) * item.qty : 0,
-          vehicle: item.vehicle,
-        };
+        if (item.kind === "package") {
+          const pkg = getPackageById(item.packageId);
+          return {
+            kind: "package",
+            packageId: item.packageId,
+            packageName: pkg?.name || "Unknown",
+            size: item.size,
+            sizeLabel: SIZE_LABELS[item.size],
+            qty: item.qty,
+            basePrice: pkg?.base || 0,
+            totalPrice: pkg ? calculatePrice(pkg.base, item.size) * item.qty : 0,
+            vehicle: item.vehicle,
+          };
+        } else {
+          return {
+            kind: "addon",
+            addonId: item.addonId,
+            addonName: item.name,
+            qty: item.qty,
+            unitPrice: item.unitPrice,
+            totalPrice: item.unitPrice * item.qty,
+          };
+        }
       }),
       appointment: {
         preferredDate: selectedDate,
@@ -125,9 +173,19 @@ function BookingPageInner() {
 
       // Clear cart and redirect
       clearCart();
-      router.push("/confirmation?booked=true");
+      setFormStatus("Booking submitted successfully! Redirecting...");
+      
+      setTimeout(() => {
+        router.push("/confirmation?booked=true");
+      }, 500);
     } catch (err: any) {
       setError(err.message || "Something went wrong. Please try again.");
+      setFormStatus("Error submitting booking. Please try again.");
+      
+      // Focus on error message
+      setTimeout(() => {
+        firstErrorRef.current?.focus();
+      }, 100);
     } finally {
       setSubmitting(false);
     }
@@ -136,24 +194,26 @@ function BookingPageInner() {
   // Empty cart state
   if (cart.items.length === 0) {
     return (
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-slate-50 border border-slate-200 rounded-xl p-12">
-            <h1 className="text-3xl font-bold text-slate-900 mb-4">
-              Your Cart is Empty
-            </h1>
-            <p className="text-slate-600 mb-8 text-lg">
-              Browse our detailing packages and add them to your cart to continue booking.
-            </p>
-            <a
-              href="/services"
-              className="btn-primary-cta inline-block px-8 py-4 rounded-lg font-semibold text-lg"
-            >
-              Browse Packages
-            </a>
+      <section className="section">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-12">
+              <h1 className="text-3xl font-bold text-slate-900 mb-4">
+                Your Cart is Empty
+              </h1>
+              <p className="text-slate-600 mb-8 text-lg">
+                Browse our detailing packages and add them to your cart to continue booking.
+              </p>
+              <a
+                href="/services"
+                className="btn-primary-cta w-full sm:w-auto inline-block px-8 py-4 rounded-lg font-semibold text-lg"
+              >
+                Browse Packages
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 
@@ -161,15 +221,21 @@ function BookingPageInner() {
   const tooManyVehicles = totalVehicles() > MAX_CARS_PER_BOOKING;
 
   return (
-    <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-primary mb-2">Complete Your Booking</h1>
-        <p className="text-slate-600 text-lg">Review your selections and provide details to finalize your appointment.</p>
-      </div>
+    <section className="section">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-primary mb-2">Complete Your Booking</h1>
+          <p className="text-slate-600 text-lg">Review your selections and provide details to finalize your appointment.</p>
+        </div>
 
-      <VehicleSizeBar />
+        <VehicleSizeBar />
 
       <form onSubmit={handleSubmit}>
+        {/* Form status live region */}
+        <p id="form-status" role="status" aria-live="polite" className="sr-only">
+          {formStatus}
+        </p>
+        
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
@@ -180,108 +246,172 @@ function BookingPageInner() {
               
               <div className="space-y-4">
                 {cart.items.map((item, index) => {
-                  const pkg = getPackageById(item.packageId);
-                  if (!pkg) return null;
+                  if (item.kind === "package") {
+                    const pkg = getPackageById(item.packageId);
+                    if (!pkg) return null;
 
-                  const unitPrice = calculatePrice(pkg.base, item.size);
-                  const itemTotal = unitPrice * item.qty;
+                    const unitPrice = calculatePrice(pkg.base, item.size);
+                    const itemTotal = unitPrice * item.qty;
 
-                  return (
-                    <div
-                      key={item.id}
-                      className="border border-slate-200 rounded-lg p-4 bg-slate-50"
-                    >
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="flex-1">
-                          <h3 className="font-bold text-slate-900 text-lg">
-                            {pkg.name}
-                          </h3>
-                          <p className="text-sm text-slate-600">
-                            {SIZE_LABELS[item.size]}
+                    return (
+                      <div
+                        key={item.id}
+                        className="border border-slate-200 rounded-lg p-4 bg-slate-50"
+                      >
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="flex-1">
+                            <h3 className="font-bold text-slate-900 text-lg">
+                              {pkg.name}
+                            </h3>
+                            <p className="text-sm text-slate-600">
+                              {SIZE_LABELS[item.size]}
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => removeItem(item.id)}
+                            className="text-red-500 hover:text-red-700 text-sm font-medium ml-4"
+                          >
+                            Remove
+                          </button>
+                        </div>
+
+                        {/* Quantity Controls */}
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3">
+                            <span className="text-sm text-slate-600">Quantity:</span>
+                            <div className="flex items-center gap-2">
+                              <button
+                                type="button"
+                                onClick={() => updateQty(item.id, item.qty - 1)}
+                                className="w-8 h-8 rounded-lg border border-slate-300 hover:bg-slate-100 flex items-center justify-center font-semibold"
+                              >
+                                −
+                              </button>
+                              <span className="w-10 text-center font-bold text-slate-900">
+                                {item.qty}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => updateQty(item.id, item.qty + 1)}
+                                disabled={item.qty >= 3}
+                                className="w-8 h-8 rounded-lg border border-slate-300 hover:bg-slate-100 flex items-center justify-center font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="font-bold text-slate-900 text-lg">
+                              ${itemTotal}
+                            </div>
+                            <div className="text-xs text-slate-500">
+                              ${unitPrice} × {item.qty}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Vehicle Details for this item */}
+                        <div className="border-t border-slate-200 pt-3 mt-3">
+                          <p className="text-xs font-semibold text-slate-700 mb-2 uppercase tracking-wide">
+                            Vehicle {index + 1} Details (Optional)
                           </p>
+                          <div className="grid grid-cols-2 gap-2">
+                            <input
+                              type="text"
+                              placeholder="Make"
+                              value={item.vehicle?.make || ""}
+                              onChange={e => handleVehicleChange(item.id, "make", e.target.value)}
+                              className="border border-slate-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary"
+                            />
+                            <input
+                              type="text"
+                              placeholder="Model"
+                              value={item.vehicle?.model || ""}
+                              onChange={e => handleVehicleChange(item.id, "model", e.target.value)}
+                              className="border border-slate-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary"
+                            />
+                            <input
+                              type="text"
+                              placeholder="Year"
+                              value={item.vehicle?.year || ""}
+                              onChange={e => handleVehicleChange(item.id, "year", e.target.value)}
+                              className="border border-slate-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary"
+                            />
+                            <input
+                              type="text"
+                              placeholder="Color"
+                              value={item.vehicle?.color || ""}
+                              onChange={e => handleVehicleChange(item.id, "color", e.target.value)}
+                              className="border border-slate-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary"
+                            />
+                          </div>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => removeItem(item.id)}
-                          className="text-red-500 hover:text-red-700 text-sm font-medium ml-4"
-                        >
-                          Remove
-                        </button>
                       </div>
+                    );
+                  } else {
+                    // Addon item
+                    const itemTotal = item.unitPrice * item.qty;
+                    return (
+                      <div
+                        key={item.id}
+                        className="border border-slate-200 rounded-lg p-4 bg-slate-50"
+                      >
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="flex-1">
+                            <h3 className="font-bold text-slate-900 text-lg">
+                              {item.name}
+                            </h3>
+                            <p className="text-sm text-slate-600">
+                              Add-on Service
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => removeItem(item.id)}
+                            className="text-red-500 hover:text-red-700 text-sm font-medium ml-4"
+                          >
+                            Remove
+                          </button>
+                        </div>
 
-                      {/* Quantity Controls */}
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-3">
-                          <span className="text-sm text-slate-600">Quantity:</span>
-                          <div className="flex items-center gap-2">
-                            <button
-                              type="button"
-                              onClick={() => updateQty(item.id, item.qty - 1)}
-                              className="w-8 h-8 rounded-lg border border-slate-300 hover:bg-slate-100 flex items-center justify-center font-semibold"
-                            >
-                              −
-                            </button>
-                            <span className="w-10 text-center font-bold text-slate-900">
-                              {item.qty}
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => updateQty(item.id, item.qty + 1)}
-                              disabled={item.qty >= 3}
-                              className="w-8 h-8 rounded-lg border border-slate-300 hover:bg-slate-100 flex items-center justify-center font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
-                            >
-                              +
-                            </button>
+                        {/* Quantity Controls */}
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <span className="text-sm text-slate-600">Quantity:</span>
+                            <div className="flex items-center gap-2">
+                              <button
+                                type="button"
+                                onClick={() => updateQty(item.id, item.qty - 1)}
+                                className="w-8 h-8 rounded-lg border border-slate-300 hover:bg-slate-100 flex items-center justify-center font-semibold"
+                              >
+                                −
+                              </button>
+                              <span className="w-10 text-center font-bold text-slate-900">
+                                {item.qty}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => updateQty(item.id, item.qty + 1)}
+                                disabled={item.qty >= 3}
+                                className="w-8 h-8 rounded-lg border border-slate-300 hover:bg-slate-100 flex items-center justify-center font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+                              >
+                                +
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="font-bold text-slate-900 text-lg">
-                            ${itemTotal}
-                          </div>
-                          <div className="text-xs text-slate-500">
-                            ${unitPrice} × {item.qty}
+                          <div className="text-right">
+                            <div className="font-bold text-slate-900 text-lg">
+                              ${itemTotal}
+                            </div>
+                            <div className="text-xs text-slate-500">
+                              ${item.unitPrice} × {item.qty}
+                            </div>
                           </div>
                         </div>
                       </div>
-
-                      {/* Vehicle Details for this item */}
-                      <div className="border-t border-slate-200 pt-3 mt-3">
-                        <p className="text-xs font-semibold text-slate-700 mb-2 uppercase tracking-wide">
-                          Vehicle {index + 1} Details (Optional)
-                        </p>
-                        <div className="grid grid-cols-2 gap-2">
-                          <input
-                            type="text"
-                            placeholder="Make"
-                            value={item.vehicle?.make || ""}
-                            onChange={e => handleVehicleChange(item.id, "make", e.target.value)}
-                            className="border border-slate-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Model"
-                            value={item.vehicle?.model || ""}
-                            onChange={e => handleVehicleChange(item.id, "model", e.target.value)}
-                            className="border border-slate-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Year"
-                            value={item.vehicle?.year || ""}
-                            onChange={e => handleVehicleChange(item.id, "year", e.target.value)}
-                            className="border border-slate-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary"
-                          />
-                          <input
-                            type="text"
-                            placeholder="Color"
-                            value={item.vehicle?.color || ""}
-                            onChange={e => handleVehicleChange(item.id, "color", e.target.value)}
-                            className="border border-slate-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-primary/40 focus:border-primary"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  );
+                    );
+                  }
                 })}
               </div>
 
@@ -301,30 +431,48 @@ function BookingPageInner() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-900 mb-1">
+                  <label htmlFor="booking-fullName" className="block text-sm font-medium text-slate-900 mb-1">
                     Full Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
+                    id="booking-fullName"
+                    ref={fieldErrors.fullName ? firstErrorRef : null}
                     required
                     value={fullName}
                     onChange={e => setFullName(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/40 focus:border-primary"
+                    className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/40 focus:border-primary ${
+                      fieldErrors.fullName ? 'border-red-500' : 'border-slate-300'
+                    }`}
                     placeholder="John Doe"
+                    aria-invalid={!!fieldErrors.fullName}
+                    aria-describedby={fieldErrors.fullName ? "booking-fullName-error" : undefined}
                   />
+                  {fieldErrors.fullName && (
+                    <p id="booking-fullName-error" className="text-red-600 text-sm mt-1">{fieldErrors.fullName}</p>
+                  )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-900 mb-1">
+                  <label htmlFor="booking-email" className="block text-sm font-medium text-slate-900 mb-1">
                     Email <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="email"
+                    id="booking-email"
+                    ref={!fieldErrors.fullName && fieldErrors.email ? firstErrorRef : null}
                     required
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/40 focus:border-primary"
+                    className={`w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/40 focus:border-primary ${
+                      fieldErrors.email ? 'border-red-500' : 'border-slate-300'
+                    }`}
                     placeholder="you@email.com"
+                    aria-invalid={!!fieldErrors.email}
+                    aria-describedby={fieldErrors.email ? "booking-email-error" : undefined}
                   />
+                  {fieldErrors.email && (
+                    <p id="booking-email-error" className="text-red-600 text-sm mt-1">{fieldErrors.email}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-900 mb-1">
@@ -492,26 +640,46 @@ function BookingPageInner() {
               
               <div className="space-y-3 mb-4 pb-4 border-b border-slate-200">
                 {cart.items.map(item => {
-                  const pkg = getPackageById(item.packageId);
-                  if (!pkg) return null;
-                  const unitPrice = calculatePrice(pkg.base, item.size);
-                  const total = unitPrice * item.qty;
+                  if (item.kind === "package") {
+                    const pkg = getPackageById(item.packageId);
+                    if (!pkg) return null;
+                    const unitPrice = calculatePrice(pkg.base, item.size);
+                    const total = unitPrice * item.qty;
 
-                  return (
-                    <div key={item.id} className="flex justify-between text-sm">
-                      <div className="flex-1">
-                        <div className="font-medium text-slate-900">
-                          {pkg.name}
+                    return (
+                      <div key={item.id} className="flex justify-between text-sm">
+                        <div className="flex-1">
+                          <div className="font-medium text-slate-900">
+                            {pkg.name}
+                          </div>
+                          <div className="text-slate-500">
+                            {SIZE_LABELS[item.size]} × {item.qty}
+                          </div>
                         </div>
-                        <div className="text-slate-500">
-                          {SIZE_LABELS[item.size]} × {item.qty}
+                        <div className="font-semibold text-slate-900">
+                          ${total}
                         </div>
                       </div>
-                      <div className="font-semibold text-slate-900">
-                        ${total}
+                    );
+                  } else {
+                    // Addon item
+                    const total = item.unitPrice * item.qty;
+                    return (
+                      <div key={item.id} className="flex justify-between text-sm">
+                        <div className="flex-1">
+                          <div className="font-medium text-slate-900">
+                            {item.name}
+                          </div>
+                          <div className="text-slate-500">
+                            Add-on × {item.qty}
+                          </div>
+                        </div>
+                        <div className="font-semibold text-slate-900">
+                          ${total}
+                        </div>
                       </div>
-                    </div>
-                  );
+                    );
+                  }
                 })}
               </div>
 
@@ -552,7 +720,8 @@ function BookingPageInner() {
           </div>
         </div>
       </form>
-    </div>
+      </div>
+    </section>
   );
 }
 

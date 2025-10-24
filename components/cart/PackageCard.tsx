@@ -2,7 +2,8 @@
 
 import React from "react";
 import { Check } from "lucide-react";
-import { Package, priceFor, SIZE_LABELS } from "../../data/pricing";
+import { Package, SIZE_LABELS } from "../../data/pricing";
+import { computeCurrentPrice, computeCompareAt, formatPrice } from "../../lib/pricing";
 import { useCart } from "./CartContext";
 
 interface PackageCardProps {
@@ -10,14 +11,15 @@ interface PackageCardProps {
 }
 
 export default function PackageCard({ package: pkg }: PackageCardProps) {
-  const { selectedSize, addItem, canAddMore, totalVehicles } = useCart();
+  const { selectedSize, addPackage, canAddMore, totalVehicles } = useCart();
   
-  const price = priceFor(pkg.id, selectedSize);
+  const currentPrice = computeCurrentPrice(pkg.base, selectedSize);
+  const compareAtPrice = computeCompareAt(pkg.base, selectedSize);
   const isDisabled = !canAddMore();
 
   const handleAddToCart = () => {
     if (canAddMore()) {
-      addItem(pkg.id, selectedSize);
+      addPackage(pkg.id, selectedSize);
     }
   };
 
@@ -45,23 +47,23 @@ export default function PackageCard({ package: pkg }: PackageCardProps) {
         <div className="flex items-baseline justify-between mb-4">
           <div>
             <div className="text-3xl font-extrabold text-primary">
-              ${price}
+              {formatPrice(currentPrice)}
+              {compareAtPrice && compareAtPrice > currentPrice && (
+                <span className="text-sm text-slate-400 line-through ml-2">
+                  {formatPrice(compareAtPrice)}
+                </span>
+              )}
             </div>
             <div className="text-xs text-slate-500">
               for {SIZE_LABELS[selectedSize]}
             </div>
           </div>
-          {pkg.base !== price && (
-            <div className="text-sm text-slate-400 line-through">
-              ${pkg.base}
-            </div>
-          )}
         </div>
 
         <button
           onClick={handleAddToCart}
           disabled={isDisabled}
-          className={`btn-small w-full py-3 px-4 rounded-lg font-semibold ${
+          className={`btn-small w-full py-3 px-4 rounded-lg font-semibold focus-ring ${
             isDisabled
               ? "bg-slate-100 text-slate-400 cursor-not-allowed opacity-50"
               : "bg-primary text-white hover:bg-primary-600"

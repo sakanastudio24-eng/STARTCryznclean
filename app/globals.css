@@ -18,6 +18,7 @@ html, body { overflow-x: hidden; }
   --brand-primary: #6B0F1A;
   --brand-primary-hover: #5E0D17;
   --brand-accent: #1F5A93;
+  --ring: 0 63% 33%; /* burgundy hue match */
 }
 
 @media (min-width: 640px) {
@@ -110,6 +111,11 @@ html, body { overflow-x: hidden; }
   }
 }
 
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .animate-fade-in {
   animation: fade-in 0.3s ease-out;
 }
@@ -119,3 +125,21 @@ html, body { overflow-x: hidden; }
     animation: none;
   }
 }
+
+/* Focus ring utility class */
+.focus-ring { 
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2; 
+}
+
+/* Section spacing utilities */
+.section {
+  padding-top: var(--section-y);
+  padding-bottom: var(--section-y);
+}
+@media (min-width:768px){
+  .section { 
+    padding-top: var(--section-y-md); 
+    padding-bottom: var(--section-y-md);
+  }
+}
+.section-muted { background: #F9F9FA; } /* use on alternating sections */
