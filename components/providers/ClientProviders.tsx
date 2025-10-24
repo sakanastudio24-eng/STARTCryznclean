@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CartProvider } from "../cart/CartContext";
+import { CartProvider } from "../../lib/cart-context";
 
 export default function ClientProviders({ children }: { children: React.ReactNode }) {
   return (
